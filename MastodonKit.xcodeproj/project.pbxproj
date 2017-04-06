@@ -13,9 +13,7 @@
 		74C628631E967E9300484F3C /* MastodonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C627F81E967BD900484F3C /* MastodonKit.framework */; };
 		74C6286B1E967EF400484F3C /* MastodonKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74C6286A1E967EF400484F3C /* MastodonKitTests.m */; };
 		74C6286D1E967EF400484F3C /* MastodonKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74C6286A1E967EF400484F3C /* MastodonKitTests.m */; };
-		74C628CB1E96943400484F3C /* OAuth2Client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C628C81E96941E00484F3C /* OAuth2Client.framework */; };
 		74C628D31E96960200484F3C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C628D21E96960200484F3C /* Security.framework */; };
-		74C628D41E96967000484F3C /* OAuth2Client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C628761E968B9900484F3C /* OAuth2Client.framework */; };
 		74C628D71E9697DC00484F3C /* MastodonClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 74C628D51E9697DC00484F3C /* MastodonClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		74C628D81E9697DC00484F3C /* MastodonClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 74C628D51E9697DC00484F3C /* MastodonClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		74C628D91E9697DC00484F3C /* MastodonClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 74C628D61E9697DC00484F3C /* MastodonClient.m */; };
@@ -38,47 +36,33 @@
 			remoteGlobalIDString = 74C627F71E967BD900484F3C;
 			remoteInfo = "MastodonKit-macOS";
 		};
-		74C628751E968B9900484F3C /* PBXContainerItemProxy */ = {
+		74C628E31E96A55A00484F3C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 74C6286F1E968B9900484F3C /* OAuth2Client.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 942FFCD612315E0A00E6C65E;
 			remoteInfo = OAuth2Client.framework;
 		};
-		74C628771E968B9900484F3C /* PBXContainerItemProxy */ = {
+		74C628E51E96A55A00484F3C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 74C6286F1E968B9900484F3C /* OAuth2Client.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = D2AAC07E0554694100DB518D;
 			remoteInfo = OAuth2Client;
 		};
-		74C628791E968B9900484F3C /* PBXContainerItemProxy */ = {
+		74C628E71E96A55A00484F3C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 74C6286F1E968B9900484F3C /* OAuth2Client.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 94B6CE6619C1D0A200AA859B;
 			remoteInfo = OAuth2ClientTests;
 		};
-		74C628C71E96941E00484F3C /* PBXContainerItemProxy */ = {
+		74C628E91E96A55A00484F3C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 74C6286F1E968B9900484F3C /* OAuth2Client.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 74C6289C1E9691F400484F3C;
 			remoteInfo = "OAuth2Client-iOS";
-		};
-		74C628C91E96942C00484F3C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 74C6286F1E968B9900484F3C /* OAuth2Client.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 74C6289B1E9691F400484F3C;
-			remoteInfo = "OAuth2Client-iOS";
-		};
-		74C628CF1E9695D700484F3C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 74C6286F1E968B9900484F3C /* OAuth2Client.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 942FFCD512315E0A00E6C65E;
-			remoteInfo = OAuth2Client.framework;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -92,7 +76,7 @@
 		74C6285E1E967E9300484F3C /* MastodonKitTests_macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MastodonKitTests_macOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		74C628621E967E9300484F3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		74C6286A1E967EF400484F3C /* MastodonKitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MastodonKitTests.m; path = MastodonKitTests/MastodonKitTests.m; sourceTree = "<group>"; };
-		74C6286F1E968B9900484F3C /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = OAuth2Client/OAuth2Client.xcodeproj; sourceTree = "<group>"; };
+		74C6286F1E968B9900484F3C /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = Dependency/OAuth2Client.xcodeproj; sourceTree = "<group>"; };
 		74C6287F1E968C9D00484F3C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		74C628951E96902900484F3C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		74C628CC1E9694BB00484F3C /* OAuth2Client.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuth2Client.framework; path = "../Debug-iphonesimulator/OAuth2Client.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,7 +91,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74C628CB1E96943400484F3C /* OAuth2Client.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,7 +100,6 @@
 			files = (
 				74C628DC1E969C3700484F3C /* Cocoa.framework in Frameworks */,
 				74C628D31E96960200484F3C /* Security.framework in Frameworks */,
-				74C628D41E96967000484F3C /* OAuth2Client.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,17 +182,6 @@
 			name = MastodonKitTests;
 			sourceTree = "<group>";
 		};
-		74C628701E968B9900484F3C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				74C628761E968B9900484F3C /* OAuth2Client.framework */,
-				74C628781E968B9900484F3C /* libOAuth2Client.a */,
-				74C6287A1E968B9900484F3C /* OAuth2ClientTests.xctest */,
-				74C628C81E96941E00484F3C /* OAuth2Client.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		74C6287E1E968C9D00484F3C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -230,6 +201,17 @@
 				74C628D61E9697DC00484F3C /* MastodonClient.m */,
 			);
 			path = Source;
+			sourceTree = "<group>";
+		};
+		74C628DD1E96A55A00484F3C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				74C628E41E96A55A00484F3C /* OAuth2Client.framework */,
+				74C628E61E96A55A00484F3C /* libOAuth2Client.a */,
+				74C628E81E96A55A00484F3C /* OAuth2ClientTests.xctest */,
+				74C628EA1E96A55A00484F3C /* OAuth2Client.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,7 +250,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				74C628CA1E96942C00484F3C /* PBXTargetDependency */,
 			);
 			name = "MastodonKit-iOS";
 			productName = MastodonKit;
@@ -287,7 +268,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				74C628D01E9695D700484F3C /* PBXTargetDependency */,
 			);
 			name = "MastodonKit-macOS";
 			productName = MastodonKit;
@@ -374,7 +354,7 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 74C628701E968B9900484F3C /* Products */;
+					ProductGroup = 74C628DD1E96A55A00484F3C /* Products */;
 					ProjectRef = 74C6286F1E968B9900484F3C /* OAuth2Client.xcodeproj */;
 				},
 			);
@@ -389,32 +369,32 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		74C628761E968B9900484F3C /* OAuth2Client.framework */ = {
+		74C628E41E96A55A00484F3C /* OAuth2Client.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = OAuth2Client.framework;
-			remoteRef = 74C628751E968B9900484F3C /* PBXContainerItemProxy */;
+			remoteRef = 74C628E31E96A55A00484F3C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		74C628781E968B9900484F3C /* libOAuth2Client.a */ = {
+		74C628E61E96A55A00484F3C /* libOAuth2Client.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libOAuth2Client.a;
-			remoteRef = 74C628771E968B9900484F3C /* PBXContainerItemProxy */;
+			remoteRef = 74C628E51E96A55A00484F3C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		74C6287A1E968B9900484F3C /* OAuth2ClientTests.xctest */ = {
+		74C628E81E96A55A00484F3C /* OAuth2ClientTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = OAuth2ClientTests.xctest;
-			remoteRef = 74C628791E968B9900484F3C /* PBXContainerItemProxy */;
+			remoteRef = 74C628E71E96A55A00484F3C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		74C628C81E96941E00484F3C /* OAuth2Client.framework */ = {
+		74C628EA1E96A55A00484F3C /* OAuth2Client.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = OAuth2Client.framework;
-			remoteRef = 74C628C71E96941E00484F3C /* PBXContainerItemProxy */;
+			remoteRef = 74C628E91E96A55A00484F3C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -495,16 +475,6 @@
 			isa = PBXTargetDependency;
 			target = 74C627F71E967BD900484F3C /* MastodonKit-macOS */;
 			targetProxy = 74C628641E967E9300484F3C /* PBXContainerItemProxy */;
-		};
-		74C628CA1E96942C00484F3C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "OAuth2Client-iOS";
-			targetProxy = 74C628C91E96942C00484F3C /* PBXContainerItemProxy */;
-		};
-		74C628D01E9695D700484F3C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = OAuth2Client.framework;
-			targetProxy = 74C628CF1E9695D700484F3C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
