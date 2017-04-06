@@ -19,6 +19,8 @@
 		74C628D91E9697DC00484F3C /* MastodonClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 74C628D61E9697DC00484F3C /* MastodonClient.m */; };
 		74C628DA1E9697DC00484F3C /* MastodonClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 74C628D61E9697DC00484F3C /* MastodonClient.m */; };
 		74C628DC1E969C3700484F3C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C628DB1E969C3700484F3C /* Cocoa.framework */; };
+		74C628EC1E96A7C000484F3C /* MastodonClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74C628EB1E96A7C000484F3C /* MastodonClientTests.m */; };
+		74C628ED1E96A7C000484F3C /* MastodonClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74C628EB1E96A7C000484F3C /* MastodonClientTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +86,7 @@
 		74C628D51E9697DC00484F3C /* MastodonClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MastodonClient.h; sourceTree = "<group>"; };
 		74C628D61E9697DC00484F3C /* MastodonClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MastodonClient.m; sourceTree = "<group>"; };
 		74C628DB1E969C3700484F3C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		74C628EB1E96A7C000484F3C /* MastodonClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MastodonClientTests.m; path = MastodonKitTests/MastodonClientTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +181,7 @@
 				74C628411E967E3700484F3C /* iOS Plist */,
 				74C6285F1E967E9300484F3C /* macOS Plist */,
 				74C6286A1E967EF400484F3C /* MastodonKitTests.m */,
+				74C628EB1E96A7C000484F3C /* MastodonClientTests.m */,
 			);
 			name = MastodonKitTests;
 			sourceTree = "<group>";
@@ -452,6 +456,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				74C6286B1E967EF400484F3C /* MastodonKitTests.m in Sources */,
+				74C628EC1E96A7C000484F3C /* MastodonClientTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,6 +465,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				74C6286D1E967EF400484F3C /* MastodonKitTests.m in Sources */,
+				74C628ED1E96A7C000484F3C /* MastodonClientTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

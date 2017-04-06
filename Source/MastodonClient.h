@@ -10,4 +10,8 @@
 
 @interface MastodonClient : NSObject
 
++ (_Nonnull instancetype)clientWithInstanceURL:(NSURL * _Nonnull)url;
+
+@property (nonatomic, strong, nonnull) NSURL *instanceUrl;
+
 @end

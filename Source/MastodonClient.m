@@ -8,6 +8,23 @@
 
 #import "MastodonClient.h"
 
+@interface MastodonClient() {
+    
+}
+
+@end
+
 @implementation MastodonClient
+
+- (instancetype)initWithInstanceURL:(NSURL *)url{
+    if (self = [super init]) {
+        _instanceUrl = url;
+    }
+    return self;
+}
+
++ (instancetype)clientWithInstanceURL:(NSURL *)url{
+    return [[self alloc] initWithInstanceURL:url];
+}
 
 @end
