@@ -21,6 +21,8 @@
 		74C628DC1E969C3700484F3C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C628DB1E969C3700484F3C /* Cocoa.framework */; };
 		74C628EC1E96A7C000484F3C /* MastodonClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74C628EB1E96A7C000484F3C /* MastodonClientTests.m */; };
 		74C628ED1E96A7C000484F3C /* MastodonClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74C628EB1E96A7C000484F3C /* MastodonClientTests.m */; };
+		74C628F41E96A9C300484F3C /* MastodonClientSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C628F31E96A9C300484F3C /* MastodonClientSwiftTests.swift */; };
+		74C628F51E96A9C300484F3C /* MastodonClientSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C628F31E96A9C300484F3C /* MastodonClientSwiftTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,7 +73,7 @@
 /* Begin PBXFileReference section */
 		74C627D91E967B7B00484F3C /* MastodonKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MastodonKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74C627DC1E967B7B00484F3C /* MastodonKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MastodonKit.h; sourceTree = "<group>"; };
-		74C627DD1E967B7B00484F3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		74C627DD1E967B7B00484F3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = MastodonKit/Info.plist; sourceTree = "<group>"; };
 		74C627F81E967BD900484F3C /* MastodonKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MastodonKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74C628401E967E3700484F3C /* MastodonKitTests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MastodonKitTests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		74C628441E967E3700484F3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 		74C628D61E9697DC00484F3C /* MastodonClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MastodonClient.m; sourceTree = "<group>"; };
 		74C628DB1E969C3700484F3C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		74C628EB1E96A7C000484F3C /* MastodonClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MastodonClientTests.m; path = MastodonKitTests/MastodonClientTests.m; sourceTree = "<group>"; };
+		74C628F31E96A9C300484F3C /* MastodonClientSwiftTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MastodonClientSwiftTests.swift; path = MastodonKitTests/Swift/MastodonClientSwiftTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +135,7 @@
 				74C6288A1E968F7400484F3C /* Source */,
 				74C627DB1E967B7B00484F3C /* MastodonKit */,
 				74C6286E1E967EFA00484F3C /* MastodonKitTests */,
+				74C628EE1E96A8FE00484F3C /* Support Files */,
 				74C627DA1E967B7B00484F3C /* Products */,
 				74C6287E1E968C9D00484F3C /* Frameworks */,
 			);
@@ -152,7 +156,6 @@
 			isa = PBXGroup;
 			children = (
 				74C627DC1E967B7B00484F3C /* MastodonKit.h */,
-				74C627DD1E967B7B00484F3C /* Info.plist */,
 			);
 			path = MastodonKit;
 			sourceTree = "<group>";
@@ -178,10 +181,8 @@
 		74C6286E1E967EFA00484F3C /* MastodonKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				74C628411E967E3700484F3C /* iOS Plist */,
-				74C6285F1E967E9300484F3C /* macOS Plist */,
-				74C6286A1E967EF400484F3C /* MastodonKitTests.m */,
-				74C628EB1E96A7C000484F3C /* MastodonClientTests.m */,
+				74C628F01E96A92B00484F3C /* Swift Tests */,
+				74C628EF1E96A91D00484F3C /* Objective C Tests */,
 			);
 			name = MastodonKitTests;
 			sourceTree = "<group>";
@@ -216,6 +217,33 @@
 				74C628EA1E96A55A00484F3C /* OAuth2Client.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		74C628EE1E96A8FE00484F3C /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				74C627DD1E967B7B00484F3C /* Info.plist */,
+				74C628411E967E3700484F3C /* iOS Plist */,
+				74C6285F1E967E9300484F3C /* macOS Plist */,
+			);
+			name = "Support Files";
+			sourceTree = "<group>";
+		};
+		74C628EF1E96A91D00484F3C /* Objective C Tests */ = {
+			isa = PBXGroup;
+			children = (
+				74C6286A1E967EF400484F3C /* MastodonKitTests.m */,
+				74C628EB1E96A7C000484F3C /* MastodonClientTests.m */,
+			);
+			name = "Objective C Tests";
+			sourceTree = "<group>";
+		};
+		74C628F01E96A92B00484F3C /* Swift Tests */ = {
+			isa = PBXGroup;
+			children = (
+				74C628F31E96A9C300484F3C /* MastodonClientSwiftTests.swift */,
+			);
+			name = "Swift Tests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -337,11 +365,13 @@
 					74C6283F1E967E3700484F3C = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = M56A72A6G5;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					74C6285D1E967E9300484F3C = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = M56A72A6G5;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -457,6 +487,7 @@
 			files = (
 				74C6286B1E967EF400484F3C /* MastodonKitTests.m in Sources */,
 				74C628EC1E96A7C000484F3C /* MastodonClientTests.m in Sources */,
+				74C628F41E96A9C300484F3C /* MastodonClientSwiftTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,6 +497,7 @@
 			files = (
 				74C6286D1E967EF400484F3C /* MastodonKitTests.m in Sources */,
 				74C628ED1E96A7C000484F3C /* MastodonClientTests.m in Sources */,
+				74C628F51E96A9C300484F3C /* MastodonClientSwiftTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -680,28 +712,36 @@
 		74C628491E967E3700484F3C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = M56A72A6G5;
 				INFOPLIST_FILE = MastodonKitTests_iOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.darkcl.MastodonKitTests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		74C6284A1E967E3700484F3C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = M56A72A6G5;
 				INFOPLIST_FILE = MastodonKitTests_iOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.darkcl.MastodonKitTests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
 		74C628671E967E9300484F3C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = M56A72A6G5;
@@ -711,12 +751,16 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.darkcl.MastodonKitTests-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		74C628681E967E9300484F3C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = M56A72A6G5;
@@ -726,6 +770,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.darkcl.MastodonKitTests-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
