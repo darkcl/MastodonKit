@@ -1,0 +1,10 @@
+
+# references:
+# * http://www.objc.io/issue-6/travis-ci.html
+# * https://github.com/supermarin/xcpretty#usage
+
+language: objective-c
+osx_image: xcode8.2
+script:
+- xcodebuild -project MastodonKit.xcodeproj -scheme "MastodonKitTests_iOS" test -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 7" | xcpretty
+- xcodebuild -project MastodonKit.xcodeproj -scheme "MastodonKitTests_macOS" test -sdk macosx -destination "platform=macOS" | xcpretty

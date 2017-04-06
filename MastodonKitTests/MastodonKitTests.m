@@ -8,6 +8,8 @@
 
 #import <XCTest/XCTest.h>
 
+#import <MastodonKit/MastodonKit.h>
+
 @interface MastodonKitTests : XCTestCase
 
 @end
@@ -27,6 +29,8 @@
 - (void)testExample {
     // This is an example of a functional test case.
     // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    XCTAssertTrue([[MastodonClient alloc] init] != nil);
 }
 
 - (void)testPerformanceExample {
