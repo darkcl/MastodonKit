@@ -26,9 +26,39 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "74C6283F1E967E3700484F3C"
+               BuildableName = "MastodonKitTests_iOS.xctest"
+               BlueprintName = "MastodonKitTests_iOS"
+               ReferencedContainer = "container:MastodonKit.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "74C6285D1E967E9300484F3C"
+               BuildableName = "MastodonKitTests_macOS.xctest"
+               BlueprintName = "MastodonKitTests_macOS"
+               ReferencedContainer = "container:MastodonKit.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "74C627D81E967B7B00484F3C"
+            BuildableName = "MastodonKit.framework"
+            BlueprintName = "MastodonKit-iOS"
+            ReferencedContainer = "container:MastodonKit.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

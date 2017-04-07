@@ -29,16 +29,32 @@
 }
 
 - (void)testCreateWithoutAnyParam {
-    MastodonClientManager *sut = [MastodonClientManager createManagerWithBuilder:^(MastodonClientManagerBuilder * _Nonnull builder) {
+    MastodonClientManager *sut = [MastodonClientManager createManager:^(MastodonClientManagerBuilder * _Nonnull builder) {
         
     }];
     XCTAssertTrue([sut.applicationName isEqualToString:@"MastodonKit"], @"Application Name Should equal MastodonKit");
     XCTAssertTrue([sut.redirectUri isEqualToString:@"urn:ietf:wg:oauth:2.0:oob"], @"Redirect Url Should equal to defualt no redirect url");
     
-    BOOL isAllScopes = [sut.scopes isEqualToSet:[NSSet setWithObjects:@"read", @"write", @"follow", nil]];
+    BOOL isScopesEqual = [sut.scopes isEqualToSet:[NSSet setWithObjects:@"read", @"write", @"follow", nil]];
     
-    XCTAssertTrue(isAllScopes, @"Scope should have all permission");
+    XCTAssertTrue(isScopesEqual, @"Scope should have all permission");
     
+}
+
+- (void)testCreateWithParam {
+    MastodonClientManager *sut = [MastodonClientManager createManager:^(MastodonClientManagerBuilder * _Nonnull builder) {
+        builder.applicationName = @"My Application";
+        builder.scopes = [NSSet setWithObjects:@"read", nil];
+        builder.redirectUri = @"myApp://oauth";
+        builder.websiteUrl = @"example.com";
+    }];
+    XCTAssertTrue([sut.applicationName isEqualToString:@"My Application"], @"Application Name Should equal \"My Application\"");
+    XCTAssertTrue([sut.redirectUri isEqualToString:@"myApp://oauth"], @"Redirect Url Should equal to myApp:\/\/oauth");
+    
+    BOOL isScopesEqual = [sut.scopes isEqualToSet:[NSSet setWithObjects:@"read", nil]];
+    
+    XCTAssertTrue(isScopesEqual, @"Scope should have read permission");
+    XCTAssertTrue([sut.websiteUrl isEqualToString:@"example.com"], @"Website should equal example.com");
 }
 
 @end

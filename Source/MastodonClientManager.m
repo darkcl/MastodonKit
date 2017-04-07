@@ -18,7 +18,7 @@
 
 @implementation MastodonClientManager
 
-+ (instancetype)createManagerWithBuilder:(MastodonClientManagerBuildBlock)buildBlock{
++ (instancetype)createManager:(MastodonClientManagerBuildBlock)buildBlock{
     MastodonClientManagerBuilder *managerBuilder = [[MastodonClientManagerBuilder alloc] init];
     buildBlock(managerBuilder);
     return [managerBuilder build];

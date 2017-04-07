@@ -14,7 +14,7 @@ typedef void(^MastodonClientManagerBuildBlock)(MastodonClientManagerBuilder * _N
 
 @interface MastodonClientManager : NSObject
 
-+ (nonnull instancetype)createManagerWithBuilder:(nonnull MastodonClientManagerBuildBlock)buildBlock;
++ (nonnull instancetype)createManager:(nonnull MastodonClientManagerBuildBlock)buildBlock;
 
 @property (nonatomic, strong, nonnull) NSString *applicationName;
 
