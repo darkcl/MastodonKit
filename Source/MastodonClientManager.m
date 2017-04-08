@@ -14,8 +14,10 @@
 
 #ifdef COCOAPODS
 #import "NXOAuth2.h"
+#import "YapDatabase.h"
 #else
 #import <OAuth2Client/NXOAuth2.h>
+#import <YapDatabase/YapDatabase.h>
 #endif
 
 #import "NSDictionary+MastodonKit.h"
@@ -106,6 +108,7 @@
 
 #pragma mark - Setter & Getter
 
+#if TARGET_OS_IOS
 - (NSArray <MastodonClient *> *)clientsList{
     return [NSUserDefaults clientsArrayWithApplicationName:self.applicationName];
 }
@@ -113,6 +116,7 @@
 - (void)setClientsList:(NSArray<MastodonClient *> *)clientsList{
     [NSUserDefaults setClientsArray:clientsList applicationName:self.applicationName];
 }
+#endif
 
 - (void)updateClient:(MastodonClient *)client{
     NSMutableArray *clients = [[NSMutableArray alloc] initWithArray:self.clientsList];
@@ -123,6 +127,7 @@
         self.clientsList = [NSArray arrayWithArray:clients];
     }
 }
+
 
 #pragma mark - Helper
 
