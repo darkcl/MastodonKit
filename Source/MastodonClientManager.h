@@ -14,6 +14,8 @@ typedef void(^MastodonClientManagerBuildBlock)(MastodonClientManagerBuilder * _N
 
 typedef void(^MastodonClientManagerCompletionBlock)(BOOL success, NSError * _Nullable error);
 
+typedef void(^MastodonClientManagerLoginCompletionBlock)(BOOL success, NSURL * _Nullable authUrl, NSError * _Nullable error);
+
 @interface MastodonClientManager : NSObject
 
 - (_Nonnull instancetype)initWithBlock:(_Nonnull MastodonClientManagerBuildBlock)block;
@@ -22,6 +24,9 @@ typedef void(^MastodonClientManagerCompletionBlock)(BOOL success, NSError * _Nul
 
 - (void)registerApplicationWithClient:(MastodonClient * _Nonnull)client
                            completion:(MastodonClientManagerCompletionBlock _Nullable)completionBlock;
+
+- (void)loginWithClient:(MastodonClient * _Nonnull)client
+             completion:(MastodonClientManagerLoginCompletionBlock _Nullable)completionBlock;
 
 @property (nonatomic, strong, nonnull) NSString *applicationName;
 

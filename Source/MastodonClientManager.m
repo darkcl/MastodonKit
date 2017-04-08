@@ -14,18 +14,22 @@
 
 #ifdef COCOAPODS
 #import "NXOAuth2.h"
-#import "YapDatabase.h"
 #else
 #import <OAuth2Client/NXOAuth2.h>
-#import <YapDatabase/YapDatabase.h>
 #endif
 
 #import "NSDictionary+MastodonKit.h"
 
 #import "NSUserDefaults+MastodonKit.h"
 
+#if TARGET_OS_IOS
+
+#import "MastodonLoginViewController.h"
+
+#endif
+
 @interface MastodonClientManager() {
-    
+    NSMutableDictionary <NSString *, MastodonClientManagerLoginCompletionBlock> *loginCompletionBlocks;
 }
 
 @end
@@ -104,6 +108,68 @@
         
     }];
     [task resume];
+}
+
+- (NSString *)serviceNameWithClient:(MastodonClient *)client{
+    return [NSString stringWithFormat:@"%@@%@",self.applicationName, client.instanceUrl.host];
+}
+
+- (void)loginWithClient:(MastodonClient * _Nonnull)client
+             completion:(MastodonClientManagerLoginCompletionBlock _Nullable)completionBlock{
+    if (client.isRegistered) {
+        [[NXOAuth2AccountStore sharedStore] setClientID:client.clientId
+                                                 secret:client.clientSecret
+                                       authorizationURL:client.authUrl
+                                               tokenURL:client.tokenUrl
+                                            redirectURL:client.redirectUri
+                                         forAccountType:[self serviceNameWithClient:client]];
+        
+        
+        
+        NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
+        
+        // TODO: Support Multiple Accounts
+        
+        if (accounts.count != 0) {
+            completionBlock(YES, nil, nil);
+        }else{
+            [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:[self serviceNameWithClient:client]
+                                           withPreparedAuthorizationURLHandler:^(NSURL *preparedURL){
+#if TARGET_OS_IOS
+                                               [MastodonLoginViewController showLoginViewWithUrl:preparedURL withRedirectUri:client.redirectUri];
+                                               
+                                               [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountStoreDidFailToRequestAccessNotification
+                                                                                                 object:[NXOAuth2AccountStore sharedStore]
+                                                                                                  queue:nil
+                                                                                             usingBlock:^(NSNotification *aNotification){
+                                                                                                 NSError *error = [aNotification.userInfo objectForKey:NXOAuth2AccountStoreErrorKey];
+                                                                                                 completionBlock(NO, nil, error);
+                                                                                             }];
+                                               
+                                               [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountStoreAccountsDidChangeNotification
+                                                                                                 object:[NXOAuth2AccountStore sharedStore]
+                                                                                                  queue:nil
+                                                                                             usingBlock:^(NSNotification *aNotification){
+                                                                                                 completionBlock(YES, nil, nil);
+                                                                                             }];
+#else
+                                               completionBlock(NO, preparedURL, nil);
+#endif
+                                           }];
+        }
+    }else{
+        __weak typeof(self) weakSelf = self;
+        
+        [self registerApplicationWithClient:client
+                                 completion:^(BOOL success, NSError * _Nullable error) {
+                                     if (success) {
+                                         [weakSelf loginWithClient:client
+                                                        completion:completionBlock];
+                                     }else{
+                                         completionBlock(NO, nil, error);
+                                     }
+                                 }];
+    }
 }
 
 #pragma mark - Setter & Getter
