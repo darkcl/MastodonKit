@@ -12,7 +12,13 @@
 
 #import "MastodonClient.h"
 
+#ifdef COCOAPODS
+#import "NXOAuth2.h"
+#else
 #import <OAuth2Client/NXOAuth2.h>
+#endif
+
+
 
 #import "NSDictionary+MastodonKit.h"
 
