@@ -39,16 +39,6 @@
                ReferencedContainer = "container:MastodonKit.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "74C6285D1E967E9300484F3C"
-               BuildableName = "MastodonKitTests_macOS.xctest"
-               BlueprintName = "MastodonKitTests_macOS"
-               ReferencedContainer = "container:MastodonKit.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

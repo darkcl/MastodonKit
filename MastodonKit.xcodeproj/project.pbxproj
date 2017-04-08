@@ -83,8 +83,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		74716F311E97C1A50033C2FB /* MastodonClientManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MastodonClientManagerTests.m; path = MastodonKitTests/MastodonClientManagerTests.m; sourceTree = "<group>"; };
-		74716F341E97C9C30033C2FB /* MastodonClientManagerSwiftTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MastodonClientManagerSwiftTests.swift; path = MastodonKitTests/Swift/MastodonClientManagerSwiftTests.swift; sourceTree = "<group>"; };
+		74716F311E97C1A50033C2FB /* MastodonClientManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MastodonClientManagerTests.m; path = MastodonKitTests/MastodonClientManagerTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		74716F341E97C9C30033C2FB /* MastodonClientManagerSwiftTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = MastodonClientManagerSwiftTests.swift; path = MastodonKitTests/Swift/MastodonClientManagerSwiftTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		74C627D91E967B7B00484F3C /* MastodonKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MastodonKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74C627DC1E967B7B00484F3C /* MastodonKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MastodonKit.h; sourceTree = "<group>"; };
 		74C627DD1E967B7B00484F3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = MastodonKit/Info.plist; sourceTree = "<group>"; };

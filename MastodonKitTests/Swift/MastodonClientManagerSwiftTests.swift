@@ -24,7 +24,7 @@ class MastodonClientManagerSwiftTests: XCTestCase {
     
     func testCreateWithoutAnyParam() {
         
-        let sut: MastodonClientManager = MastodonClientManager.createManager({ (builder) in
+        let sut: MastodonClientManager = MastodonClientManager.init(block: { (builder) in
             
         })
         
@@ -41,7 +41,7 @@ class MastodonClientManagerSwiftTests: XCTestCase {
     
     func testCreateWithParam() {
         
-        let sut: MastodonClientManager = MastodonClientManager.createManager({ (builder) in
+        let sut: MastodonClientManager = MastodonClientManager.init(block: { (builder) in
             builder.applicationName = "My Application";
             builder.scopes = ["read"];
             builder.redirectUri = "myApp://oauth";
@@ -60,4 +60,16 @@ class MastodonClientManagerSwiftTests: XCTestCase {
         XCTAssertTrue(sut.websiteUrl == "example.com", "Website should equal example.com");
     }
     
+    func testCreateClients() {
+        let sut: MastodonClientManager = MastodonClientManager.init(block: { (builder) in
+            
+        })
+        
+        sut.createClient(URL(string: "https://mastodon.cloud"))
+        sut.createClient(nil)
+        
+        XCTAssertTrue(sut.clientsList?.count == 2, "Clients count should be 2")
+        XCTAssertTrue(sut.clientsList?[0].instanceUrl.absoluteString == "https://mastodon.cloud", "Clients #0 should be https://mastodon.cloud")
+        XCTAssertTrue(sut.clientsList?[1].instanceUrl.absoluteString == "https://mastodon.social", "Clients #1 should be https://mastodon.social")
+    }
 }

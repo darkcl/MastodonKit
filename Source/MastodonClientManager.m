@@ -10,6 +10,8 @@
 
 #import "MastodonClientManagerBuilder.h"
 
+#import "MastodonClient.h"
+
 @interface MastodonClientManager() {
     
 }
@@ -18,10 +20,29 @@
 
 @implementation MastodonClientManager
 
-+ (instancetype)createManager:(MastodonClientManagerBuildBlock)buildBlock{
+- (instancetype)initWithBlock:(MastodonClientManagerBuildBlock)buildBlock{
     MastodonClientManagerBuilder *managerBuilder = [[MastodonClientManagerBuilder alloc] init];
     buildBlock(managerBuilder);
+    
     return [managerBuilder build];
+}
+
+- (nonnull MastodonClient *)createClient:(nullable NSURL *)instanceUrl{
+    MastodonClient *client;
+    
+    if (instanceUrl != nil) {
+        client = [MastodonClient clientWithInstanceURL:instanceUrl];
+    }else{
+        client = [MastodonClient clientWithInstanceURL:[NSURL URLWithString:@"https://mastodon.social"]];
+    }
+    
+    NSMutableArray *clients = [[NSMutableArray alloc] initWithArray:self.clientsList];
+    
+    [clients addObject:client];
+    
+    self.clientsList = [NSArray arrayWithArray:clients];
+    
+    return client;
 }
 
 @end

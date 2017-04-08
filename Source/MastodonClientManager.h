@@ -8,13 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@class MastodonClientManagerBuilder;
+@class MastodonClientManagerBuilder, MastodonClient;
 
 typedef void(^MastodonClientManagerBuildBlock)(MastodonClientManagerBuilder * _Nonnull builder);
 
 @interface MastodonClientManager : NSObject
 
-+ (nonnull instancetype)createManager:(nonnull MastodonClientManagerBuildBlock)buildBlock;
+- (_Nonnull instancetype)initWithBlock:(_Nonnull MastodonClientManagerBuildBlock)block;
+
+- (MastodonClient * _Nonnull)createClient:(NSURL * _Nullable)instanceUrl;
 
 @property (nonatomic, strong, nonnull) NSString *applicationName;
 
@@ -23,5 +25,7 @@ typedef void(^MastodonClientManagerBuildBlock)(MastodonClientManagerBuilder * _N
 @property (nonatomic, strong, nonnull) NSSet <NSString *> *scopes;
 
 @property (nonatomic, strong, nullable) NSString *websiteUrl;
+
+@property (nonatomic, strong, nullable) NSArray <MastodonClient *> *clientsList;
 
 @end

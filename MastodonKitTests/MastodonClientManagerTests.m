@@ -29,7 +29,7 @@
 }
 
 - (void)testCreateWithoutAnyParam {
-    MastodonClientManager *sut = [MastodonClientManager createManager:^(MastodonClientManagerBuilder * _Nonnull builder) {
+    MastodonClientManager *sut = [[MastodonClientManager alloc] initWithBlock:^(MastodonClientManagerBuilder * _Nonnull builder) {
         
     }];
     XCTAssertTrue([sut.applicationName isEqualToString:@"MastodonKit"], @"Application Name Should equal MastodonKit");
@@ -42,19 +42,33 @@
 }
 
 - (void)testCreateWithParam {
-    MastodonClientManager *sut = [MastodonClientManager createManager:^(MastodonClientManagerBuilder * _Nonnull builder) {
+    MastodonClientManager *sut = [[MastodonClientManager alloc] initWithBlock:^(MastodonClientManagerBuilder * _Nonnull builder) {
         builder.applicationName = @"My Application";
         builder.scopes = [NSSet setWithObjects:@"read", nil];
         builder.redirectUri = @"myApp://oauth";
         builder.websiteUrl = @"example.com";
     }];
     XCTAssertTrue([sut.applicationName isEqualToString:@"My Application"], @"Application Name Should equal \"My Application\"");
-    XCTAssertTrue([sut.redirectUri isEqualToString:@"myApp://oauth"], @"Redirect Url Should equal to myApp:\/\/oauth");
+    XCTAssertTrue([sut.redirectUri isEqualToString:@"myApp://oauth"], @"Redirect Url Should equal to myApp://oauth");
     
     BOOL isScopesEqual = [sut.scopes isEqualToSet:[NSSet setWithObjects:@"read", nil]];
     
     XCTAssertTrue(isScopesEqual, @"Scope should have read permission");
     XCTAssertTrue([sut.websiteUrl isEqualToString:@"example.com"], @"Website should equal example.com");
+}
+
+- (void)testCreateClients {
+    MastodonClientManager *sut = [[MastodonClientManager alloc] initWithBlock:^(MastodonClientManagerBuilder * _Nonnull builder) {
+        
+    }];
+    
+    [sut createClient:[NSURL URLWithString:@"https://mastodon.cloud"]];
+    [sut createClient:nil];
+    
+    XCTAssertTrue(sut.clientsList.count == 2, @"Clients count should be 2");
+    
+    XCTAssertTrue([sut.clientsList[0].instanceUrl.absoluteString isEqualToString:@"https://mastodon.cloud"], @"Clients #0 should be https://mastodon.cloud");
+    XCTAssertTrue([sut.clientsList[1].instanceUrl.absoluteString isEqualToString:@"https://mastodon.social"], @"Clients #0 should be https://mastodon.social");
 }
 
 @end
