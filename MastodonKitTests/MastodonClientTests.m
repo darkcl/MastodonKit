@@ -27,7 +27,9 @@
     sut = [MastodonClient clientWithInstanceURL:url];
     
     XCTAssertTrue([url.absoluteString isEqualToString:sut.instanceUrl.absoluteString]);
-    
+    XCTAssertTrue([sut.registerAppUrl.absoluteString isEqualToString:@"https://google.com/api/v1/apps"]);
+    XCTAssertTrue([sut.authUrl.absoluteString isEqualToString:@"https://google.com/oauth/authorize?response_type=code"]);
+    XCTAssertTrue([sut.tokenUrl.absoluteString isEqualToString:@"https://google.com/oauth/token"]);
 }
 
 @end

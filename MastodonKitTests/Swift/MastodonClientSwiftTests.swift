@@ -25,11 +25,13 @@ class MastodonClientSwiftTests: XCTestCase {
     func testInstanceUrl() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
-        if let url = URL(string: "http://google.com") {
+        if let url = URL(string: "https://google.com") {
             let sut = MastodonClient.init(instanceURL: url)
             
             XCTAssertTrue(url.absoluteString == sut.instanceUrl.absoluteString, "URL Should Equal")
-            
+            XCTAssertTrue(sut.registerAppUrl.absoluteString == "https://google.com/api/v1/apps", "URL Should Equal")
+            XCTAssertTrue(sut.authUrl.absoluteString == "https://google.com/oauth/authorize?response_type=code", "URL Should Equal")
+            XCTAssertTrue(sut.tokenUrl.absoluteString == "https://google.com/oauth/token", "URL Should Equal")
         }else{
             XCTFail("URL Should not nil.")
         }

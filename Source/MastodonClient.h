@@ -14,4 +14,12 @@
 
 @property (nonatomic, strong, nonnull) NSURL *instanceUrl;
 
+@property (nonatomic, strong, readonly, nonnull) NSURL *registerAppUrl;
+
+@property (nonatomic, strong, readonly, nonnull) NSURL *authUrl;
+
+@property (nonatomic, strong, readonly, nonnull) NSURL *tokenUrl;
+
+@property (nonatomic, strong, nullable) NSString *appId;
+
 @end

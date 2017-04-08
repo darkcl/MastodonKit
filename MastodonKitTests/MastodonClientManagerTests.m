@@ -10,6 +10,9 @@
 
 #import <MastodonKit/MastodonKit.h>
 
+#import <OHHTTPStubs/OHHTTPStubs.h>
+#import <OHHTTPStubs/OHHTTPStubsResponse+JSON.h>
+
 @interface MastodonClientManagerTests : XCTestCase {
     
 }
@@ -26,6 +29,7 @@
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
+    [OHHTTPStubs removeAllStubs];
 }
 
 - (void)testCreateWithoutAnyParam {
@@ -68,7 +72,42 @@
     XCTAssertTrue(sut.clientsList.count == 2, @"Clients count should be 2");
     
     XCTAssertTrue([sut.clientsList[0].instanceUrl.absoluteString isEqualToString:@"https://mastodon.cloud"], @"Clients #0 should be https://mastodon.cloud");
-    XCTAssertTrue([sut.clientsList[1].instanceUrl.absoluteString isEqualToString:@"https://mastodon.social"], @"Clients #0 should be https://mastodon.social");
+    XCTAssertTrue([sut.clientsList[1].instanceUrl.absoluteString isEqualToString:@"https://mastodon.social"], @"Clients #1 should be https://mastodon.social");
+}
+
+- (void)testRegisterApp {
+    MastodonClientManager *sut = [[MastodonClientManager alloc] initWithBlock:^(MastodonClientManagerBuilder * _Nonnull builder) {
+        
+    }];
+    MastodonClient *client = [sut createClient:nil];
+    
+    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
+        return [request.URL.host isEqualToString:@"mastodon.social"];
+    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
+        NSDictionary* obj = @{@"id": @1000,
+                              @"redirect_uri": @"urn:ietf:wg:oauth:2.0:oob",
+                              @"client_id": @"testing_client_id",
+                              @"client_secret": @"testing_client_secret"};
+        return [OHHTTPStubsResponse responseWithJSONObject:obj statusCode:200 headers:nil];
+    }];
+    
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Testing Register App API"];
+    
+    [sut registerApplicationWithClient:client
+                            completion:^(BOOL success, NSError * _Nullable error) {
+                                XCTAssertTrue(success, @"Should Success");
+                                XCTAssertTrue([client.appId isEqualToString:@"1000"], @"Client App Id should equal 1000");
+                                [expectation fulfill];
+                            }];
+    
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *error) {
+        
+        if(error)
+        {
+            XCTFail(@"Expectation Failed with error: %@", error);
+        }
+        
+    }];
 }
 
 @end

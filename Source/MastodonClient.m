@@ -8,6 +8,8 @@
 
 #import "MastodonClient.h"
 
+#import "MastodonConstants.h"
+
 @interface MastodonClient() {
     
 }
@@ -25,6 +27,24 @@
 
 + (instancetype)clientWithInstanceURL:(NSURL *)url{
     return [[self alloc] initWithInstanceURL:url];
+}
+
+- (NSURL *)registerAppUrl{
+    NSString *result = [NSString stringWithFormat:@"%@/api/%@/apps", self.instanceUrl.absoluteString, MastodonAPIVersion];
+    
+    return [NSURL URLWithString:result];
+}
+
+- (NSURL *)authUrl{
+    NSString *result = [NSString stringWithFormat:@"%@/oauth/authorize?response_type=code", self.instanceUrl.absoluteString];
+    
+    return [NSURL URLWithString:result];
+}
+
+- (NSURL *)tokenUrl{
+    NSString *result = [NSString stringWithFormat:@"%@/oauth/token", self.instanceUrl.absoluteString];
+    
+    return [NSURL URLWithString:result];
 }
 
 @end
