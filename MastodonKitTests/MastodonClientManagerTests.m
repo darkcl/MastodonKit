@@ -24,12 +24,20 @@
 - (void)setUp {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
+    
+    // Clear User Defaults
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"com.mastodonkit.clients"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
     [OHHTTPStubs removeAllStubs];
+    
+    // Clear User Defaults
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"com.mastodonkit.clients"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)testCreateWithoutAnyParam {
@@ -68,6 +76,7 @@
     
     [sut createClient:[NSURL URLWithString:@"https://mastodon.cloud"]];
     [sut createClient:nil];
+    [sut createClient:nil];
     
     XCTAssertTrue(sut.clientsList.count == 2, @"Clients count should be 2");
     
@@ -97,6 +106,10 @@
                             completion:^(BOOL success, NSError * _Nullable error) {
                                 XCTAssertTrue(success, @"Should Success");
                                 XCTAssertTrue([client.appId isEqualToString:@"1000"], @"Client App Id should equal 1000");
+                                XCTAssertTrue([client.redirectUri.absoluteString isEqualToString:@"urn:ietf:wg:oauth:2.0:oob"], @"Client RedirectUri should be no redirect");
+                                
+                                XCTAssertTrue([client.clientId isEqualToString:@"testing_client_id"], @"Client Id should equal testing_client_id");
+                                XCTAssertTrue([client.clientSecret isEqualToString:@"testing_client_secret"], @"Client Secret should equal testing_client_secret");
                                 [expectation fulfill];
                             }];
     

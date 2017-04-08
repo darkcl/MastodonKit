@@ -18,9 +18,9 @@
 #import <OAuth2Client/NXOAuth2.h>
 #endif
 
-
-
 #import "NSDictionary+MastodonKit.h"
+
+#import "NSUserDefaults+MastodonKit.h"
 
 @interface MastodonClientManager() {
     
@@ -48,11 +48,15 @@
     
     NSMutableArray *clients = [[NSMutableArray alloc] initWithArray:self.clientsList];
     
-    [clients addObject:client];
-    
-    self.clientsList = [NSArray arrayWithArray:clients];
-    
-    return client;
+    if (![clients containsObject:client]) {
+        [clients addObject:client];
+        
+        self.clientsList = [NSArray arrayWithArray:clients];
+        
+        return client;
+    }else{
+        return [clients objectAtIndex:[clients indexOfObject:client]];
+    }
 }
 
 - (void)registerApplicationWithClient:(MastodonClient * _Nonnull)client
@@ -73,31 +77,24 @@
     
     NSURLSessionTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error) {
-            NSLog(@"dataTaskWithRequest error: %@", error);
-            
             completionBlock(NO, error);
         }else{
             NSError *parseError;
             id responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
             if (!responseObject) {
-                NSLog(@"JSON parse error: %@", parseError);
                 completionBlock(NO, parseError);
             } else {
-                NSLog(@"responseObject = %@", responseObject);
-                
                 NSString *appId = [responseObject stringOrNilForKey:@"id"];
                 NSString *redirectUri = [responseObject stringOrNilForKey:@"redirect_uri"];
                 NSString *clientId = [responseObject stringOrNilForKey:@"client_id"];
                 NSString *clientSecret = [responseObject stringOrNilForKey:@"client_secret"];
                 
                 client.appId = appId;
+                client.redirectUri = [NSURL URLWithString:redirectUri];
+                client.clientId = clientId;
+                client.clientSecret = clientSecret;
                 
-                [[NXOAuth2AccountStore sharedStore] setClientID:clientId
-                                                         secret:clientSecret
-                                               authorizationURL:client.authUrl
-                                                       tokenURL:client.tokenUrl
-                                                    redirectURL:[NSURL URLWithString:redirectUri]
-                                                 forAccountType:[NSString stringWithFormat:@"%@@%@", weakSelf.applicationName, client.instanceUrl.host]];
+                [weakSelf updateClient:client];
                 
                 completionBlock(YES, nil);
             }
@@ -107,7 +104,29 @@
     [task resume];
 }
 
+#pragma mark - Setter & Getter
+
+- (NSArray <MastodonClient *> *)clientsList{
+    return [NSUserDefaults clientsArrayWithApplicationName:self.applicationName];
+}
+
+- (void)setClientsList:(NSArray<MastodonClient *> *)clientsList{
+    [NSUserDefaults setClientsArray:clientsList applicationName:self.applicationName];
+}
+
+- (void)updateClient:(MastodonClient *)client{
+    NSMutableArray *clients = [[NSMutableArray alloc] initWithArray:self.clientsList];
+    
+    if ([clients containsObject:client]) {
+        [clients replaceObjectAtIndex:[clients indexOfObject:client] withObject:client];
+        
+        self.clientsList = [NSArray arrayWithArray:clients];
+    }
+}
+
 #pragma mark - Helper
+
+
 
 - (NSString *)stringOrNilForObject:(id)object{
     if ([object isKindOfClass:[NSNull class]]) {

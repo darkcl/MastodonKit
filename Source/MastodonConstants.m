@@ -9,3 +9,4 @@
 #import "MastodonConstants.h"
 
 NSString * const MastodonAPIVersion = @"v1";
+NSString * const MastodonKitClientsKey = @"com.mastodonkit.clients";

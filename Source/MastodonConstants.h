@@ -10,3 +10,4 @@
 
 FOUNDATION_EXPORT NSString * const MastodonAPIVersion;
 
+FOUNDATION_EXPORT NSString * const MastodonKitClientsKey;
