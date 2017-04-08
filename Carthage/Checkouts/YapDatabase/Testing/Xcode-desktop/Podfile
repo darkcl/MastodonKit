@@ -1,0 +1,14 @@
+project 'YapDatabaseTesting.xcodeproj'
+platform :osx, '10.10'
+
+target 'YapDatabase' do
+	pod "YapDatabase", path: '../../'
+end
+
+target 'YapDatabaseTests' do
+	pod "YapDatabase", path: '../../'
+end
+
+target 'MultiprocessApp' do
+	pod "YapDatabase", path: '../../'
+end

@@ -1,0 +1,6 @@
+platform :ios, '8.0'
+
+target 'CloudKitTodo' do
+	pod 'Reachability', '3.2'
+	pod "YapDatabase", path: '../../'
+end
