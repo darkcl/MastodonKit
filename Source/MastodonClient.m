@@ -93,6 +93,10 @@ static NSString *const kClientSecretKey = @"client_secret";
 
 - (void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeObject:self.instanceUrl forKey:kInstanceUrlKey];
+    [aCoder encodeObject:self.appId forKey:kAppIdKey];
+    [aCoder encodeObject:self.redirectUri forKey:kRedirectUriKey];
+    [aCoder encodeObject:self.clientId forKey:kClientIdKey];
+    [aCoder encodeObject:self.clientSecret forKey:kClientSecretKey];
 }
 
 @end

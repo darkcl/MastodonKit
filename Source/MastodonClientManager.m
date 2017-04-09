@@ -220,7 +220,10 @@
     // TODO: Select Account?
     NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
     
+    __weak typeof(self) weakSelf = self;
+    
     if (accounts.count != 0) {
+        
         [NXOAuth2Request performMethod:@"GET"
                             onResource:client.localTimelineUrl
                        usingParameters:nil
@@ -231,6 +234,20 @@
                        responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                            // Process the response
                            if (error != nil) {
+                               if ([error.domain isEqualToString:NXOAuth2HTTPErrorDomain] && error.code == 401) {
+                                   // Unauthorized
+                                   [[NXOAuth2AccountStore sharedStore] removeAccount:accounts[0]];
+                                   
+                                   [weakSelf loginWithClient:client
+                                                  completion:^(BOOL success, NSURL * _Nullable authUrl, NSError * _Nullable error) {
+                                                      if (success) {
+                                                          [weakSelf fetchLocalTimelineWithClient:client completion:completionBlock];
+                                                      }else{
+                                                          completionBlock(NO, nil, error);
+                                                      }
+                                                  }];
+                               }
+                               
                                completionBlock(NO, nil, error);
                            }else{
                                NSError *jsonError;
