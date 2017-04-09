@@ -27,3 +27,19 @@ FOUNDATION_EXPORT const unsigned char MastodonKitVersionString[];
 // Errors
 
 #import <MastodonKit/NSError+MastodonKit.h>
+
+// Models
+
+#import <MastodonKit/MastodonConstants.h>
+
+#import <MastodonKit/MastodonStatus.h>
+
+#import <MastodonKit/MastodonAccount.h>
+
+#import <MastodonKit/MastodonAttachment.h>
+
+#import <MastodonKit/MastodonMention.h>
+
+#import <MastodonKit/MastodonTags.h>
+
+#import <MastodonKit/MastodonApplication.h>

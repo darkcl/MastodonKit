@@ -16,6 +16,30 @@
 		741673241E9A10B4001AE48A /* NSError+MastodonKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 741673211E9A10B4001AE48A /* NSError+MastodonKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		741673251E9A10B4001AE48A /* NSError+MastodonKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 741673221E9A10B4001AE48A /* NSError+MastodonKit.m */; };
 		741673261E9A10B4001AE48A /* NSError+MastodonKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 741673221E9A10B4001AE48A /* NSError+MastodonKit.m */; };
+		7416733F1E9A5F42001AE48A /* MastodonStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 7416733D1E9A5F42001AE48A /* MastodonStatus.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		741673401E9A5F42001AE48A /* MastodonStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 7416733D1E9A5F42001AE48A /* MastodonStatus.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		741673411E9A5F42001AE48A /* MastodonStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 7416733E1E9A5F42001AE48A /* MastodonStatus.m */; };
+		741673421E9A5F42001AE48A /* MastodonStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 7416733E1E9A5F42001AE48A /* MastodonStatus.m */; };
+		741673451E9A66A2001AE48A /* MastodonAccount.h in Headers */ = {isa = PBXBuildFile; fileRef = 741673431E9A66A2001AE48A /* MastodonAccount.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		741673461E9A66A2001AE48A /* MastodonAccount.h in Headers */ = {isa = PBXBuildFile; fileRef = 741673431E9A66A2001AE48A /* MastodonAccount.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		741673471E9A66A2001AE48A /* MastodonAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 741673441E9A66A2001AE48A /* MastodonAccount.m */; };
+		741673481E9A66A2001AE48A /* MastodonAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 741673441E9A66A2001AE48A /* MastodonAccount.m */; };
+		7416734D1E9A7130001AE48A /* MastodonAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = 7416734B1E9A7130001AE48A /* MastodonAttachment.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7416734E1E9A7130001AE48A /* MastodonAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = 7416734B1E9A7130001AE48A /* MastodonAttachment.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7416734F1E9A7130001AE48A /* MastodonAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7416734C1E9A7130001AE48A /* MastodonAttachment.m */; };
+		741673501E9A7130001AE48A /* MastodonAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 7416734C1E9A7130001AE48A /* MastodonAttachment.m */; };
+		741673541E9A7283001AE48A /* MastodonMention.h in Headers */ = {isa = PBXBuildFile; fileRef = 741673521E9A7283001AE48A /* MastodonMention.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		741673551E9A7283001AE48A /* MastodonMention.h in Headers */ = {isa = PBXBuildFile; fileRef = 741673521E9A7283001AE48A /* MastodonMention.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		741673561E9A7283001AE48A /* MastodonMention.m in Sources */ = {isa = PBXBuildFile; fileRef = 741673531E9A7283001AE48A /* MastodonMention.m */; };
+		741673571E9A7283001AE48A /* MastodonMention.m in Sources */ = {isa = PBXBuildFile; fileRef = 741673531E9A7283001AE48A /* MastodonMention.m */; };
+		7416735B1E9A7431001AE48A /* MastodonTags.h in Headers */ = {isa = PBXBuildFile; fileRef = 741673591E9A7431001AE48A /* MastodonTags.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7416735C1E9A7431001AE48A /* MastodonTags.h in Headers */ = {isa = PBXBuildFile; fileRef = 741673591E9A7431001AE48A /* MastodonTags.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7416735D1E9A7431001AE48A /* MastodonTags.m in Sources */ = {isa = PBXBuildFile; fileRef = 7416735A1E9A7431001AE48A /* MastodonTags.m */; };
+		7416735E1E9A7431001AE48A /* MastodonTags.m in Sources */ = {isa = PBXBuildFile; fileRef = 7416735A1E9A7431001AE48A /* MastodonTags.m */; };
+		741673621E9A74E6001AE48A /* MastodonApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 741673601E9A74E6001AE48A /* MastodonApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		741673631E9A74E6001AE48A /* MastodonApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 741673601E9A74E6001AE48A /* MastodonApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		741673641E9A74E6001AE48A /* MastodonApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 741673611E9A74E6001AE48A /* MastodonApplication.m */; };
+		741673651E9A74E6001AE48A /* MastodonApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 741673611E9A74E6001AE48A /* MastodonApplication.m */; };
 		74716F321E97C1A50033C2FB /* MastodonClientManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74716F311E97C1A50033C2FB /* MastodonClientManagerTests.m */; };
 		74716F331E97C1A50033C2FB /* MastodonClientManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74716F311E97C1A50033C2FB /* MastodonClientManagerTests.m */; };
 		74716F351E97C9C30033C2FB /* MastodonClientManagerSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74716F341E97C9C30033C2FB /* MastodonClientManagerSwiftTests.swift */; };
@@ -28,8 +52,8 @@
 		748AC7CB1E98E72D009FF145 /* OAuth2Client.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C628E41E96A55A00484F3C /* OAuth2Client.framework */; };
 		748AC7CD1E98E893009FF145 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748AC7CC1E98E893009FF145 /* OHHTTPStubs.framework */; };
 		748AC7CF1E98E89C009FF145 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 748AC7CE1E98E89C009FF145 /* OHHTTPStubs.framework */; };
-		74A918AD1E98A9C100AB8963 /* MastodonConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 74A918AB1E98A9C100AB8963 /* MastodonConstants.h */; };
-		74A918AE1E98A9C100AB8963 /* MastodonConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 74A918AB1E98A9C100AB8963 /* MastodonConstants.h */; };
+		74A918AD1E98A9C100AB8963 /* MastodonConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 74A918AB1E98A9C100AB8963 /* MastodonConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		74A918AE1E98A9C100AB8963 /* MastodonConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 74A918AB1E98A9C100AB8963 /* MastodonConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		74A918AF1E98A9C100AB8963 /* MastodonConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A918AC1E98A9C100AB8963 /* MastodonConstants.m */; };
 		74A918B01E98A9C100AB8963 /* MastodonConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 74A918AC1E98A9C100AB8963 /* MastodonConstants.m */; };
 		74C627EA1E967B7B00484F3C /* MastodonKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 74C627DC1E967B7B00484F3C /* MastodonKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -130,6 +154,18 @@
 		7416731C1E993A04001AE48A /* MastodonLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MastodonLoginViewController.m; sourceTree = "<group>"; };
 		741673211E9A10B4001AE48A /* NSError+MastodonKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+MastodonKit.h"; sourceTree = "<group>"; };
 		741673221E9A10B4001AE48A /* NSError+MastodonKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+MastodonKit.m"; sourceTree = "<group>"; };
+		7416733D1E9A5F42001AE48A /* MastodonStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MastodonStatus.h; sourceTree = "<group>"; };
+		7416733E1E9A5F42001AE48A /* MastodonStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MastodonStatus.m; sourceTree = "<group>"; };
+		741673431E9A66A2001AE48A /* MastodonAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MastodonAccount.h; sourceTree = "<group>"; };
+		741673441E9A66A2001AE48A /* MastodonAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MastodonAccount.m; sourceTree = "<group>"; };
+		7416734B1E9A7130001AE48A /* MastodonAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MastodonAttachment.h; sourceTree = "<group>"; };
+		7416734C1E9A7130001AE48A /* MastodonAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MastodonAttachment.m; sourceTree = "<group>"; };
+		741673521E9A7283001AE48A /* MastodonMention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MastodonMention.h; sourceTree = "<group>"; };
+		741673531E9A7283001AE48A /* MastodonMention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MastodonMention.m; sourceTree = "<group>"; };
+		741673591E9A7431001AE48A /* MastodonTags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MastodonTags.h; sourceTree = "<group>"; };
+		7416735A1E9A7431001AE48A /* MastodonTags.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MastodonTags.m; sourceTree = "<group>"; };
+		741673601E9A74E6001AE48A /* MastodonApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MastodonApplication.h; sourceTree = "<group>"; };
+		741673611E9A74E6001AE48A /* MastodonApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MastodonApplication.m; sourceTree = "<group>"; };
 		74716F311E97C1A50033C2FB /* MastodonClientManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MastodonClientManagerTests.m; path = MastodonKitTests/MastodonClientManagerTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		74716F341E97C9C30033C2FB /* MastodonClientManagerSwiftTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = MastodonClientManagerSwiftTests.swift; path = MastodonKitTests/Swift/MastodonClientManagerSwiftTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		748AC7C01E98E442009FF145 /* NSDictionary+MastodonKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+MastodonKit.h"; sourceTree = "<group>"; };
@@ -210,6 +246,73 @@
 				7416731C1E993A04001AE48A /* MastodonLoginViewController.m */,
 			);
 			name = UI;
+			sourceTree = "<group>";
+		};
+		7416733C1E9A58F8001AE48A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				741673491E9A66A9001AE48A /* Status */,
+				7416734A1E9A66B0001AE48A /* Account */,
+				741673511E9A7133001AE48A /* Attachment */,
+				741673581E9A7286001AE48A /* Mention */,
+				7416735F1E9A7438001AE48A /* Tags */,
+				741673661E9A74EA001AE48A /* Application */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		741673491E9A66A9001AE48A /* Status */ = {
+			isa = PBXGroup;
+			children = (
+				7416733D1E9A5F42001AE48A /* MastodonStatus.h */,
+				7416733E1E9A5F42001AE48A /* MastodonStatus.m */,
+			);
+			name = Status;
+			sourceTree = "<group>";
+		};
+		7416734A1E9A66B0001AE48A /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				741673431E9A66A2001AE48A /* MastodonAccount.h */,
+				741673441E9A66A2001AE48A /* MastodonAccount.m */,
+			);
+			name = Account;
+			sourceTree = "<group>";
+		};
+		741673511E9A7133001AE48A /* Attachment */ = {
+			isa = PBXGroup;
+			children = (
+				7416734B1E9A7130001AE48A /* MastodonAttachment.h */,
+				7416734C1E9A7130001AE48A /* MastodonAttachment.m */,
+			);
+			name = Attachment;
+			sourceTree = "<group>";
+		};
+		741673581E9A7286001AE48A /* Mention */ = {
+			isa = PBXGroup;
+			children = (
+				741673521E9A7283001AE48A /* MastodonMention.h */,
+				741673531E9A7283001AE48A /* MastodonMention.m */,
+			);
+			name = Mention;
+			sourceTree = "<group>";
+		};
+		7416735F1E9A7438001AE48A /* Tags */ = {
+			isa = PBXGroup;
+			children = (
+				741673591E9A7431001AE48A /* MastodonTags.h */,
+				7416735A1E9A7431001AE48A /* MastodonTags.m */,
+			);
+			name = Tags;
+			sourceTree = "<group>";
+		};
+		741673661E9A74EA001AE48A /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				741673601E9A74E6001AE48A /* MastodonApplication.h */,
+				741673611E9A74E6001AE48A /* MastodonApplication.m */,
+			);
+			name = Application;
 			sourceTree = "<group>";
 		};
 		748AC7BF1E98E422009FF145 /* Categories */ = {
@@ -316,6 +419,7 @@
 		74C6288A1E968F7400484F3C /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				7416733C1E9A58F8001AE48A /* Model */,
 				748AC7BF1E98E422009FF145 /* Categories */,
 				74A918B11E98A9C600AB8963 /* Constants */,
 				74C6292E1E97B69D00484F3C /* Client Manager */,
@@ -401,11 +505,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				7416731D1E993A04001AE48A /* MastodonLoginViewController.h in Headers */,
+				741673541E9A7283001AE48A /* MastodonMention.h in Headers */,
 				74C628D71E9697DC00484F3C /* MastodonClient.h in Headers */,
 				741673231E9A10B4001AE48A /* NSError+MastodonKit.h in Headers */,
+				7416735B1E9A7431001AE48A /* MastodonTags.h in Headers */,
 				74C6292A1E97B69A00484F3C /* MastodonClientManager.h in Headers */,
 				74C629321E97BCE500484F3C /* MastodonClientManagerBuilder.h in Headers */,
+				741673451E9A66A2001AE48A /* MastodonAccount.h in Headers */,
+				741673621E9A74E6001AE48A /* MastodonApplication.h in Headers */,
+				7416733F1E9A5F42001AE48A /* MastodonStatus.h in Headers */,
 				74C627EA1E967B7B00484F3C /* MastodonKit.h in Headers */,
+				7416734D1E9A7130001AE48A /* MastodonAttachment.h in Headers */,
 				741673011E990CEF001AE48A /* NSUserDefaults+MastodonKit.h in Headers */,
 				74A918AD1E98A9C100AB8963 /* MastodonConstants.h in Headers */,
 				748AC7C21E98E442009FF145 /* NSDictionary+MastodonKit.h in Headers */,
@@ -417,13 +527,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				74C628D81E9697DC00484F3C /* MastodonClient.h in Headers */,
+				741673461E9A66A2001AE48A /* MastodonAccount.h in Headers */,
+				7416734E1E9A7130001AE48A /* MastodonAttachment.h in Headers */,
 				74C6292B1E97B69A00484F3C /* MastodonClientManager.h in Headers */,
+				741673631E9A74E6001AE48A /* MastodonApplication.h in Headers */,
 				74C629331E97BCE500484F3C /* MastodonClientManagerBuilder.h in Headers */,
 				74C628101E967C1500484F3C /* MastodonKit.h in Headers */,
 				741673051E990CF3001AE48A /* NSUserDefaults+MastodonKit.h in Headers */,
 				74A918AE1E98A9C100AB8963 /* MastodonConstants.h in Headers */,
 				741673241E9A10B4001AE48A /* NSError+MastodonKit.h in Headers */,
 				748AC7C31E98E442009FF145 /* NSDictionary+MastodonKit.h in Headers */,
+				7416735C1E9A7431001AE48A /* MastodonTags.h in Headers */,
+				741673551E9A7283001AE48A /* MastodonMention.h in Headers */,
+				741673401E9A5F42001AE48A /* MastodonStatus.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -653,10 +769,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				74A918AF1E98A9C100AB8963 /* MastodonConstants.m in Sources */,
+				7416734F1E9A7130001AE48A /* MastodonAttachment.m in Sources */,
 				7416731E1E993A04001AE48A /* MastodonLoginViewController.m in Sources */,
 				74C629341E97BCE500484F3C /* MastodonClientManagerBuilder.m in Sources */,
+				741673411E9A5F42001AE48A /* MastodonStatus.m in Sources */,
 				741673251E9A10B4001AE48A /* NSError+MastodonKit.m in Sources */,
 				748AC7C41E98E442009FF145 /* NSDictionary+MastodonKit.m in Sources */,
+				741673641E9A74E6001AE48A /* MastodonApplication.m in Sources */,
+				741673561E9A7283001AE48A /* MastodonMention.m in Sources */,
+				741673471E9A66A2001AE48A /* MastodonAccount.m in Sources */,
+				7416735D1E9A7431001AE48A /* MastodonTags.m in Sources */,
 				741673021E990CEF001AE48A /* NSUserDefaults+MastodonKit.m in Sources */,
 				74C628D91E9697DC00484F3C /* MastodonClient.m in Sources */,
 				74C6292C1E97B69A00484F3C /* MastodonClientManager.m in Sources */,
@@ -670,8 +792,14 @@
 				74A918B01E98A9C100AB8963 /* MastodonConstants.m in Sources */,
 				74C629351E97BCE500484F3C /* MastodonClientManagerBuilder.m in Sources */,
 				748AC7C51E98E442009FF145 /* NSDictionary+MastodonKit.m in Sources */,
+				7416735E1E9A7431001AE48A /* MastodonTags.m in Sources */,
+				741673501E9A7130001AE48A /* MastodonAttachment.m in Sources */,
+				741673651E9A74E6001AE48A /* MastodonApplication.m in Sources */,
+				741673421E9A5F42001AE48A /* MastodonStatus.m in Sources */,
 				74C628DA1E9697DC00484F3C /* MastodonClient.m in Sources */,
 				74C6292D1E97B69A00484F3C /* MastodonClientManager.m in Sources */,
+				741673571E9A7283001AE48A /* MastodonMention.m in Sources */,
+				741673481E9A66A2001AE48A /* MastodonAccount.m in Sources */,
 				741673261E9A10B4001AE48A /* NSError+MastodonKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

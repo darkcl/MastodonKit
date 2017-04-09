@@ -28,6 +28,8 @@
 
 #import "MastodonLoginViewController.h"
 
+#import "MastodonStatus.h"
+
 #endif
 
 @interface MastodonClientManager() {
@@ -208,7 +210,16 @@
 }
 
 - (void)fetchLocalTimelineWithClient:(MastodonClient * _Nonnull)client
+                               maxId:(NSString * _Nullable)maxId
+                             sinceId:(NSString * _Nullable)sinceId
+                               limit:(NSInteger)limit
                           completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    
+    NSArray <MastodonClient *> *clients = self.clientsList;
+    
+    if ([clients containsObject:client]) {
+        client = [clients objectAtIndex:[clients indexOfObject:client]];
+    }
     
     [[NXOAuth2AccountStore sharedStore] setClientID:client.clientId
                                              secret:client.clientSecret
@@ -224,9 +235,23 @@
     
     if (accounts.count != 0) {
         
+        NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+        
+        if (maxId != nil) {
+            [param setObject:maxId forKey:@"max_id"];
+        }
+        
+        if (sinceId != nil) {
+            [param setObject:sinceId forKey:@"since_id"];
+        }
+        
+        if (limit != 0) {
+            [param setObject:@(limit) forKey:@"limit"];
+        }
+        
         [NXOAuth2Request performMethod:@"GET"
                             onResource:client.localTimelineUrl
-                       usingParameters:nil
+                       usingParameters:param
                            withAccount:accounts[0]
                    sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
                        // e.g., update a progress indicator
@@ -241,14 +266,15 @@
                                    [weakSelf loginWithClient:client
                                                   completion:^(BOOL success, NSURL * _Nullable authUrl, NSError * _Nullable error) {
                                                       if (success) {
-                                                          [weakSelf fetchLocalTimelineWithClient:client completion:completionBlock];
+                                                          [weakSelf fetchLocalTimelineWithClient:client maxId:maxId sinceId:sinceId limit:limit completion:completionBlock];
                                                       }else{
                                                           completionBlock(NO, nil, error);
                                                       }
                                                   }];
+                               }else{
+                                   completionBlock(NO, nil, error);
                                }
                                
-                               completionBlock(NO, nil, error);
                            }else{
                                NSError *jsonError;
                                id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
@@ -256,7 +282,16 @@
                                if (jsonError != nil) {
                                    completionBlock(NO, nil, jsonError);
                                }else{
-                                   completionBlock(YES, jsonObject, nil);
+                                   if ([jsonObject isKindOfClass:[NSArray class]]) {
+                                       NSArray *arr = (NSArray *)jsonObject;
+                                       NSMutableArray *result = [[NSMutableArray alloc] init];
+                                       for (NSDictionary *info in arr) {
+                                           [result addObject:[[MastodonStatus alloc] initWithDictionary:info]];
+                                       }
+                                       completionBlock(YES, result, nil);
+                                   }else{
+                                       completionBlock(YES, jsonObject, nil);
+                                   }
                                }
                            }
                        }];

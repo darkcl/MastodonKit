@@ -10,10 +10,19 @@
 
 @implementation NSDictionary (MastodonKit)
 
-- (NSString *)stringOrNilForKey:(NSString *)key{
+- (id)objectOrNilForKey:(NSString *)key{
     id obj = [self objectForKey:key];
-    
     if (obj == nil || [obj isKindOfClass:[NSNull class]]) {
+        return nil;
+    }else{
+        return obj;
+    }
+}
+
+- (NSString *)stringOrNilForKey:(NSString *)key{
+    id obj = [self objectOrNilForKey:key];
+    
+    if (obj == nil) {
         return nil;
     }else if ([obj respondsToSelector:@selector(stringValue)]) {
         return [obj stringValue];

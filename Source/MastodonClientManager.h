@@ -37,6 +37,9 @@ typedef void(^MastodonClientRequestComplationBlock)(BOOL success, _Nullable id r
 #pragma mark - Fetching Data
 
 - (void)fetchLocalTimelineWithClient:(MastodonClient * _Nonnull)client
+                               maxId:(NSString * _Nullable)maxId
+                             sinceId:(NSString * _Nullable)sinceId
+                               limit:(NSInteger)limit
                           completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
 @property (nonatomic, strong, nonnull) NSString *applicationName;
