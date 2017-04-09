@@ -14,6 +14,8 @@
 
 #import "NSError+MastodonKit.h"
 
+#import "MastodonStatus.h"
+
 #ifdef COCOAPODS
 #import "NXOAuth2.h"
 #else
@@ -27,8 +29,6 @@
 #if TARGET_OS_IOS
 
 #import "MastodonLoginViewController.h"
-
-#import "MastodonStatus.h"
 
 #endif
 
