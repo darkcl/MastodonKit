@@ -20,8 +20,20 @@
 
 @property (nonatomic, strong, readonly, nonnull) NSURL *tokenUrl;
 
+#pragma mark - Resources URL
+
+@property (nonatomic, strong, readonly, nonnull) NSURL *localTimelineUrl;
+
 #pragma mark - OAuth
 
-@property BOOL isRegistered;
+@property (readonly) BOOL isRegistered;
+
+@property (nonatomic, strong, nullable) NSString *appId;
+
+@property (nonatomic, strong, nullable) NSURL *redirectUri;
+
+@property (nonatomic, strong, nullable) NSString *clientId;
+
+@property (nonatomic, strong, nullable) NSString *clientSecret;
 
 @end

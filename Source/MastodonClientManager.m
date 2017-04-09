@@ -79,6 +79,13 @@
             [[NXOAuth2AccountStore sharedStore] removeAccount:account];
         }
         
+        for(NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
+            if([[cookie domain] isEqualToString:client.instanceUrl.host]) {
+                [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
+            }
+        }
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
         [clients removeObject:client];
         
         self.clientsList = [NSArray arrayWithArray:clients];
@@ -112,10 +119,15 @@
             if (!responseObject) {
                 completionBlock(NO, parseError);
             } else {
-//                NSString *appId = [responseObject stringOrNilForKey:@"id"];
+                NSString *appId = [responseObject stringOrNilForKey:@"id"];
                 NSString *redirectUri = [responseObject stringOrNilForKey:@"redirect_uri"];
                 NSString *clientId = [responseObject stringOrNilForKey:@"client_id"];
                 NSString *clientSecret = [responseObject stringOrNilForKey:@"client_secret"];
+                
+                client.appId = appId;
+                client.redirectUri = [NSURL URLWithString:redirectUri];
+                client.clientId = clientId;
+                client.clientSecret = clientSecret;
                 
                 if (redirectUri != nil &&
                     clientId != nil &&
@@ -126,7 +138,7 @@
                                                            tokenURL:client.tokenUrl
                                                         redirectURL:[NSURL URLWithString:redirectUri]
                                                      forAccountType:[weakSelf serviceNameWithClient:client]];
-                    client.isRegistered = YES;
+                    
                     [weakSelf updateClient:client];
                     completionBlock(YES, nil);
                 }else{
@@ -147,9 +159,6 @@
              completion:(MastodonClientManagerLoginCompletionBlock _Nullable)completionBlock{
     if (client.isRegistered) {
         
-        
-        
-        
         NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
         
         // TODO: Support Multiple Accounts
@@ -162,17 +171,20 @@
             [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:[self serviceNameWithClient:client]
                                            withPreparedAuthorizationURLHandler:^(NSURL *preparedURL){
 #if TARGET_OS_IOS
-                                               [MastodonLoginViewController showLoginViewWithUrl:preparedURL
-                                                                                 withRedirectUri:[NSURL URLWithString:weakSelf.redirectUri]
-                                                                                         success:^{
-                                                                                             completionBlock(YES, nil, nil);
-                                                                                         }
-                                                                                          cancel:^{
-                                                                                              completionBlock(NO, nil, [NSError loginCancelError]);
-                                                                                          }
-                                                                                         failure:^(NSError *error) {
-                                                                                             completionBlock(NO, nil, error);
-                                                                                         }];
+                                               dispatch_async(dispatch_get_main_queue(), ^{
+                                                   [MastodonLoginViewController showLoginViewWithUrl:preparedURL
+                                                                                     withRedirectUri:[NSURL URLWithString:weakSelf.redirectUri]
+                                                                                             success:^{
+                                                                                                 completionBlock(YES, nil, nil);
+                                                                                             }
+                                                                                              cancel:^{
+                                                                                                  completionBlock(NO, nil, [NSError loginCancelError]);
+                                                                                              }
+                                                                                             failure:^(NSError *error) {
+                                                                                                 completionBlock(NO, nil, error);
+                                                                                             }];
+                                               });
+                                               
                                                
                                                
 #else
@@ -193,6 +205,48 @@
                                      }
                                  }];
     }
+}
+
+- (void)fetchLocalTimelineWithClient:(MastodonClient * _Nonnull)client
+                          completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    
+    [[NXOAuth2AccountStore sharedStore] setClientID:client.clientId
+                                             secret:client.clientSecret
+                                   authorizationURL:client.authUrl
+                                           tokenURL:client.tokenUrl
+                                        redirectURL:[NSURL URLWithString:self.redirectUri]
+                                     forAccountType:[self serviceNameWithClient:client]];
+    
+    // TODO: Select Account?
+    NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
+    
+    if (accounts.count != 0) {
+        [NXOAuth2Request performMethod:@"GET"
+                            onResource:client.localTimelineUrl
+                       usingParameters:nil
+                           withAccount:accounts[0]
+                   sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+                       // e.g., update a progress indicator
+                   }
+                       responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                           // Process the response
+                           if (error != nil) {
+                               completionBlock(NO, nil, error);
+                           }else{
+                               NSError *jsonError;
+                               id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
+                               
+                               if (jsonError != nil) {
+                                   completionBlock(NO, nil, jsonError);
+                               }else{
+                                   completionBlock(YES, jsonObject, nil);
+                               }
+                           }
+                       }];
+    }else{
+        completionBlock(NO, nil, nil);
+    }
+    
 }
 
 #pragma mark - Setter & Getter
