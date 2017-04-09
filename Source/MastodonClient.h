@@ -22,14 +22,6 @@
 
 #pragma mark - OAuth
 
-@property (readonly) BOOL isRegistered;
-
-@property (nonatomic, strong, nullable) NSString *appId;
-
-@property (nonatomic, strong, nullable) NSURL *redirectUri;
-
-@property (nonatomic, strong, nullable) NSString *clientId;
-
-@property (nonatomic, strong, nullable) NSString *clientSecret;
+@property BOOL isRegistered;
 
 @end

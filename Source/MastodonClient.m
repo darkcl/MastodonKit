@@ -11,10 +11,7 @@
 #import "MastodonConstants.h"
 
 static NSString *const kInstanceUrlKey = @"instance_url";
-static NSString *const kAppIdKey = @"app_id";
-static NSString *const kRedirectUriKey = @"redirect_uri";
-static NSString *const kClientIdKey = @"client_id";
-static NSString *const kClientSecretKey = @"client_secret";
+static NSString *const kIsRegisterKey = @"is_register";
 
 @interface MastodonClient() {
     
@@ -64,33 +61,19 @@ static NSString *const kClientSecretKey = @"client_secret";
     }
 }
 
-- (BOOL)isRegistered{
-    if (self.appId != nil && self.clientId !=nil && self.clientSecret != nil && self.redirectUri != nil) {
-        return YES;
-    }else{
-        return NO;
-    }
-}
-
 #pragma mark - NSCoding
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder{
     if (self = [super init]) {
         self.instanceUrl = [aDecoder decodeObjectForKey:kInstanceUrlKey];
-        self.appId = [aDecoder decodeObjectForKey:kAppIdKey];
-        self.redirectUri = [aDecoder decodeObjectForKey:kRedirectUriKey];
-        self.clientId = [aDecoder decodeObjectForKey:kClientIdKey];
-        self.clientSecret = [aDecoder decodeObjectForKey:kClientSecretKey];
+        self.isRegistered = [aDecoder decodeBoolForKey:kIsRegisterKey];
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeObject:self.instanceUrl forKey:kInstanceUrlKey];
-    [aCoder encodeObject:self.appId forKey:kAppIdKey];
-    [aCoder encodeObject:self.redirectUri forKey:kRedirectUriKey];
-    [aCoder encodeObject:self.clientId forKey:kClientIdKey];
-    [aCoder encodeObject:self.clientSecret forKey:kClientSecretKey];
+    [aCoder encodeBool:self.isRegistered forKey:kIsRegisterKey];
 }
 
 @end

@@ -98,7 +98,6 @@ class MastodonClientManagerSwiftTests: XCTestCase {
         
         sut.registerApplication(with: client) { (success, error) in
             XCTAssertTrue(success, "Should Success")
-            XCTAssertTrue(client.appId == "1000", "Client App Id should equal 1000")
             expectation.fulfill()
         }
         

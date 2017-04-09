@@ -105,11 +105,6 @@
     [sut registerApplicationWithClient:client
                             completion:^(BOOL success, NSError * _Nullable error) {
                                 XCTAssertTrue(success, @"Should Success");
-                                XCTAssertTrue([client.appId isEqualToString:@"1000"], @"Client App Id should equal 1000");
-                                XCTAssertTrue([client.redirectUri.absoluteString isEqualToString:@"urn:ietf:wg:oauth:2.0:oob"], @"Client RedirectUri should be no redirect");
-                                
-                                XCTAssertTrue([client.clientId isEqualToString:@"testing_client_id"], @"Client Id should equal testing_client_id");
-                                XCTAssertTrue([client.clientSecret isEqualToString:@"testing_client_secret"], @"Client Secret should equal testing_client_secret");
                                 [expectation fulfill];
                             }];
     

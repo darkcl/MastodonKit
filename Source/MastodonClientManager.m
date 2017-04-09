@@ -90,19 +90,26 @@
             if (!responseObject) {
                 completionBlock(NO, parseError);
             } else {
-                NSString *appId = [responseObject stringOrNilForKey:@"id"];
+//                NSString *appId = [responseObject stringOrNilForKey:@"id"];
                 NSString *redirectUri = [responseObject stringOrNilForKey:@"redirect_uri"];
                 NSString *clientId = [responseObject stringOrNilForKey:@"client_id"];
                 NSString *clientSecret = [responseObject stringOrNilForKey:@"client_secret"];
                 
-                client.appId = appId;
-                client.redirectUri = [NSURL URLWithString:redirectUri];
-                client.clientId = clientId;
-                client.clientSecret = clientSecret;
-                
-                [weakSelf updateClient:client];
-                
-                completionBlock(YES, nil);
+                if (redirectUri != nil &&
+                    clientId != nil &&
+                    clientSecret != nil) {
+                    [[NXOAuth2AccountStore sharedStore] setClientID:clientId
+                                                             secret:clientSecret
+                                                   authorizationURL:client.authUrl
+                                                           tokenURL:client.tokenUrl
+                                                        redirectURL:[NSURL URLWithString:redirectUri]
+                                                     forAccountType:[weakSelf serviceNameWithClient:client]];
+                    client.isRegistered = YES;
+                    [weakSelf updateClient:client];
+                    completionBlock(YES, nil);
+                }else{
+                    completionBlock(NO, [NSError errorWithDomain:@"com.darkcl.mastodon" code:1 userInfo:@{NSLocalizedDescriptionKey: @"Something went wrong."}]);
+                }
             }
         }
         
@@ -117,12 +124,7 @@
 - (void)loginWithClient:(MastodonClient * _Nonnull)client
              completion:(MastodonClientManagerLoginCompletionBlock _Nullable)completionBlock{
     if (client.isRegistered) {
-        [[NXOAuth2AccountStore sharedStore] setClientID:client.clientId
-                                                 secret:client.clientSecret
-                                       authorizationURL:client.authUrl
-                                               tokenURL:client.tokenUrl
-                                            redirectURL:client.redirectUri
-                                         forAccountType:[self serviceNameWithClient:client]];
+        
         
         
         
@@ -130,13 +132,15 @@
         
         // TODO: Support Multiple Accounts
         
+        __weak typeof(self) weakSelf = self;
+        
         if (accounts.count != 0) {
             completionBlock(YES, nil, nil);
         }else{
             [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:[self serviceNameWithClient:client]
                                            withPreparedAuthorizationURLHandler:^(NSURL *preparedURL){
 #if TARGET_OS_IOS
-                                               [MastodonLoginViewController showLoginViewWithUrl:preparedURL withRedirectUri:client.redirectUri];
+                                               [MastodonLoginViewController showLoginViewWithUrl:preparedURL withRedirectUri:[NSURL URLWithString:weakSelf.redirectUri]];
                                                
                                                [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountStoreDidFailToRequestAccessNotification
                                                                                                  object:[NXOAuth2AccountStore sharedStore]
