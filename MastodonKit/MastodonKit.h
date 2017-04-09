@@ -23,3 +23,7 @@ FOUNDATION_EXPORT const unsigned char MastodonKitVersionString[];
 // Builders
 
 #import <MastodonKit/MastodonClientManagerBuilder.h>
+
+// Errors
+
+#import <MastodonKit/NSError+MastodonKit.h>

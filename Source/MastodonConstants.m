@@ -10,3 +10,4 @@
 
 NSString * const MastodonAPIVersion = @"v1";
 NSString * const MastodonKitClientsKey = @"com.mastodonkit.clients";
+NSString * const MastodonKitErrorDomain = @"com.mastodonkit.error";

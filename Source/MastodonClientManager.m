@@ -12,6 +12,8 @@
 
 #import "MastodonClient.h"
 
+#import "NSError+MastodonKit.h"
+
 #ifdef COCOAPODS
 #import "NXOAuth2.h"
 #else
@@ -62,6 +64,26 @@
         return client;
     }else{
         return [clients objectAtIndex:[clients indexOfObject:client]];
+    }
+}
+
+- (void)removeClient:(MastodonClient * _Nonnull)client{
+    NSMutableArray *clients = [[NSMutableArray alloc] initWithArray:self.clientsList];
+    
+    if ([clients containsObject:client]) {
+        // Remove all acount to this service
+        
+        NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
+        
+        for (NXOAuth2Account *account in accounts) {
+            [[NXOAuth2AccountStore sharedStore] removeAccount:account];
+        }
+        
+        [clients removeObject:client];
+        
+        self.clientsList = [NSArray arrayWithArray:clients];
+        
+        
     }
 }
 
@@ -140,22 +162,19 @@
             [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:[self serviceNameWithClient:client]
                                            withPreparedAuthorizationURLHandler:^(NSURL *preparedURL){
 #if TARGET_OS_IOS
-                                               [MastodonLoginViewController showLoginViewWithUrl:preparedURL withRedirectUri:[NSURL URLWithString:weakSelf.redirectUri]];
+                                               [MastodonLoginViewController showLoginViewWithUrl:preparedURL
+                                                                                 withRedirectUri:[NSURL URLWithString:weakSelf.redirectUri]
+                                                                                         success:^{
+                                                                                             completionBlock(YES, nil, nil);
+                                                                                         }
+                                                                                          cancel:^{
+                                                                                              completionBlock(NO, nil, [NSError loginCancelError]);
+                                                                                          }
+                                                                                         failure:^(NSError *error) {
+                                                                                             completionBlock(NO, nil, error);
+                                                                                         }];
                                                
-                                               [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountStoreDidFailToRequestAccessNotification
-                                                                                                 object:[NXOAuth2AccountStore sharedStore]
-                                                                                                  queue:nil
-                                                                                             usingBlock:^(NSNotification *aNotification){
-                                                                                                 NSError *error = [aNotification.userInfo objectForKey:NXOAuth2AccountStoreErrorKey];
-                                                                                                 completionBlock(NO, nil, error);
-                                                                                             }];
                                                
-                                               [[NSNotificationCenter defaultCenter] addObserverForName:NXOAuth2AccountStoreAccountsDidChangeNotification
-                                                                                                 object:[NXOAuth2AccountStore sharedStore]
-                                                                                                  queue:nil
-                                                                                             usingBlock:^(NSNotification *aNotification){
-                                                                                                 completionBlock(YES, nil, nil);
-                                                                                             }];
 #else
                                                completionBlock(NO, preparedURL, nil);
 #endif

@@ -22,6 +22,8 @@ typedef void(^MastodonClientManagerLoginCompletionBlock)(BOOL success, NSURL * _
 
 - (MastodonClient * _Nonnull)createClient:(NSURL * _Nullable)instanceUrl;
 
+- (void)removeClient:(MastodonClient * _Nonnull)client;
+
 - (void)registerApplicationWithClient:(MastodonClient * _Nonnull)client
                            completion:(MastodonClientManagerCompletionBlock _Nullable)completionBlock;
 
