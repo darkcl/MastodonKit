@@ -38,6 +38,30 @@
                                 successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
                                 failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock;
 
++ (void)fetchAccountFollowersWithClient:(MastodonClient * _Nonnull)client
+                              accountId:(NSString * _Nonnull)accountId
+                                  maxId:(NSString * _Nullable)maxId
+                                sinceId:(NSString * _Nullable)sinceId
+                                  limit:(NSInteger)limit
+                           successBlock:(void(^ _Nullable)(NSArray <MastodonAccount *> * _Nullable result))successBlock
+                           failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
++ (void)fetchAccountFollowingWithClient:(MastodonClient * _Nonnull)client
+                              accountId:(NSString * _Nonnull)accountId
+                                  maxId:(NSString * _Nullable)maxId
+                                sinceId:(NSString * _Nullable)sinceId
+                                  limit:(NSInteger)limit
+                           successBlock:(void(^ _Nullable)(NSArray <MastodonAccount *> * _Nullable result))successBlock
+                           failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
++ (void)fetchAccountStatusesWithClient:(MastodonClient * _Nonnull)client
+                             accountId:(NSString * _Nonnull)accountId
+                                 maxId:(NSString * _Nullable)maxId
+                               sinceId:(NSString * _Nullable)sinceId
+                                 limit:(NSInteger)limit
+                          successBlock:(void(^ _Nullable)(NSArray <MastodonAccount *> * _Nullable result))successBlock
+                          failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
 #pragma mark - Fetching Timeline
 
 + (void)fetchHomeTimeline:(MastodonClient * _Nonnull)client

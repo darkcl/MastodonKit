@@ -45,7 +45,27 @@ typedef void(^MastodonClientRequestComplationBlock)(BOOL success, _Nullable id r
 - (void)fetchCurentUserAccountInfoWithClient:(MastodonClient * _Nonnull)client
                                   completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
+- (void)fetchAccountFollowersWithClient:(MastodonClient * _Nonnull)client
+                         accountId:(NSString * _Nonnull)accountId
+                             maxId:(NSString * _Nullable)maxId
+                           sinceId:(NSString * _Nullable)sinceId
+                             limit:(NSInteger)limit
+                        completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
+
+- (void)fetchAccountFollowingWithClient:(MastodonClient * _Nonnull)client
+                              accountId:(NSString * _Nonnull)accountId
+                                  maxId:(NSString * _Nullable)maxId
+                                sinceId:(NSString * _Nullable)sinceId
+                                  limit:(NSInteger)limit
+                             completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)fetchAccountStatusesWithClient:(MastodonClient * _Nonnull)client
+                              accountId:(NSString * _Nonnull)accountId
+                                  maxId:(NSString * _Nullable)maxId
+                                sinceId:(NSString * _Nullable)sinceId
+                                  limit:(NSInteger)limit
+                            completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
 #pragma mark - Fetching Timeline
 

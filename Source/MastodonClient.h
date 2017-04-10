@@ -32,6 +32,12 @@
 
 - (NSURL * _Nonnull)accountUrlWithAccountId:(NSString * _Nonnull)accountId;
 
+- (NSURL * _Nonnull)accountFollowersUrlWithAccountId:(NSString * _Nonnull)accountId;
+
+- (NSURL * _Nonnull)accountFollowingsUrlWithAccountId:(NSString * _Nonnull)accountId;
+
+- (NSURL * _Nonnull)accountStatusesUrlWithAccountId:(NSString * _Nonnull)accountId;
+
 #pragma mark - OAuth
 
 @property (readonly) BOOL isRegistered;

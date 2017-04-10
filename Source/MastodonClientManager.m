@@ -227,6 +227,204 @@
 
 #pragma mark - Fetching Account Information
 
+- (void)fetchAccountStatusesWithClient:(MastodonClient * _Nonnull)client
+                             accountId:(NSString * _Nonnull)accountId
+                                 maxId:(NSString * _Nullable)maxId
+                               sinceId:(NSString * _Nullable)sinceId
+                                 limit:(NSInteger)limit
+                            completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    NSArray <MastodonClient *> *clients = self.clientsList;
+    
+    if ([clients containsObject:client]) {
+        client = [clients objectAtIndex:[clients indexOfObject:client]];
+    }
+    
+    NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
+    if (accounts.count != 0) {
+        
+        NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+        
+        if (maxId != nil) {
+            [param setObject:maxId forKey:@"max_id"];
+        }
+        
+        if (sinceId != nil) {
+            [param setObject:sinceId forKey:@"since_id"];
+        }
+        
+        if (limit != 0) {
+            [param setObject:@(limit) forKey:@"limit"];
+        }
+        
+        [self performMethod:@"GET"
+                 onResource:[client accountStatusesUrlWithAccountId:accountId]
+            usingParameters:param
+                withAccount:accounts[0]
+                 withClient:client
+        sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+            // e.g., update a progress indicator
+        }
+            responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                // Process the response
+                if (error != nil) {
+                    completionBlock(NO, nil, error);
+                }else{
+                    NSError *jsonError;
+                    id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
+                    
+                    if (jsonError != nil) {
+                        completionBlock(NO, nil, jsonError);
+                    }else{
+                        if ([jsonObject isKindOfClass:[NSArray class]]) {
+                            NSArray *arr = (NSArray *)jsonObject;
+                            NSMutableArray *result = [[NSMutableArray alloc] init];
+                            for (NSDictionary *info in arr) {
+                                [result addObject:[[MastodonStatus alloc] initWithDictionary:info]];
+                            }
+                            completionBlock(YES, result, nil);
+                        }else{
+                            completionBlock(YES, jsonObject, nil);
+                        }
+                    }
+                }
+            }];
+    }else{
+        completionBlock(NO, nil, nil);
+    }
+}
+
+- (void)fetchAccountFollowingWithClient:(MastodonClient * _Nonnull)client
+                              accountId:(NSString * _Nonnull)accountId
+                                  maxId:(NSString * _Nullable)maxId
+                                sinceId:(NSString * _Nullable)sinceId
+                                  limit:(NSInteger)limit
+                             completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    NSArray <MastodonClient *> *clients = self.clientsList;
+    
+    if ([clients containsObject:client]) {
+        client = [clients objectAtIndex:[clients indexOfObject:client]];
+    }
+    
+    NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
+    if (accounts.count != 0) {
+        
+        NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+        
+        if (maxId != nil) {
+            [param setObject:maxId forKey:@"max_id"];
+        }
+        
+        if (sinceId != nil) {
+            [param setObject:sinceId forKey:@"since_id"];
+        }
+        
+        if (limit != 0) {
+            [param setObject:@(limit) forKey:@"limit"];
+        }
+        
+        [self performMethod:@"GET"
+                 onResource:[client accountFollowingsUrlWithAccountId:accountId]
+            usingParameters:param
+                withAccount:accounts[0]
+                 withClient:client
+        sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+            // e.g., update a progress indicator
+        }
+            responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                // Process the response
+                if (error != nil) {
+                    completionBlock(NO, nil, error);
+                }else{
+                    NSError *jsonError;
+                    id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
+                    
+                    if (jsonError != nil) {
+                        completionBlock(NO, nil, jsonError);
+                    }else{
+                        if ([jsonObject isKindOfClass:[NSArray class]]) {
+                            NSArray *arr = (NSArray *)jsonObject;
+                            NSMutableArray *result = [[NSMutableArray alloc] init];
+                            for (NSDictionary *info in arr) {
+                                [result addObject:[[MastodonAccount alloc] initWithDictionary:info]];
+                            }
+                            completionBlock(YES, result, nil);
+                        }else{
+                            completionBlock(YES, jsonObject, nil);
+                        }
+                    }
+                }
+            }];
+    }else{
+        completionBlock(NO, nil, nil);
+    }
+}
+
+- (void)fetchAccountFollowersWithClient:(MastodonClient * _Nonnull)client
+                              accountId:(NSString * _Nonnull)accountId
+                                  maxId:(NSString * _Nullable)maxId
+                                sinceId:(NSString * _Nullable)sinceId
+                                  limit:(NSInteger)limit
+                             completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    NSArray <MastodonClient *> *clients = self.clientsList;
+    
+    if ([clients containsObject:client]) {
+        client = [clients objectAtIndex:[clients indexOfObject:client]];
+    }
+    
+    NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
+    if (accounts.count != 0) {
+        
+        NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+        
+        if (maxId != nil) {
+            [param setObject:maxId forKey:@"max_id"];
+        }
+        
+        if (sinceId != nil) {
+            [param setObject:sinceId forKey:@"since_id"];
+        }
+        
+        if (limit != 0) {
+            [param setObject:@(limit) forKey:@"limit"];
+        }
+        
+        [self performMethod:@"GET"
+                 onResource:[client accountFollowersUrlWithAccountId:accountId]
+            usingParameters:param
+                withAccount:accounts[0]
+                 withClient:client
+        sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+            // e.g., update a progress indicator
+        }
+            responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                // Process the response
+                if (error != nil) {
+                    completionBlock(NO, nil, error);
+                }else{
+                    NSError *jsonError;
+                    id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
+                    
+                    if (jsonError != nil) {
+                        completionBlock(NO, nil, jsonError);
+                    }else{
+                        if ([jsonObject isKindOfClass:[NSArray class]]) {
+                            NSArray *arr = (NSArray *)jsonObject;
+                            NSMutableArray *result = [[NSMutableArray alloc] init];
+                            for (NSDictionary *info in arr) {
+                                [result addObject:[[MastodonAccount alloc] initWithDictionary:info]];
+                            }
+                            completionBlock(YES, result, nil);
+                        }else{
+                            completionBlock(YES, jsonObject, nil);
+                        }
+                    }
+                }
+            }];
+    }else{
+        completionBlock(NO, nil, nil);
+    }
+}
+
 - (void)fetchCurentUserAccountInfoWithClient:(MastodonClient * _Nonnull)client
                                    completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
     NSArray <MastodonClient *> *clients = self.clientsList;
