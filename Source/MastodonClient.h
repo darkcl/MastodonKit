@@ -28,6 +28,10 @@
 
 - (NSURL * _Nonnull)timelineWithTag:(NSString * _Nonnull)tag;
 
+@property (nonatomic, strong, readonly, nonnull) NSURL *currentUserUrl;
+
+- (NSURL * _Nonnull)accountUrlWithAccountId:(NSString * _Nonnull)accountId;
+
 #pragma mark - OAuth
 
 @property (readonly) BOOL isRegistered;

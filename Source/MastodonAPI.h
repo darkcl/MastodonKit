@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class MastodonStatus, MastodonClient;
+@class MastodonStatus, MastodonClient, MastodonAccount;
 
 @interface MastodonAPI : NSObject
 
@@ -28,7 +28,17 @@
            successBlock:(void(^ _Nullable)(void))successBlock
            failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock;
 
-#pragma mark - Timeline Related
+#pragma mark - Fetching Account
++ (void)fetchAccountInfoWithClient:(MastodonClient * _Nonnull)client
+                         accountId:(NSString * _Nonnull)accountId
+                      successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
+                      failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock;
+
++ (void)fetchCurentUserAccountInfoWithClient:(MastodonClient * _Nonnull)client
+                                successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
+                                failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock;
+
+#pragma mark - Fetching Timeline
 
 + (void)fetchHomeTimeline:(MastodonClient * _Nonnull)client
                     maxId:(NSString * _Nullable)maxId

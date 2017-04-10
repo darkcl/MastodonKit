@@ -36,7 +36,26 @@ typedef void(^MastodonClientRequestComplationBlock)(BOOL success, _Nullable id r
 - (void)loginWithClient:(MastodonClient * _Nonnull)client
              completion:(MastodonClientManagerLoginCompletionBlock _Nullable)completionBlock;
 
-#pragma mark - Fetching Data
+#pragma mark - Fetching Account Information
+
+- (void)fetchAccountInfoWithClient:(MastodonClient * _Nonnull)client
+                         accountId:(NSString * _Nonnull)accountId
+                        completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)fetchCurentUserAccountInfoWithClient:(MastodonClient * _Nonnull)client
+                                  completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+
+
+#pragma mark - Fetching Timeline
+
+- (void)fetchTagsTimelineWithClient:(MastodonClient * _Nonnull)client
+                                tag:(NSString * _Nonnull)tag
+                            isLocal:(BOOL)isLocal
+                              maxId:(NSString * _Nullable)maxId
+                            sinceId:(NSString * _Nullable)sinceId
+                              limit:(NSInteger)limit
+                         completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
 - (void)fetchHomeTimelineWithClient:(MastodonClient * _Nonnull)client
                               maxId:(NSString * _Nullable)maxId
@@ -51,10 +70,10 @@ typedef void(^MastodonClientRequestComplationBlock)(BOOL success, _Nullable id r
                           completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
 - (void)fetchPublicTimelineWithClient:(MastodonClient * _Nonnull)client
-                               maxId:(NSString * _Nullable)maxId
-                             sinceId:(NSString * _Nullable)sinceId
-                               limit:(NSInteger)limit
-                          completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+                                maxId:(NSString * _Nullable)maxId
+                              sinceId:(NSString * _Nullable)sinceId
+                                limit:(NSInteger)limit
+                           completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
 @property (nonatomic, strong, nonnull) NSString *applicationName;
 
