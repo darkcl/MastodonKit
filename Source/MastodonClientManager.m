@@ -43,8 +43,28 @@
 - (instancetype)initWithBlock:(MastodonClientManagerBuildBlock)buildBlock{
     MastodonClientManagerBuilder *managerBuilder = [[MastodonClientManagerBuilder alloc] init];
     buildBlock(managerBuilder);
+    MastodonClientManager *result = [managerBuilder build];
+    [result setUpAllClient];
+    return result;
+}
+
+- (void)setUpAllClient{
+    NSArray <MastodonClient *> *clients = self.clientsList;
     
-    return [managerBuilder build];
+    for (MastodonClient *client in clients) {
+        [self setUpClient:client];
+    }
+}
+
+- (void)setUpClient:(MastodonClient *)client{
+    if (client.isRegistered) {
+        [[NXOAuth2AccountStore sharedStore] setClientID:client.clientId
+                                                 secret:client.clientSecret
+                                       authorizationURL:client.authUrl
+                                               tokenURL:client.tokenUrl
+                                            redirectURL:client.redirectUri
+                                         forAccountType:[self serviceNameWithClient:client]];
+    }
 }
 
 - (MastodonClient * _Nonnull)createClient:(NSURL * _Nullable)instanceUrl{
@@ -131,17 +151,11 @@
                 client.clientId = clientId;
                 client.clientSecret = clientSecret;
                 
-                if (redirectUri != nil &&
-                    clientId != nil &&
-                    clientSecret != nil) {
-                    [[NXOAuth2AccountStore sharedStore] setClientID:clientId
-                                                             secret:clientSecret
-                                                   authorizationURL:client.authUrl
-                                                           tokenURL:client.tokenUrl
-                                                        redirectURL:[NSURL URLWithString:redirectUri]
-                                                     forAccountType:[weakSelf serviceNameWithClient:client]];
+                if (client.isRegistered) {
+                    [weakSelf setUpClient:client];
                     
                     [weakSelf updateClient:client];
+                    
                     completionBlock(YES, nil);
                 }else{
                     completionBlock(NO, [NSError errorWithDomain:@"com.darkcl.mastodon" code:1 userInfo:@{NSLocalizedDescriptionKey: @"Something went wrong."}]);
@@ -220,13 +234,6 @@
     if ([clients containsObject:client]) {
         client = [clients objectAtIndex:[clients indexOfObject:client]];
     }
-    
-    [[NXOAuth2AccountStore sharedStore] setClientID:client.clientId
-                                             secret:client.clientSecret
-                                   authorizationURL:client.authUrl
-                                           tokenURL:client.tokenUrl
-                                        redirectURL:[NSURL URLWithString:self.redirectUri]
-                                     forAccountType:[self serviceNameWithClient:client]];
     
     // TODO: Select Account?
     NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
