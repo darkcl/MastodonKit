@@ -26,6 +26,8 @@
 
 @property (nonatomic, strong, readonly, nonnull) NSURL *publicTimelineUrl;
 
+- (NSURL * _Nonnull)timelineWithTag:(NSString * _Nonnull)tag;
+
 #pragma mark - OAuth
 
 @property (readonly) BOOL isRegistered;

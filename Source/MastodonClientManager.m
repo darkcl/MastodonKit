@@ -71,7 +71,7 @@
     MastodonClient *client;
     
     if (instanceUrl != nil) {
-        client = [MastodonClient clientWithInstanceURL:instanceUrl];
+        client = [MastodonClient clientWithInstanceURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@://%@", instanceUrl.scheme, instanceUrl.host]]];
     }else{
         client = [MastodonClient clientWithInstanceURL:[NSURL URLWithString:@"https://mastodon.social"]];
     }
@@ -388,7 +388,7 @@
             [param setObject:@(limit) forKey:@"limit"];
         }
         
-        [param setObject:@YES forKey:@"local"];
+        [param setObject:@(YES).stringValue forKey:@"local"];
         
         [self performMethod:@"GET"
                  onResource:client.publicTimelineUrl

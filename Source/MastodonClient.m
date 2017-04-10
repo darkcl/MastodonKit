@@ -53,6 +53,12 @@ static NSString *const kClientSecretKey = @"client_secret";
     return [NSURL URLWithString:result];
 }
 
+- (NSURL * _Nonnull)timelineWithTag:(NSString * _Nonnull)tag{
+    NSString *result = [NSString stringWithFormat:@"%@/api/%@/timelines/tag/%@", self.instanceUrl.absoluteString, MastodonAPIVersion, tag];
+    
+    return [NSURL URLWithString:result];
+}
+
 - (NSURL *)homeTimelineUrl{
     NSString *result = [NSString stringWithFormat:@"%@/api/%@/timelines/home", self.instanceUrl.absoluteString, MastodonAPIVersion];
     
