@@ -330,6 +330,15 @@
     }
 }
 
+- (MastodonClient * _Nullable)getClientWithInstanceUrl:(NSURL * _Nonnull)instanceUrl{
+    NSArray <MastodonClient *> *clients = self.clientsList;
+    for (MastodonClient *client in clients) {
+        if ([client.instanceUrl.absoluteString isEqualToString:instanceUrl.absoluteString]) {
+            return client;
+        }
+    }
+    return nil;
+}
 
 #pragma mark - Helper
 

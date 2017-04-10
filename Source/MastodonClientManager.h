@@ -26,6 +26,8 @@ typedef void(^MastodonClientRequestComplationBlock)(BOOL success, _Nullable id r
 
 - (void)removeClient:(MastodonClient * _Nonnull)client;
 
+- (MastodonClient * _Nullable)getClientWithInstanceUrl:(NSURL * _Nonnull)instanceUrl;
+
 #pragma mark - Login / Authenticate
 
 - (void)registerApplicationWithClient:(MastodonClient * _Nonnull)client
