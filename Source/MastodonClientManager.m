@@ -232,6 +232,8 @@
                                  maxId:(NSString * _Nullable)maxId
                                sinceId:(NSString * _Nullable)sinceId
                                  limit:(NSInteger)limit
+                             onlyMedia:(BOOL)onlyMedia
+                        excludeReplies:(BOOL)excludeReplies
                             completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
     NSArray <MastodonClient *> *clients = self.clientsList;
     
@@ -254,6 +256,14 @@
         
         if (limit != 0) {
             [param setObject:@(limit) forKey:@"limit"];
+        }
+        
+        if (onlyMedia) {
+            [param setObject:@(onlyMedia).stringValue forKey:@"only_media"];
+        }
+        
+        if (onlyMedia) {
+            [param setObject:@(excludeReplies).stringValue forKey:@"exclude_replies"];
         }
         
         [self performMethod:@"GET"

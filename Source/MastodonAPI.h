@@ -59,6 +59,8 @@
                                  maxId:(NSString * _Nullable)maxId
                                sinceId:(NSString * _Nullable)sinceId
                                  limit:(NSInteger)limit
+                             onlyMedia:(BOOL)onlyMedia
+                        excludeReplies:(BOOL)excludeReplies
                           successBlock:(void(^ _Nullable)(NSArray <MastodonAccount *> * _Nullable result))successBlock
                           failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
 

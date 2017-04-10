@@ -64,7 +64,9 @@ typedef void(^MastodonClientRequestComplationBlock)(BOOL success, _Nullable id r
                               accountId:(NSString * _Nonnull)accountId
                                   maxId:(NSString * _Nullable)maxId
                                 sinceId:(NSString * _Nullable)sinceId
-                                  limit:(NSInteger)limit
+                                 limit:(NSInteger)limit
+                             onlyMedia:(BOOL)onlyMedia
+                        excludeReplies:(BOOL)excludeReplies
                             completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
 #pragma mark - Fetching Timeline
