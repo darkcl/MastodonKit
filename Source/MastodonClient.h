@@ -22,7 +22,9 @@
 
 #pragma mark - Resources URL
 
-@property (nonatomic, strong, readonly, nonnull) NSURL *localTimelineUrl;
+@property (nonatomic, strong, readonly, nonnull) NSURL *homeTimelineUrl;
+
+@property (nonatomic, strong, readonly, nonnull) NSURL *publicTimelineUrl;
 
 #pragma mark - OAuth
 

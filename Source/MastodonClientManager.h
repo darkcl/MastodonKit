@@ -38,7 +38,19 @@ typedef void(^MastodonClientRequestComplationBlock)(BOOL success, _Nullable id r
 
 #pragma mark - Fetching Data
 
+- (void)fetchHomeTimelineWithClient:(MastodonClient * _Nonnull)client
+                              maxId:(NSString * _Nullable)maxId
+                            sinceId:(NSString * _Nullable)sinceId
+                              limit:(NSInteger)limit
+                         completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
 - (void)fetchLocalTimelineWithClient:(MastodonClient * _Nonnull)client
+                               maxId:(NSString * _Nullable)maxId
+                             sinceId:(NSString * _Nullable)sinceId
+                               limit:(NSInteger)limit
+                          completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)fetchPublicTimelineWithClient:(MastodonClient * _Nonnull)client
                                maxId:(NSString * _Nullable)maxId
                              sinceId:(NSString * _Nullable)sinceId
                                limit:(NSInteger)limit

@@ -223,12 +223,11 @@
     }
 }
 
-- (void)fetchLocalTimelineWithClient:(MastodonClient * _Nonnull)client
-                               maxId:(NSString * _Nullable)maxId
-                             sinceId:(NSString * _Nullable)sinceId
-                               limit:(NSInteger)limit
-                          completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
-    
+- (void)fetchPublicTimelineWithClient:(MastodonClient * _Nonnull)client
+                                maxId:(NSString * _Nullable)maxId
+                              sinceId:(NSString * _Nullable)sinceId
+                                limit:(NSInteger)limit
+                           completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
     NSArray <MastodonClient *> *clients = self.clientsList;
     
     if ([clients containsObject:client]) {
@@ -237,8 +236,6 @@
     
     // TODO: Select Account?
     NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
-    
-    __weak typeof(self) weakSelf = self;
     
     if (accounts.count != 0) {
         
@@ -256,52 +253,175 @@
             [param setObject:@(limit) forKey:@"limit"];
         }
         
-        [NXOAuth2Request performMethod:@"GET"
-                            onResource:client.localTimelineUrl
-                       usingParameters:param
-                           withAccount:accounts[0]
-                   sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
-                       // e.g., update a progress indicator
-                   }
-                       responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
-                           // Process the response
-                           if (error != nil) {
-                               if ([error.domain isEqualToString:NXOAuth2HTTPErrorDomain] && error.code == 401) {
-                                   // Unauthorized
-                                   [[NXOAuth2AccountStore sharedStore] removeAccount:accounts[0]];
-                                   
-                                   [weakSelf loginWithClient:client
-                                                  completion:^(BOOL success, NSURL * _Nullable authUrl, NSError * _Nullable error) {
-                                                      if (success) {
-                                                          [weakSelf fetchLocalTimelineWithClient:client maxId:maxId sinceId:sinceId limit:limit completion:completionBlock];
-                                                      }else{
-                                                          completionBlock(NO, nil, error);
-                                                      }
-                                                  }];
-                               }else{
-                                   completionBlock(NO, nil, error);
-                               }
-                               
-                           }else{
-                               NSError *jsonError;
-                               id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
-                               
-                               if (jsonError != nil) {
-                                   completionBlock(NO, nil, jsonError);
-                               }else{
-                                   if ([jsonObject isKindOfClass:[NSArray class]]) {
-                                       NSArray *arr = (NSArray *)jsonObject;
-                                       NSMutableArray *result = [[NSMutableArray alloc] init];
-                                       for (NSDictionary *info in arr) {
-                                           [result addObject:[[MastodonStatus alloc] initWithDictionary:info]];
-                                       }
-                                       completionBlock(YES, result, nil);
-                                   }else{
-                                       completionBlock(YES, jsonObject, nil);
-                                   }
-                               }
-                           }
-                       }];
+        [self performMethod:@"GET"
+                 onResource:client.publicTimelineUrl
+            usingParameters:param
+                withAccount:accounts[0]
+                 withClient:client
+        sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+            // e.g., update a progress indicator
+        }
+            responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                // Process the response
+                if (error != nil) {
+                    completionBlock(NO, nil, error);
+                }else{
+                    NSError *jsonError;
+                    id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
+                    
+                    if (jsonError != nil) {
+                        completionBlock(NO, nil, jsonError);
+                    }else{
+                        if ([jsonObject isKindOfClass:[NSArray class]]) {
+                            NSArray *arr = (NSArray *)jsonObject;
+                            NSMutableArray *result = [[NSMutableArray alloc] init];
+                            for (NSDictionary *info in arr) {
+                                [result addObject:[[MastodonStatus alloc] initWithDictionary:info]];
+                            }
+                            completionBlock(YES, result, nil);
+                        }else{
+                            completionBlock(YES, jsonObject, nil);
+                        }
+                    }
+                }
+            }];
+    }else{
+        completionBlock(NO, nil, nil);
+    }
+}
+
+- (void)fetchHomeTimelineWithClient:(MastodonClient * _Nonnull)client
+                              maxId:(NSString * _Nullable)maxId
+                            sinceId:(NSString * _Nullable)sinceId
+                              limit:(NSInteger)limit
+                         completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    NSArray <MastodonClient *> *clients = self.clientsList;
+    
+    if ([clients containsObject:client]) {
+        client = [clients objectAtIndex:[clients indexOfObject:client]];
+    }
+    
+    // TODO: Select Account?
+    NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
+    
+    if (accounts.count != 0) {
+        
+        NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+        
+        if (maxId != nil) {
+            [param setObject:maxId forKey:@"max_id"];
+        }
+        
+        if (sinceId != nil) {
+            [param setObject:sinceId forKey:@"since_id"];
+        }
+        
+        if (limit != 0) {
+            [param setObject:@(limit) forKey:@"limit"];
+        }
+        
+        [self performMethod:@"GET"
+                 onResource:client.homeTimelineUrl
+            usingParameters:param
+                withAccount:accounts[0]
+                 withClient:client
+        sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+            // e.g., update a progress indicator
+        }
+            responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                // Process the response
+                if (error != nil) {
+                    completionBlock(NO, nil, error);
+                }else{
+                    NSError *jsonError;
+                    id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
+                    
+                    if (jsonError != nil) {
+                        completionBlock(NO, nil, jsonError);
+                    }else{
+                        if ([jsonObject isKindOfClass:[NSArray class]]) {
+                            NSArray *arr = (NSArray *)jsonObject;
+                            NSMutableArray *result = [[NSMutableArray alloc] init];
+                            for (NSDictionary *info in arr) {
+                                [result addObject:[[MastodonStatus alloc] initWithDictionary:info]];
+                            }
+                            completionBlock(YES, result, nil);
+                        }else{
+                            completionBlock(YES, jsonObject, nil);
+                        }
+                    }
+                }
+            }];
+    }else{
+        completionBlock(NO, nil, nil);
+    }
+}
+
+- (void)fetchLocalTimelineWithClient:(MastodonClient * _Nonnull)client
+                               maxId:(NSString * _Nullable)maxId
+                             sinceId:(NSString * _Nullable)sinceId
+                               limit:(NSInteger)limit
+                          completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    
+    NSArray <MastodonClient *> *clients = self.clientsList;
+    
+    if ([clients containsObject:client]) {
+        client = [clients objectAtIndex:[clients indexOfObject:client]];
+    }
+    
+    // TODO: Select Account?
+    NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
+    
+    if (accounts.count != 0) {
+        
+        NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+        
+        if (maxId != nil) {
+            [param setObject:maxId forKey:@"max_id"];
+        }
+        
+        if (sinceId != nil) {
+            [param setObject:sinceId forKey:@"since_id"];
+        }
+        
+        if (limit != 0) {
+            [param setObject:@(limit) forKey:@"limit"];
+        }
+        
+        [param setObject:@YES forKey:@"local"];
+        
+        [self performMethod:@"GET"
+                 onResource:client.publicTimelineUrl
+            usingParameters:param
+                withAccount:accounts[0]
+                 withClient:client
+        sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+            // e.g., update a progress indicator
+        }
+            responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                // Process the response
+                if (error != nil) {
+                    completionBlock(NO, nil, error);
+                }else{
+                    NSError *jsonError;
+                    id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
+                    
+                    if (jsonError != nil) {
+                        completionBlock(NO, nil, jsonError);
+                    }else{
+                        if ([jsonObject isKindOfClass:[NSArray class]]) {
+                            NSArray *arr = (NSArray *)jsonObject;
+                            NSMutableArray *result = [[NSMutableArray alloc] init];
+                            for (NSDictionary *info in arr) {
+                                [result addObject:[[MastodonStatus alloc] initWithDictionary:info]];
+                            }
+                            completionBlock(YES, result, nil);
+                        }else{
+                            completionBlock(YES, jsonObject, nil);
+                        }
+                    }
+                }
+            }];
     }else{
         completionBlock(NO, nil, nil);
     }
@@ -342,7 +462,44 @@
 
 #pragma mark - Helper
 
-
+- (void)performMethod:(NSString *)aMethod
+           onResource:(NSURL *)aResource
+      usingParameters:(NSDictionary *)someParameters
+          withAccount:(NXOAuth2Account *)anAccount
+           withClient:(MastodonClient * _Nonnull)client
+  sendProgressHandler:(NXOAuth2ConnectionSendingProgressHandler)progressHandler
+      responseHandler:(NXOAuth2ConnectionResponseHandler)responseHandler{
+    __weak typeof(self) weakSelf = self;
+    
+    [NXOAuth2Request performMethod:aMethod
+                        onResource:aResource
+                   usingParameters:someParameters
+                       withAccount:anAccount
+               sendProgressHandler:progressHandler
+                   responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                       // Process the response
+                       if (error != nil) {
+                           if ([error.domain isEqualToString:NXOAuth2HTTPErrorDomain] && error.code == 401) {
+                               // Unauthorized (Try to re-login)
+                               [[NXOAuth2AccountStore sharedStore] removeAccount:anAccount];
+                               
+                               [weakSelf loginWithClient:client
+                                              completion:^(BOOL loginSuccess, NSURL * _Nullable authUrl, NSError * _Nullable loginError) {
+                                                  if (loginSuccess) {
+                                                      [weakSelf performMethod:aMethod onResource:aResource usingParameters:someParameters withAccount:anAccount withClient:client sendProgressHandler:progressHandler responseHandler:responseHandler];
+                                                  }else{
+                                                      responseHandler(response, responseData, loginError);
+                                                  }
+                                              }];
+                           }else{
+                               responseHandler(response, responseData, error);
+                           }
+                           
+                       }else{
+                           responseHandler(response, responseData, error);
+                       }
+                   }];
+}
 
 - (NSString *)stringOrNilForObject:(id)object{
     if ([object isKindOfClass:[NSNull class]]) {

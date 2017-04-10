@@ -97,6 +97,27 @@
 
 #pragma mark - Timeline Related
 
++ (void)fetchHomeTimeline:(MastodonClient * _Nonnull)client
+                    maxId:(NSString * _Nullable)maxId
+                  sinceId:(NSString * _Nullable)sinceId
+                    limit:(NSInteger)limit
+             successBlock:(void(^ _Nullable)(NSArray <MastodonStatus *> * _Nullable result))successBlock
+             failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager fetchHomeTimelineWithClient:client
+                                       maxId:maxId
+                                     sinceId:sinceId
+                                       limit:limit
+                                  completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                      if (success) {
+                                          successBlock(response);
+                                      }else{
+                                          failureBlock(error);
+                                      }
+                                  }];
+}
+
 + (void)fetchLocalTimeline:(MastodonClient * _Nonnull)client
                      maxId:(NSString * _Nullable)maxId
                    sinceId:(NSString * _Nullable)sinceId
@@ -116,6 +137,27 @@
                                            failureBlock(error);
                                        }
                                    }];
+}
+
++ (void)fetchPublicTimeline:(MastodonClient * _Nonnull)client
+                      maxId:(NSString * _Nullable)maxId
+                    sinceId:(NSString * _Nullable)sinceId
+                      limit:(NSInteger)limit
+               successBlock:(void(^ _Nullable)(NSArray <MastodonStatus *> * _Nullable result))successBlock
+               failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager fetchPublicTimelineWithClient:client
+                                         maxId:maxId
+                                       sinceId:sinceId
+                                         limit:limit
+                                    completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                        if (success) {
+                                            successBlock(response);
+                                        }else{
+                                            failureBlock(error);
+                                        }
+                                    }];
 }
 
 @end
