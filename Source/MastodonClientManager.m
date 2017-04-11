@@ -225,6 +225,107 @@
     }
 }
 
+#pragma mark - Account Operation
+
+- (void)accountOperationWithClient:(MastodonClient * _Nonnull)client
+                     withAccountId:(NSString * _Nonnull)accountId
+                     operationType:(MastodonClientAccountOperationType)type
+                        completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    NSArray <MastodonClient *> *clients = self.clientsList;
+    
+    if ([clients containsObject:client]) {
+        client = [clients objectAtIndex:[clients indexOfObject:client]];
+    }
+    
+    NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
+    if (accounts.count != 0) {
+        
+        [self performMethod:@"GET"
+                 onResource:[client accountOperationUrlWithAccountId:accountId operationType:type]
+            usingParameters:nil
+                withAccount:accounts[0]
+                 withClient:client
+        sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+            // e.g., update a progress indicator
+        }
+            responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                // Process the response
+                if (error != nil) {
+                    completionBlock(NO, nil, error);
+                }else{
+                    NSError *jsonError;
+                    id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
+                    
+                    if (jsonError != nil) {
+                        completionBlock(NO, nil, jsonError);
+                    }else{
+                        if ([jsonObject isKindOfClass:[NSDictionary class]]) {
+                            completionBlock(YES, [[MastodonAccount alloc] initWithDictionary:jsonObject], nil);
+                        }else{
+                            completionBlock(YES, jsonObject, nil);
+                        }
+                    }
+                }
+            }];
+    }else{
+        completionBlock(NO, nil, nil);
+    }
+}
+
+- (void)followAccountWithClient:(MastodonClient * _Nonnull)client
+                  withAccountId:(NSString * _Nonnull)accountId
+                     completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    [self accountOperationWithClient:client
+                       withAccountId:accountId
+                       operationType:MastodonClientAccountOperationTypeFollow
+                          completion:completionBlock];
+}
+
+- (void)unfollowAccountWithClient:(MastodonClient * _Nonnull)client
+                    withAccountId:(NSString * _Nonnull)accountId
+                       completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    [self accountOperationWithClient:client
+                       withAccountId:accountId
+                       operationType:MastodonClientAccountOperationTypeUnfollow
+                          completion:completionBlock];
+}
+
+- (void)blockAccountWithClient:(MastodonClient * _Nonnull)client
+                 withAccountId:(NSString * _Nonnull)accountId
+                    completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    [self accountOperationWithClient:client
+                       withAccountId:accountId
+                       operationType:MastodonClientAccountOperationTypeBlock
+                          completion:completionBlock];
+}
+
+- (void)unblockAccountWithClient:(MastodonClient * _Nonnull)client
+                   withAccountId:(NSString * _Nonnull)accountId
+                      completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    [self accountOperationWithClient:client
+                       withAccountId:accountId
+                       operationType:MastodonClientAccountOperationTypeUnblock
+                          completion:completionBlock];
+}
+
+- (void)muteAccountWithClient:(MastodonClient * _Nonnull)client
+                withAccountId:(NSString * _Nonnull)accountId
+                   completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    [self accountOperationWithClient:client
+                       withAccountId:accountId
+                       operationType:MastodonClientAccountOperationTypeMute
+                          completion:completionBlock];
+}
+
+- (void)unmuteAccountWithClient:(MastodonClient * _Nonnull)client
+                  withAccountId:(NSString * _Nonnull)accountId
+                     completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    [self accountOperationWithClient:client
+                       withAccountId:accountId
+                       operationType:MastodonClientAccountOperationTypeUnmute
+                          completion:completionBlock];
+}
+
 #pragma mark - Fetching Account Information
 
 - (void)fetchAccountStatusesWithClient:(MastodonClient * _Nonnull)client

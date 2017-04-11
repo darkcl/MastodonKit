@@ -39,6 +39,15 @@
     XCTAssertTrue([[sut accountFollowersUrlWithAccountId:@"test"].absoluteString isEqualToString:@"https://example.com/api/v1/accounts/test/followers"]);
     XCTAssertTrue([[sut accountFollowingsUrlWithAccountId:@"test"].absoluteString isEqualToString:@"https://example.com/api/v1/accounts/test/following"]);
     XCTAssertTrue([[sut accountStatusesUrlWithAccountId:@"test"].absoluteString isEqualToString:@"https://example.com/api/v1/accounts/test/statuses"]);
+    
+    XCTAssertTrue([[sut accountOperationUrlWithAccountId:@"test" operationType:MastodonClientAccountOperationTypeFollow].absoluteString isEqualToString:@"https://example.com/api/v1/accounts/test/follow"]);
+    XCTAssertTrue([[sut accountOperationUrlWithAccountId:@"test" operationType:MastodonClientAccountOperationTypeUnfollow].absoluteString isEqualToString:@"https://example.com/api/v1/accounts/test/unfollow"]);
+    
+    XCTAssertTrue([[sut accountOperationUrlWithAccountId:@"test" operationType:MastodonClientAccountOperationTypeBlock].absoluteString isEqualToString:@"https://example.com/api/v1/accounts/test/block"]);
+    XCTAssertTrue([[sut accountOperationUrlWithAccountId:@"test" operationType:MastodonClientAccountOperationTypeUnblock].absoluteString isEqualToString:@"https://example.com/api/v1/accounts/test/unblock"]);
+    
+    XCTAssertTrue([[sut accountOperationUrlWithAccountId:@"test" operationType:MastodonClientAccountOperationTypeMute].absoluteString isEqualToString:@"https://example.com/api/v1/accounts/test/mute"]);
+    XCTAssertTrue([[sut accountOperationUrlWithAccountId:@"test" operationType:MastodonClientAccountOperationTypeUnmute].absoluteString isEqualToString:@"https://example.com/api/v1/accounts/test/unmute"]);
 }
 
 @end

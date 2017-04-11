@@ -101,6 +101,38 @@ static NSString *const kClientSecretKey = @"client_secret";
     return [NSURL URLWithString:result];
 }
 
+- (NSURL * _Nonnull)accountOperationUrlWithAccountId:(NSString * _Nonnull)accountId
+                                       operationType:(MastodonClientAccountOperationType)type{
+    NSString *typeStr = @"";
+    
+    switch (type) {
+        case MastodonClientAccountOperationTypeFollow:
+            typeStr = @"follow";
+            break;
+        case MastodonClientAccountOperationTypeUnfollow:
+            typeStr = @"unfollow";
+            break;
+        case MastodonClientAccountOperationTypeBlock:
+            typeStr = @"block";
+            break;
+        case MastodonClientAccountOperationTypeUnblock:
+            typeStr = @"unblock";
+            break;
+        case MastodonClientAccountOperationTypeMute:
+            typeStr = @"mute";
+            break;
+        case MastodonClientAccountOperationTypeUnmute:
+            typeStr = @"unmute";
+            break;
+        default:
+            break;
+    }
+    
+    NSString *result = [NSString stringWithFormat:@"%@/api/%@/accounts/%@/%@", self.instanceUrl.absoluteString, MastodonAPIVersion, accountId, typeStr];
+    
+    return [NSURL URLWithString:result];
+}
+
 - (BOOL)isEqual:(id)object{
     if ([object isKindOfClass:[MastodonClient class]]) {
         MastodonClient *client = (MastodonClient *)object;

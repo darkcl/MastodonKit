@@ -69,6 +69,31 @@ typedef void(^MastodonClientRequestComplationBlock)(BOOL success, _Nullable id r
                         excludeReplies:(BOOL)excludeReplies
                             completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
+#pragma mark - Account Operation
+- (void)followAccountWithClient:(MastodonClient * _Nonnull)client
+                  withAccountId:(NSString * _Nonnull)accountId
+                     completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)unfollowAccountWithClient:(MastodonClient * _Nonnull)client
+                    withAccountId:(NSString * _Nonnull)accountId
+                       completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)blockAccountWithClient:(MastodonClient * _Nonnull)client
+                 withAccountId:(NSString * _Nonnull)accountId
+                    completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)unblockAccountWithClient:(MastodonClient * _Nonnull)client
+                   withAccountId:(NSString * _Nonnull)accountId
+                      completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)muteAccountWithClient:(MastodonClient * _Nonnull)client
+                withAccountId:(NSString * _Nonnull)accountId
+                   completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)unmuteAccountWithClient:(MastodonClient * _Nonnull)client
+                  withAccountId:(NSString * _Nonnull)accountId
+                     completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
 #pragma mark - Fetching Timeline
 
 - (void)fetchTagsTimelineWithClient:(MastodonClient * _Nonnull)client

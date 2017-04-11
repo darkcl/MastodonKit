@@ -8,6 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, MastodonClientAccountOperationType) {
+    MastodonClientAccountOperationTypeFollow,
+    MastodonClientAccountOperationTypeUnfollow,
+    MastodonClientAccountOperationTypeBlock,
+    MastodonClientAccountOperationTypeUnblock,
+    MastodonClientAccountOperationTypeMute,
+    MastodonClientAccountOperationTypeUnmute
+};
+
 @interface MastodonClient : NSObject <NSCoding>
 
 + (_Nonnull instancetype)clientWithInstanceURL:(NSURL * _Nonnull)url;
@@ -37,6 +46,8 @@
 - (NSURL * _Nonnull)accountFollowingsUrlWithAccountId:(NSString * _Nonnull)accountId;
 
 - (NSURL * _Nonnull)accountStatusesUrlWithAccountId:(NSString * _Nonnull)accountId;
+
+- (NSURL * _Nonnull)accountOperationUrlWithAccountId:(NSString * _Nonnull)accountId operationType:(MastodonClientAccountOperationType)type;
 
 #pragma mark - OAuth
 

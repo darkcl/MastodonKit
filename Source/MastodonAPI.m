@@ -95,6 +95,109 @@
                       }];
 }
 
+#pragma mark - Account Operation
++ (void)followAccountWithClient:(MastodonClient * _Nonnull)client
+                  withAccountId:(NSString * _Nonnull)accountId
+                   successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
+                   failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager followAccountWithClient:client
+                           withAccountId:accountId
+                              completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                  if (success) {
+                                      successBlock(response);
+                                  }else{
+                                      failureBlock(error);
+                                  }
+                              }];
+}
+
++ (void)unfollowAccountWithClient:(MastodonClient * _Nonnull)client
+                    withAccountId:(NSString * _Nonnull)accountId
+                     successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
+                     failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager unfollowAccountWithClient:client
+                             withAccountId:accountId
+                                completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                    if (success) {
+                                        successBlock(response);
+                                    }else{
+                                        failureBlock(error);
+                                    }
+                                }];
+}
+
++ (void)blockAccountWithClient:(MastodonClient * _Nonnull)client
+                 withAccountId:(NSString * _Nonnull)accountId
+                  successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
+                  failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager blockAccountWithClient:client
+                          withAccountId:accountId
+                             completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                 if (success) {
+                                     successBlock(response);
+                                 }else{
+                                     failureBlock(error);
+                                 }
+                             }];
+}
+
++ (void)unblockAccountWithClient:(MastodonClient * _Nonnull)client
+                   withAccountId:(NSString * _Nonnull)accountId
+                    successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
+                    failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager unblockAccountWithClient:client
+                            withAccountId:accountId
+                               completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                   if (success) {
+                                       successBlock(response);
+                                   }else{
+                                       failureBlock(error);
+                                   }
+                               }];
+}
+
++ (void)muteAccountWithClient:(MastodonClient * _Nonnull)client
+                withAccountId:(NSString * _Nonnull)accountId
+                 successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
+                 failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager muteAccountWithClient:client
+                         withAccountId:accountId
+                            completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                if (success) {
+                                    successBlock(response);
+                                }else{
+                                    failureBlock(error);
+                                }
+                            }];
+}
+
++ (void)unmuteAccountWithClient:(MastodonClient * _Nonnull)client
+                  withAccountId:(NSString * _Nonnull)accountId
+                   successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
+                   failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager unmuteAccountWithClient:client
+                           withAccountId:accountId
+                              completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                  if (success) {
+                                      successBlock(response);
+                                  }else{
+                                      failureBlock(error);
+                                  }
+                              }];
+}
+
 #pragma mark - Fetching Account
 + (void)fetchAccountInfoWithClient:(MastodonClient * _Nonnull)client
                          accountId:(NSString * _Nonnull)accountId

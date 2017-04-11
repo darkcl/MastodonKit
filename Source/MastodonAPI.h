@@ -64,6 +64,37 @@
                           successBlock:(void(^ _Nullable)(NSArray <MastodonAccount *> * _Nullable result))successBlock
                           failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
 
+#pragma mark - Account Operation
++ (void)followAccountWithClient:(MastodonClient * _Nonnull)client
+                  withAccountId:(NSString * _Nonnull)accountId
+                   successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
+                   failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock;
+
++ (void)unfollowAccountWithClient:(MastodonClient * _Nonnull)client
+                    withAccountId:(NSString * _Nonnull)accountId
+                     successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
+                     failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock;
+
++ (void)blockAccountWithClient:(MastodonClient * _Nonnull)client
+                 withAccountId:(NSString * _Nonnull)accountId
+                  successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
+                  failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock;
+
++ (void)unblockAccountWithClient:(MastodonClient * _Nonnull)client
+                   withAccountId:(NSString * _Nonnull)accountId
+                    successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
+                    failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock;
+
++ (void)muteAccountWithClient:(MastodonClient * _Nonnull)client
+                withAccountId:(NSString * _Nonnull)accountId
+                 successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
+                 failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock;
+
++ (void)unmuteAccountWithClient:(MastodonClient * _Nonnull)client
+                  withAccountId:(NSString * _Nonnull)accountId
+                   successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
+                   failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock;
+
 #pragma mark - Fetching Timeline
 
 + (void)fetchHomeTimeline:(MastodonClient * _Nonnull)client
