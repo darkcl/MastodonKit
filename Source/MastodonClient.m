@@ -133,6 +133,22 @@ static NSString *const kClientSecretKey = @"client_secret";
     return [NSURL URLWithString:result];
 }
 
+- (NSURL * _Nonnull)accountRelationshipUrlWithAccountIds:(NSArray <NSString *> * _Nonnull)accountIds{
+    NSURLComponents *comp = [[NSURLComponents alloc] init];
+    comp.scheme = self.instanceUrl.scheme;
+    comp.host = self.instanceUrl.host;
+    comp.path = [NSString stringWithFormat:@"/api/%@/accounts/relationships", MastodonAPIVersion];
+    
+    NSMutableArray *queries = [[NSMutableArray alloc] init];
+    
+    for (NSString *accountId in accountIds) {
+        [queries addObject:[[NSURLQueryItem alloc] initWithName:@"id[]" value:accountId]];
+    }
+    
+    comp.queryItems = queries;
+    return comp.URL;
+}
+
 - (BOOL)isEqual:(id)object{
     if ([object isKindOfClass:[MastodonClient class]]) {
         MastodonClient *client = (MastodonClient *)object;

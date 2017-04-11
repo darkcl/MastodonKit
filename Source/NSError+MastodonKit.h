@@ -12,4 +12,6 @@
 
 + (NSError *)loginCancelError;
 
++ (NSError *)serverErrorWithResponse:(NSDictionary *)response;
+
 @end

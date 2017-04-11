@@ -48,6 +48,10 @@
     
     XCTAssertTrue([[sut accountOperationUrlWithAccountId:@"test" operationType:MastodonClientAccountOperationTypeMute].absoluteString isEqualToString:@"https://example.com/api/v1/accounts/test/mute"]);
     XCTAssertTrue([[sut accountOperationUrlWithAccountId:@"test" operationType:MastodonClientAccountOperationTypeUnmute].absoluteString isEqualToString:@"https://example.com/api/v1/accounts/test/unmute"]);
+    
+    NSArray *testIds = @[@"test1", @"test2"];
+    
+    XCTAssertTrue([[sut accountRelationshipUrlWithAccountIds:testIds].absoluteString isEqualToString:@"https://example.com/api/v1/accounts/relationships?id%5B%5D=test1&id%5B%5D=test2"]);
 }
 
 @end

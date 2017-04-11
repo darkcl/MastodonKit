@@ -5,9 +5,5 @@
 
 language: objective-c
 osx_image: xcode8.2
-before_install: 
-- carthage bootstrap --verbose
 script:
-- set -o pipefail && xcodebuild -project MastodonKit.xcodeproj -scheme "MastodonKitTests_iOS" test -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 7" | xcpretty
-- set -o pipefail && xcodebuild -project MastodonKit.xcodeproj -scheme "MastodonKitTests_macOS" test -sdk macosx -destination "platform=macOS" | xcpretty
 - pod lib lint --quick --allow-warnings

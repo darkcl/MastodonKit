@@ -45,3 +45,5 @@ FOUNDATION_EXPORT const unsigned char MastodonKitVersionString[];
 #import <MastodonKit/MastodonTags.h>
 
 #import <MastodonKit/MastodonApplication.h>
+
+#import <MastodonKit/MastodonRelationship.h>

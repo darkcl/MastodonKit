@@ -18,6 +18,8 @@
 
 #import "MastodonStatus.h"
 
+#import "MastodonRelationship.h"
+
 #ifdef COCOAPODS
 #import "NXOAuth2.h"
 #else
@@ -224,6 +226,54 @@
                                  }];
     }
 }
+- (void)fetchAccountRelationshipsWithClient:(MastodonClient * _Nonnull)client
+                                  accountIds:(NSArray <NSString *> * _Nonnull)accountIds
+                                  completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    NSArray <MastodonClient *> *clients = self.clientsList;
+    
+    if ([clients containsObject:client]) {
+        client = [clients objectAtIndex:[clients indexOfObject:client]];
+    }
+    
+    NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
+    if (accounts.count != 0) {
+        
+        [self performMethod:@"GET"
+                 onResource:[client accountRelationshipUrlWithAccountIds:accountIds]
+            usingParameters:nil
+                withAccount:accounts[0]
+                 withClient:client
+        sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+            // e.g., update a progress indicator
+        }
+            responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                // Process the response
+                if (error != nil) {
+                    completionBlock(NO, nil, error);
+                }else{
+                    NSError *jsonError;
+                    id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
+                    
+                    if (jsonError != nil) {
+                        completionBlock(NO, nil, jsonError);
+                    }else{
+                        if ([jsonObject isKindOfClass:[NSArray class]]) {
+                            NSArray *arr = (NSArray *)jsonObject;
+                            NSMutableArray *result = [[NSMutableArray alloc] init];
+                            for (NSDictionary *info in arr) {
+                                [result addObject:[[MastodonRelationship alloc] initWithDictionary:info]];
+                            }
+                            completionBlock(YES, result, nil);
+                        }else{
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                        }
+                    }
+                }
+            }];
+    }else{
+        completionBlock(NO, nil, nil);
+    }
+}
 
 #pragma mark - Account Operation
 
@@ -262,7 +312,7 @@
                         if ([jsonObject isKindOfClass:[NSDictionary class]]) {
                             completionBlock(YES, [[MastodonAccount alloc] initWithDictionary:jsonObject], nil);
                         }else{
-                            completionBlock(YES, jsonObject, nil);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
                         }
                     }
                 }
@@ -394,7 +444,7 @@
                             }
                             completionBlock(YES, result, nil);
                         }else{
-                            completionBlock(YES, jsonObject, nil);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
                         }
                     }
                 }
@@ -460,7 +510,7 @@
                             }
                             completionBlock(YES, result, nil);
                         }else{
-                            completionBlock(YES, jsonObject, nil);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
                         }
                     }
                 }
@@ -526,7 +576,7 @@
                             }
                             completionBlock(YES, result, nil);
                         }else{
-                            completionBlock(YES, jsonObject, nil);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
                         }
                     }
                 }
@@ -569,7 +619,7 @@
                         if ([jsonObject isKindOfClass:[NSDictionary class]]) {
                             completionBlock(YES, [[MastodonAccount alloc] initWithDictionary:jsonObject], nil);
                         }else{
-                            completionBlock(YES, jsonObject, nil);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
                         }
                     }
                 }
@@ -613,7 +663,7 @@
                         if ([jsonObject isKindOfClass:[NSDictionary class]]) {
                             completionBlock(YES, [[MastodonAccount alloc] initWithDictionary:jsonObject], nil);
                         }else{
-                            completionBlock(YES, jsonObject, nil);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
                         }
                     }
                 }
@@ -685,7 +735,7 @@
                             }
                             completionBlock(YES, result, nil);
                         }else{
-                            completionBlock(YES, jsonObject, nil);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
                         }
                     }
                 }
@@ -751,7 +801,7 @@
                             }
                             completionBlock(YES, result, nil);
                         }else{
-                            completionBlock(YES, jsonObject, nil);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
                         }
                     }
                 }
@@ -818,7 +868,7 @@
                             }
                             completionBlock(YES, result, nil);
                         }else{
-                            completionBlock(YES, jsonObject, nil);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
                         }
                     }
                 }
@@ -888,7 +938,7 @@
                             }
                             completionBlock(YES, result, nil);
                         }else{
-                            completionBlock(YES, jsonObject, nil);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
                         }
                     }
                 }
@@ -932,6 +982,17 @@
 }
 
 #pragma mark - Helper
+
+- (NSDictionary *)urlEncodeArray:(NSArray *)array
+                         withKey:(NSString *)key{
+    NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
+    NSInteger idx = 0;
+    for (id obj in array) {
+        [result setObject:obj forKey:[NSString stringWithFormat:@"%@[%li]", key, (long)idx]];
+        idx++;
+    }
+    return [NSDictionary dictionaryWithDictionary:result];
+}
 
 - (void)performMethod:(NSString *)aMethod
            onResource:(NSURL *)aResource

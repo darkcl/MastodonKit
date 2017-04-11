@@ -46,11 +46,11 @@ typedef void(^MastodonClientRequestComplationBlock)(BOOL success, _Nullable id r
                                   completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
 - (void)fetchAccountFollowersWithClient:(MastodonClient * _Nonnull)client
-                         accountId:(NSString * _Nonnull)accountId
-                             maxId:(NSString * _Nullable)maxId
-                           sinceId:(NSString * _Nullable)sinceId
-                             limit:(NSInteger)limit
-                        completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+                              accountId:(NSString * _Nonnull)accountId
+                                  maxId:(NSString * _Nullable)maxId
+                                sinceId:(NSString * _Nullable)sinceId
+                                  limit:(NSInteger)limit
+                             completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
 
 - (void)fetchAccountFollowingWithClient:(MastodonClient * _Nonnull)client
@@ -61,15 +61,19 @@ typedef void(^MastodonClientRequestComplationBlock)(BOOL success, _Nullable id r
                              completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
 - (void)fetchAccountStatusesWithClient:(MastodonClient * _Nonnull)client
-                              accountId:(NSString * _Nonnull)accountId
-                                  maxId:(NSString * _Nullable)maxId
-                                sinceId:(NSString * _Nullable)sinceId
+                             accountId:(NSString * _Nonnull)accountId
+                                 maxId:(NSString * _Nullable)maxId
+                               sinceId:(NSString * _Nullable)sinceId
                                  limit:(NSInteger)limit
                              onlyMedia:(BOOL)onlyMedia
                         excludeReplies:(BOOL)excludeReplies
                             completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
+- (void)fetchAccountRelationshipsWithClient:(MastodonClient * _Nonnull)client
+                                  accountIds:(NSArray <NSString *> * _Nonnull)accountIds
+                                  completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 #pragma mark - Account Operation
+
 - (void)followAccountWithClient:(MastodonClient * _Nonnull)client
                   withAccountId:(NSString * _Nonnull)accountId
                      completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;

@@ -49,6 +49,8 @@ typedef NS_ENUM(NSInteger, MastodonClientAccountOperationType) {
 
 - (NSURL * _Nonnull)accountOperationUrlWithAccountId:(NSString * _Nonnull)accountId operationType:(MastodonClientAccountOperationType)type;
 
+- (NSURL * _Nonnull)accountRelationshipUrlWithAccountIds:(NSArray <NSString *> * _Nonnull)accountIds;
+
 #pragma mark - OAuth
 
 @property (readonly) BOOL isRegistered;
