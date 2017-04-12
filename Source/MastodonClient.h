@@ -59,6 +59,10 @@ typedef NS_ENUM(NSInteger, MastodonClientAccountOperationType) {
 
 @property (nonatomic, strong, readonly, nonnull) NSURL *followRequestsUrl;
 
+@property (nonatomic, strong, readonly, nonnull) NSURL *apporveFollowRequestsUrl;
+
+@property (nonatomic, strong, readonly, nonnull) NSURL *rejectFollowRequestsUrl;
+
 #pragma mark - OAuth
 
 @property (readonly) BOOL isRegistered;

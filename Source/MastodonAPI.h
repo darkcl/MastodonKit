@@ -125,6 +125,16 @@
                    successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
                    failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock;
 
++ (void)apporveFollowRequestWithClient:(MastodonClient * _Nonnull)client
+                         withAccountId:(NSString * _Nonnull)accountId
+                          successBlock:(void(^ _Nullable)(void))successBlock
+                          failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock;
+
++ (void)rejectFollowRequestWithClient:(MastodonClient * _Nonnull)client
+                        withAccountId:(NSString * _Nonnull)accountId
+                         successBlock:(void(^ _Nullable)(void))successBlock
+                         failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock;
+
 #pragma mark - Fetching Timeline
 
 + (void)fetchHomeTimeline:(MastodonClient * _Nonnull)client

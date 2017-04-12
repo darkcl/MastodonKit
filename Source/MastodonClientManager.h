@@ -119,6 +119,14 @@ typedef void(^MastodonClientRequestComplationBlock)(BOOL success, _Nullable id r
                   withAccountId:(NSString * _Nonnull)accountId
                      completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
+- (void)apporveFollowRequestWithClient:(MastodonClient * _Nonnull)client
+                         withAccountId:(NSString * _Nonnull)accountId
+                            completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)rejectFollowRequestWithClient:(MastodonClient * _Nonnull)client
+                        withAccountId:(NSString * _Nonnull)accountId
+                           completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
 #pragma mark - Fetching Timeline
 
 - (void)fetchTagsTimelineWithClient:(MastodonClient * _Nonnull)client

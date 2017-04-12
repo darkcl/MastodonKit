@@ -198,6 +198,40 @@
                               }];
 }
 
++ (void)apporveFollowRequestWithClient:(MastodonClient * _Nonnull)client
+                         withAccountId:(NSString * _Nonnull)accountId
+                          successBlock:(void(^ _Nullable)(void))successBlock
+                          failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager apporveFollowRequestWithClient:client
+                                  withAccountId:accountId
+                                     completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                         if (success) {
+                                             successBlock();
+                                         }else{
+                                             failureBlock(error);
+                                         }
+                                     }];
+}
+
++ (void)rejectFollowRequestWithClient:(MastodonClient * _Nonnull)client
+                        withAccountId:(NSString * _Nonnull)accountId
+                         successBlock:(void(^ _Nullable)(void))successBlock
+                         failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager rejectFollowRequestWithClient:client
+                                 withAccountId:accountId
+                                    completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                        if (success) {
+                                            successBlock();
+                                        }else{
+                                            failureBlock(error);
+                                        }
+                                    }];
+}
+
 #pragma mark - Fetching Account
 
 + (void)fetchCurentUserAccountInfoWithClient:(MastodonClient * _Nonnull)client
