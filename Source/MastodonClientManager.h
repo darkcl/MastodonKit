@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MastodonConstants.h"
+
 @class MastodonClientManagerBuilder, MastodonClient;
 
 typedef void(^MastodonClientManagerBuildBlock)(MastodonClientManagerBuilder * _Nonnull builder);
@@ -164,6 +166,37 @@ typedef void(^MastodonClientRequestProgessBlock)(double progress);
                                   sinceId:(NSString * _Nullable)sinceId
                                     limit:(NSInteger)limit
                                completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+#pragma mark - Statuses Operation
+
+- (void)postStatusWithClient:(MastodonClient * _Nonnull)client
+               statusContent:(NSString * _Nonnull)statusContent
+             replyToStatusId:(NSString * _Nullable)replyToStatusId
+                    mediaIds:(NSArray <NSString *> * _Nullable)mediaIds
+                 isSensitive:(BOOL)isSensitive
+                 spolierText:(NSString * _Nullable)spolierText
+              postVisibility:(MastodonStatusVisibility)postVisibility
+                  completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)deleteStatusWithClient:(MastodonClient * _Nonnull)client
+                      statusId:(NSString * _Nonnull)statusId
+                    completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)reblogStatusWithClient:(MastodonClient * _Nonnull)client
+                      statusId:(NSString * _Nonnull)statusId
+                    completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)unreblogStatusWithClient:(MastodonClient * _Nonnull)client
+                        statusId:(NSString * _Nonnull)statusId
+                      completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)favouriteStatusWithClient:(MastodonClient * _Nonnull)client
+                         statusId:(NSString * _Nonnull)statusId
+                       completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)unfavouriteStatusWithClient:(MastodonClient * _Nonnull)client
+                           statusId:(NSString * _Nonnull)statusId
+                         completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
 #pragma mark - Account Operation
 

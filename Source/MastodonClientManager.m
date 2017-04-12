@@ -874,6 +874,219 @@
     }
 }
 
+#pragma mark - Statuses Operation
+
+- (void)statusesOperationWithClient:(MastodonClient * _Nonnull)client
+                     withStatusId:(NSString * _Nonnull)statusId
+                     operationType:(MastodonClientStatusOperationType)type
+                        completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    NSArray <MastodonClient *> *clients = self.clientsList;
+    
+    if ([clients containsObject:client]) {
+        client = [clients objectAtIndex:[clients indexOfObject:client]];
+    }
+    
+    NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
+    if (accounts.count != 0) {
+        
+        [self performMethod:@"POST"
+                 onResource:[client statusOperationUrlWithStatusId:statusId operationType:type]
+            usingParameters:nil
+                withAccount:accounts[0]
+                 withClient:client
+        sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+            // e.g., update a progress indicator
+        }
+            responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                // Process the response
+                if (error != nil) {
+                    completionBlock(NO, nil, error);
+                }else{
+                    NSError *jsonError;
+                    id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
+                    
+                    if (jsonError != nil) {
+                        completionBlock(NO, nil, jsonError);
+                    }else{
+                        if ([jsonObject isKindOfClass:[NSDictionary class]]) {
+                            completionBlock(YES, [[MastodonStatus alloc] initWithDictionary:jsonObject], nil);
+                        }else{
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                        }
+                    }
+                }
+            }];
+    }else{
+        completionBlock(NO, nil, nil);
+    }
+}
+
+- (void)postStatusWithClient:(MastodonClient * _Nonnull)client
+               statusContent:(NSString * _Nonnull)statusContent
+             replyToStatusId:(NSString * _Nullable)replyToStatusId
+                    mediaIds:(NSArray <NSString *> * _Nullable)mediaIds
+                 isSensitive:(BOOL)isSensitive
+                 spolierText:(NSString * _Nullable)spolierText
+              postVisibility:(MastodonStatusVisibility)postVisibility
+                  completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    NSArray <MastodonClient *> *clients = self.clientsList;
+    
+    if ([clients containsObject:client]) {
+        client = [clients objectAtIndex:[clients indexOfObject:client]];
+    }
+    
+    NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
+    if (accounts.count != 0) {
+        
+        NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+        
+        if (statusContent != nil) {
+            [params setObject:statusContent forKey:@"status"];
+        }
+        
+        if (replyToStatusId != nil) {
+            [params setObject:replyToStatusId forKey:@"in_reply_to_id"];
+        }
+        
+        if (mediaIds != nil) {
+            [params setObject:replyToStatusId forKey:@"media_ids"];
+        }
+        
+        [params setObject:@(isSensitive).stringValue forKey:@"sensitive"];
+        
+        if (spolierText != nil) {
+            [params setObject:spolierText forKey:@"spoiler_text"];
+        }
+        
+        switch (postVisibility) {
+            case MastodonStatusVisibilityPublic:
+                [params setObject:@"public" forKey:@"visibility"];
+                break;
+            case MastodonStatusVisibilityUnlisted:
+                [params setObject:@"unlisted" forKey:@"visibility"];
+                break;
+            case MastodonStatusVisibilityDirect:
+                [params setObject:@"direct" forKey:@"visibility"];
+                break;
+            case MastodonStatusVisibilityPrivate:
+                [params setObject:@"private" forKey:@"visibility"];
+                break;
+            default:
+                break;
+        }
+        
+        [self performMethod:@"POST"
+                 onResource:client.statusUrl
+            usingParameters:params
+                withAccount:accounts[0]
+                 withClient:client
+        sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+            // e.g., update a progress indicator
+        }
+            responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                // Process the response
+                if (error != nil) {
+                    completionBlock(NO, nil, error);
+                }else{
+                    NSError *jsonError;
+                    id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
+                    
+                    if (jsonError != nil) {
+                        completionBlock(NO, nil, jsonError);
+                    }else{
+                        if ([jsonObject isKindOfClass:[NSDictionary class]]) {
+                            completionBlock(YES, [[MastodonStatus alloc] initWithDictionary:jsonObject], nil);
+                        }else{
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                        }
+                    }
+                }
+            }];
+    }else{
+        completionBlock(NO, nil, nil);
+    }
+}
+
+- (void)deleteStatusWithClient:(MastodonClient * _Nonnull)client
+                      statusId:(NSString * _Nonnull)statusId
+                    completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    NSArray <MastodonClient *> *clients = self.clientsList;
+    
+    if ([clients containsObject:client]) {
+        client = [clients objectAtIndex:[clients indexOfObject:client]];
+    }
+    
+    NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
+    if (accounts.count != 0) {
+        
+        [self performMethod:@"DELETE"
+                 onResource:[client statusUrlWithStatusId:statusId]
+            usingParameters:nil
+                withAccount:accounts[0]
+                 withClient:client
+        sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+            // e.g., update a progress indicator
+        }
+            responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                // Process the response
+                if (error != nil) {
+                    completionBlock(NO, nil, error);
+                }else{
+                    NSError *jsonError;
+                    id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
+                    
+                    if (jsonError != nil) {
+                        completionBlock(NO, nil, jsonError);
+                    }else{
+                        if ([jsonObject isKindOfClass:[NSDictionary class]]) {
+                            completionBlock(YES, [[MastodonStatus alloc] initWithDictionary:jsonObject], nil);
+                        }else{
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                        }
+                    }
+                }
+            }];
+    }else{
+        completionBlock(NO, nil, nil);
+    }
+}
+
+- (void)reblogStatusWithClient:(MastodonClient * _Nonnull)client
+                      statusId:(NSString * _Nonnull)statusId
+                    completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    [self statusesOperationWithClient:client
+                        withStatusId:statusId
+                        operationType:MastodonClientStatusOperationTypeReblog
+                           completion:completionBlock];
+}
+
+- (void)unreblogStatusWithClient:(MastodonClient * _Nonnull)client
+                        statusId:(NSString * _Nonnull)statusId
+                      completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    [self statusesOperationWithClient:client
+                         withStatusId:statusId
+                        operationType:MastodonClientStatusOperationTypeUnreblog
+                           completion:completionBlock];
+}
+
+- (void)favouriteStatusWithClient:(MastodonClient * _Nonnull)client
+                         statusId:(NSString * _Nonnull)statusId
+                       completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    [self statusesOperationWithClient:client
+                         withStatusId:statusId
+                        operationType:MastodonClientStatusOperationTypeFavourite
+                           completion:completionBlock];
+}
+
+- (void)unfavouriteStatusWithClient:(MastodonClient * _Nonnull)client
+                           statusId:(NSString * _Nonnull)statusId
+                         completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    [self statusesOperationWithClient:client
+                         withStatusId:statusId
+                        operationType:MastodonClientStatusOperationTypeUnfavourite
+                           completion:completionBlock];
+}
+
 #pragma mark - Account Operation
 
 - (void)accountOperationWithClient:(MastodonClient * _Nonnull)client

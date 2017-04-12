@@ -110,4 +110,11 @@
     XCTAssertTrue([sut.statusUrl.absoluteString isEqualToString:@"https://example.com/api/v1/statuses"]);
 }
 
+- (void)testStatusOperationUrl{
+    XCTAssertTrue([[sut statusOperationUrlWithStatusId:@"test" operationType:MastodonClientStatusOperationTypeReblog].absoluteString isEqualToString:@"https://example.com/api/v1/statuses/test/reblog"]);
+    XCTAssertTrue([[sut statusOperationUrlWithStatusId:@"test" operationType:MastodonClientStatusOperationTypeUnreblog].absoluteString isEqualToString:@"https://example.com/api/v1/statuses/test/unreblog"]);
+    XCTAssertTrue([[sut statusOperationUrlWithStatusId:@"test" operationType:MastodonClientStatusOperationTypeFavourite].absoluteString isEqualToString:@"https://example.com/api/v1/statuses/test/favourite"]);
+    XCTAssertTrue([[sut statusOperationUrlWithStatusId:@"test" operationType:MastodonClientStatusOperationTypeUnfavourite].absoluteString isEqualToString:@"https://example.com/api/v1/statuses/test/unfavourite"]);
+}
+
 @end

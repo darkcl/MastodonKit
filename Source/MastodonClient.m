@@ -263,6 +263,32 @@ static NSString *const kClientSecretKey = @"client_secret";
     return [NSURL URLWithString:result];
 }
 
+- (NSURL * _Nonnull)statusOperationUrlWithStatusId:(NSString * _Nonnull)statusId
+                                     operationType:(MastodonClientStatusOperationType)type{
+    NSString *typeStr = @"";
+    
+    switch (type) {
+        case MastodonClientStatusOperationTypeReblog:
+            typeStr = @"reblog";
+            break;
+        case MastodonClientStatusOperationTypeUnreblog:
+            typeStr = @"unreblog";
+            break;
+        case MastodonClientStatusOperationTypeFavourite:
+            typeStr = @"favourite";
+            break;
+        case MastodonClientStatusOperationTypeUnfavourite:
+            typeStr = @"unfavourite";
+            break;
+        default:
+            break;
+    }
+    
+    NSString *result = [NSString stringWithFormat:@"%@/%@/%@", self.statusUrl.absoluteString, statusId, typeStr];
+    
+    return [NSURL URLWithString:result];
+}
+
 - (BOOL)isEqual:(id)object{
     if ([object isKindOfClass:[MastodonClient class]]) {
         MastodonClient *client = (MastodonClient *)object;

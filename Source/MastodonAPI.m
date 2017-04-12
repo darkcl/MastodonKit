@@ -315,7 +315,123 @@
                                         }];
 }
 
+#pragma mark - Statuses Operation
+
++ (void)postStatusWithClient:(MastodonClient * _Nonnull)client
+               statusContent:(NSString * _Nonnull)statusContent
+             replyToStatusId:(NSString * _Nullable)replyToStatusId
+                    mediaIds:(NSArray <NSString *> * _Nullable)mediaIds
+                 isSensitive:(BOOL)isSensitive
+                 spolierText:(NSString * _Nullable)spolierText
+              postVisibility:(MastodonStatusVisibility)postVisibility
+                successBlock:(void(^ _Nullable)(MastodonStatus * _Nullable result))successBlock
+                failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager postStatusWithClient:client
+                        statusContent:statusContent
+                      replyToStatusId:replyToStatusId
+                             mediaIds:mediaIds
+                          isSensitive:isSensitive
+                          spolierText:spolierText
+                       postVisibility:postVisibility
+                           completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                               if (success) {
+                                   successBlock(response);
+                               }else{
+                                   failureBlock(error);
+                               }
+                           }];
+}
+
++ (void)deleteStatusWithClient:(MastodonClient * _Nonnull)client
+                      statusId:(NSString * _Nonnull)statusId
+                  successBlock:(void(^ _Nullable)(void))successBlock
+                  failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager deleteStatusWithClient:client
+                               statusId:statusId
+                             completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                 if (success) {
+                                     successBlock();
+                                 }else{
+                                     failureBlock(error);
+                                 }
+                             }];
+    
+}
+
++ (void)reblogStatusWithClient:(MastodonClient * _Nonnull)client
+                      statusId:(NSString * _Nonnull)statusId
+                  successBlock:(void(^ _Nullable)(MastodonStatus * _Nullable result))successBlock
+                  failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager reblogStatusWithClient:client
+                               statusId:statusId
+                             completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                 if (success) {
+                                     successBlock(response);
+                                 }else{
+                                     failureBlock(error);
+                                 }
+                             }];
+}
+
++ (void)unreblogStatusWithClient:(MastodonClient * _Nonnull)client
+                        statusId:(NSString * _Nonnull)statusId
+                    successBlock:(void(^ _Nullable)(MastodonStatus * _Nullable result))successBlock
+                    failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager unreblogStatusWithClient:client
+                               statusId:statusId
+                             completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                 if (success) {
+                                     successBlock(response);
+                                 }else{
+                                     failureBlock(error);
+                                 }
+                             }];
+}
+
++ (void)favouriteStatusWithClient:(MastodonClient * _Nonnull)client
+                         statusId:(NSString * _Nonnull)statusId
+                     successBlock:(void(^ _Nullable)(MastodonStatus * _Nullable result))successBlock
+                     failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager favouriteStatusWithClient:client
+                                 statusId:statusId
+                               completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                   if (success) {
+                                       successBlock(response);
+                                   }else{
+                                       failureBlock(error);
+                                   }
+                               }];
+}
+
++ (void)unfavouriteStatusWithClient:(MastodonClient * _Nonnull)client
+                           statusId:(NSString * _Nonnull)statusId
+                       successBlock:(void(^ _Nullable)(MastodonStatus * _Nullable result))successBlock
+                       failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager unfavouriteStatusWithClient:client
+                                  statusId:statusId
+                                completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                    if (success) {
+                                        successBlock(response);
+                                    }else{
+                                        failureBlock(error);
+                                    }
+                                }];
+}
+
 #pragma mark - Account Operation
+
 + (void)followAccountWithClient:(MastodonClient * _Nonnull)client
                   withAccountId:(NSString * _Nonnull)accountId
                    successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock

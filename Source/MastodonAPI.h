@@ -10,6 +10,8 @@
 
 @class MastodonStatus, MastodonClient, MastodonAccount, MastodonRelationship, MastodonAttachment, MastodonNotification, MastodonReport, MastodonSearchResult, MastodonContext, MastodonCard;
 
+#import "MastodonConstants.h"
+
 @interface MastodonAPI : NSObject
 
 + (BOOL)launchMastodonKit;
@@ -174,6 +176,43 @@
                                     limit:(NSInteger)limit
                              successBlock:(void(^ _Nullable)(NSArray <MastodonAccount *> * _Nullable result))successBlock
                              failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
+#pragma mark - Statuses Operation
+
++ (void)postStatusWithClient:(MastodonClient * _Nonnull)client
+               statusContent:(NSString * _Nonnull)statusContent
+             replyToStatusId:(NSString * _Nullable)replyToStatusId
+                    mediaIds:(NSArray <NSString *> * _Nullable)mediaIds
+                 isSensitive:(BOOL)isSensitive
+                 spolierText:(NSString * _Nullable)spolierText
+              postVisibility:(MastodonStatusVisibility)postVisibility
+                successBlock:(void(^ _Nullable)(MastodonStatus * _Nullable result))successBlock
+                failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
++ (void)deleteStatusWithClient:(MastodonClient * _Nonnull)client
+                      statusId:(NSString * _Nonnull)statusId
+                  successBlock:(void(^ _Nullable)(void))successBlock
+                  failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
++ (void)reblogStatusWithClient:(MastodonClient * _Nonnull)client
+                      statusId:(NSString * _Nonnull)statusId
+                  successBlock:(void(^ _Nullable)(MastodonStatus * _Nullable result))successBlock
+                  failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
++ (void)unreblogStatusWithClient:(MastodonClient * _Nonnull)client
+                        statusId:(NSString * _Nonnull)statusId
+                    successBlock:(void(^ _Nullable)(MastodonStatus * _Nullable result))successBlock
+                    failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
++ (void)favouriteStatusWithClient:(MastodonClient * _Nonnull)client
+                         statusId:(NSString * _Nonnull)statusId
+                     successBlock:(void(^ _Nullable)(MastodonStatus * _Nullable result))successBlock
+                     failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
++ (void)unfavouriteStatusWithClient:(MastodonClient * _Nonnull)client
+                           statusId:(NSString * _Nonnull)statusId
+                       successBlock:(void(^ _Nullable)(MastodonStatus * _Nullable result))successBlock
+                       failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
 
 #pragma mark - Account Operation
 

@@ -17,6 +17,13 @@ typedef NS_ENUM(NSInteger, MastodonClientAccountOperationType) {
     MastodonClientAccountOperationTypeUnmute
 };
 
+typedef NS_ENUM(NSInteger, MastodonClientStatusOperationType) {
+    MastodonClientStatusOperationTypeReblog,
+    MastodonClientStatusOperationTypeUnreblog,
+    MastodonClientStatusOperationTypeFavourite,
+    MastodonClientStatusOperationTypeUnfavourite
+};
+
 @interface MastodonClient : NSObject <NSCoding>
 
 + (_Nonnull instancetype)clientWithInstanceURL:(NSURL * _Nonnull)url;
@@ -100,6 +107,11 @@ typedef NS_ENUM(NSInteger, MastodonClientAccountOperationType) {
 - (NSURL * _Nonnull)statusReblogUrlWithStatusId:(NSString * _Nonnull)statusId;
 
 - (NSURL * _Nonnull)statusFavouriteUrlWithStatusId:(NSString * _Nonnull)statusId;
+
+#pragma mark - Status Operation
+
+- (NSURL * _Nonnull)statusOperationUrlWithStatusId:(NSString * _Nonnull)statusId
+                                     operationType:(MastodonClientStatusOperationType)type;
 
 #pragma mark - OAuth
 
