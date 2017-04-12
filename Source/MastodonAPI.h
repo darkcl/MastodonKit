@@ -77,7 +77,15 @@
                                 sinceId:(NSString * _Nullable)sinceId
                                   limit:(NSInteger)limit
                            successBlock:(void(^ _Nullable)(NSArray <MastodonAccount *> * _Nullable result))successBlock
-                          failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+                           failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
++ (void)fetchCurentUserStatusesWithClient:(MastodonClient * _Nonnull)client
+                                    maxId:(NSString * _Nullable)maxId
+                                  sinceId:(NSString * _Nullable)sinceId
+                                    limit:(NSInteger)limit
+                             successBlock:(void(^ _Nullable)(NSArray <MastodonStatus *> * _Nullable result))successBlock
+                             failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
 #pragma mark - Account Operation
 
 + (void)followAccountWithClient:(MastodonClient * _Nonnull)client

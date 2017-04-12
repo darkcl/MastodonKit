@@ -290,20 +290,20 @@
 }
 
 + (void)fetchAccountRelationshipsWithClient:(MastodonClient * _Nonnull)client
-                                  accountIds:(NSArray <NSString *> * _Nonnull)accountIds
-                                successBlock:(void(^ _Nullable)(NSArray <MastodonRelationship *> * _Nullable result))successBlock
-                                failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+                                 accountIds:(NSArray <NSString *> * _Nonnull)accountIds
+                               successBlock:(void(^ _Nullable)(NSArray <MastodonRelationship *> * _Nullable result))successBlock
+                               failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
     MastodonAPI *api = [self sharedInstance];
     
     [api.manager fetchAccountRelationshipsWithClient:client
-                                           accountIds:accountIds
-                                           completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
-                                               if (success) {
-                                                   successBlock(response);
-                                               }else{
-                                                   failureBlock(error);
-                                               }
-                                           }];
+                                          accountIds:accountIds
+                                          completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                              if (success) {
+                                                  successBlock(response);
+                                              }else{
+                                                  failureBlock(error);
+                                              }
+                                          }];
 }
 
 #pragma mark - Fetching Current Account
@@ -344,6 +344,27 @@
                                               failureBlock(error);
                                           }
                                       }];
+}
+
++ (void)fetchCurentUserStatusesWithClient:(MastodonClient * _Nonnull)client
+                                    maxId:(NSString * _Nullable)maxId
+                                  sinceId:(NSString * _Nullable)sinceId
+                                    limit:(NSInteger)limit
+                             successBlock:(void(^ _Nullable)(NSArray <MastodonStatus *> * _Nullable result))successBlock
+                             failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager fetchCurentUserStatusesWithClient:client
+                                             maxId:maxId
+                                           sinceId:sinceId
+                                             limit:limit
+                                        completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                            if (success) {
+                                                successBlock(response);
+                                            }else{
+                                                failureBlock(error);
+                                            }
+                                        }];
 }
 
 #pragma mark - Fetching Timeline
