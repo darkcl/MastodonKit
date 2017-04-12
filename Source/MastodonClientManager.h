@@ -87,6 +87,12 @@ typedef void(^MastodonClientRequestComplationBlock)(BOOL success, _Nullable id r
                                     limit:(NSInteger)limit
                                completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
+- (void)fetchCurentUserFollowRequestsWithClient:(MastodonClient * _Nonnull)client
+                                          maxId:(NSString * _Nullable)maxId
+                                        sinceId:(NSString * _Nullable)sinceId
+                                          limit:(NSInteger)limit
+                                     completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
 #pragma mark - Account Operation
 
 - (void)followAccountWithClient:(MastodonClient * _Nonnull)client

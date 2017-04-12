@@ -73,6 +73,8 @@
     
     XCTAssertTrue([sut.blockedAccountUrl.absoluteString isEqualToString:@"https://example.com/api/v1/blocks"]);
     XCTAssertTrue([sut.favouriteStatusesUrl.absoluteString isEqualToString:@"https://example.com/api/v1/favourites"]);
+    
+    XCTAssertTrue([sut.followRequestsUrl.absoluteString isEqualToString:@"https://example.com/api/v1/follow_requests"]);
 }
 
 @end

@@ -161,6 +161,12 @@ static NSString *const kClientSecretKey = @"client_secret";
     return [NSURL URLWithString:result];
 }
 
+- (NSURL * _Nonnull)followRequestsUrl{
+    NSString *result = [NSString stringWithFormat:@"%@/api/%@/follow_requests", self.instanceUrl.absoluteString, MastodonAPIVersion];
+    
+    return [NSURL URLWithString:result];
+}
+
 - (BOOL)isEqual:(id)object{
     if ([object isKindOfClass:[MastodonClient class]]) {
         MastodonClient *client = (MastodonClient *)object;
