@@ -42,9 +42,6 @@ typedef void(^MastodonClientRequestComplationBlock)(BOOL success, _Nullable id r
                          accountId:(NSString * _Nonnull)accountId
                         completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
-- (void)fetchCurentUserAccountInfoWithClient:(MastodonClient * _Nonnull)client
-                                  completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
-
 - (void)fetchAccountFollowersWithClient:(MastodonClient * _Nonnull)client
                               accountId:(NSString * _Nonnull)accountId
                                   maxId:(NSString * _Nullable)maxId
@@ -73,8 +70,16 @@ typedef void(^MastodonClientRequestComplationBlock)(BOOL success, _Nullable id r
                                   accountIds:(NSArray <NSString *> * _Nonnull)accountIds
                                   completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
-#pragma mark - Fetching My Account Information
+#pragma mark - Fetching Curent Account Information
 
+- (void)fetchCurentUserAccountInfoWithClient:(MastodonClient * _Nonnull)client
+                                  completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)fetchCurentUserBlocksWithClient:(MastodonClient * _Nonnull)client
+                                  maxId:(NSString * _Nullable)maxId
+                                sinceId:(NSString * _Nullable)sinceId
+                                  limit:(NSInteger)limit
+                             completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
 #pragma mark - Account Operation
 

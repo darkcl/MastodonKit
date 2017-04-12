@@ -199,22 +199,6 @@
 }
 
 #pragma mark - Fetching Account
-+ (void)fetchAccountInfoWithClient:(MastodonClient * _Nonnull)client
-                         accountId:(NSString * _Nonnull)accountId
-                      successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
-                      failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock{
-    MastodonAPI *api = [self sharedInstance];
-    
-    [api.manager fetchAccountInfoWithClient:client
-                                  accountId:accountId
-                                 completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
-                                     if (success) {
-                                         successBlock(response);
-                                     }else{
-                                         failureBlock(error);
-                                     }
-                                 }];
-}
 
 + (void)fetchCurentUserAccountInfoWithClient:(MastodonClient * _Nonnull)client
                                 successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
@@ -320,6 +304,46 @@
                                                    failureBlock(error);
                                                }
                                            }];
+}
+
+#pragma mark - Fetching Current Account
+
++ (void)fetchAccountInfoWithClient:(MastodonClient * _Nonnull)client
+                         accountId:(NSString * _Nonnull)accountId
+                      successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
+                      failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager fetchAccountInfoWithClient:client
+                                  accountId:accountId
+                                 completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                     if (success) {
+                                         successBlock(response);
+                                     }else{
+                                         failureBlock(error);
+                                     }
+                                 }];
+}
+
++ (void)fetchCurentUserBlocksWithClient:(MastodonClient * _Nonnull)client
+                                  maxId:(NSString * _Nullable)maxId
+                                sinceId:(NSString * _Nullable)sinceId
+                                  limit:(NSInteger)limit
+                           successBlock:(void(^ _Nullable)(NSArray <MastodonAccount *> * _Nullable result))successBlock
+                           failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager fetchCurentUserBlocksWithClient:client
+                                           maxId:maxId
+                                         sinceId:sinceId
+                                           limit:limit
+                                      completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                          if (success) {
+                                              successBlock(response);
+                                          }else{
+                                              failureBlock(error);
+                                          }
+                                      }];
 }
 
 #pragma mark - Fetching Timeline

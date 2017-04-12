@@ -35,10 +35,6 @@
                       successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
                       failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock;
 
-+ (void)fetchCurentUserAccountInfoWithClient:(MastodonClient * _Nonnull)client
-                                successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
-                                failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock;
-
 + (void)fetchAccountFollowersWithClient:(MastodonClient * _Nonnull)client
                               accountId:(NSString * _Nonnull)accountId
                                   maxId:(NSString * _Nullable)maxId
@@ -66,10 +62,22 @@
                           failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
 
 + (void)fetchAccountRelationshipsWithClient:(MastodonClient * _Nonnull)client
-                                  accountIds:(NSArray <NSString *> * _Nonnull)accountIds
-                                successBlock:(void(^ _Nullable)(NSArray <MastodonRelationship *> * _Nullable result))successBlock
-                                failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+                                 accountIds:(NSArray <NSString *> * _Nonnull)accountIds
+                               successBlock:(void(^ _Nullable)(NSArray <MastodonRelationship *> * _Nullable result))successBlock
+                               failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
 
+#pragma mark - Fetching Current Account
+
++ (void)fetchCurentUserAccountInfoWithClient:(MastodonClient * _Nonnull)client
+                                successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
+                                failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock;
+
++ (void)fetchCurentUserBlocksWithClient:(MastodonClient * _Nonnull)client
+                                  maxId:(NSString * _Nullable)maxId
+                                sinceId:(NSString * _Nullable)sinceId
+                                  limit:(NSInteger)limit
+                           successBlock:(void(^ _Nullable)(NSArray <MastodonAccount *> * _Nullable result))successBlock
+                          failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
 #pragma mark - Account Operation
 
 + (void)followAccountWithClient:(MastodonClient * _Nonnull)client
