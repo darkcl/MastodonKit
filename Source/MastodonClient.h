@@ -55,6 +55,8 @@ typedef NS_ENUM(NSInteger, MastodonClientAccountOperationType) {
 
 @property (nonatomic, strong, readonly, nonnull) NSURL *blockedAccountUrl;
 
+@property (nonatomic, strong, readonly, nonnull) NSURL *muteAccountUrl;
+
 @property (nonatomic, strong, readonly, nonnull) NSURL *favouriteStatusesUrl;
 
 @property (nonatomic, strong, readonly, nonnull) NSURL *followRequestsUrl;

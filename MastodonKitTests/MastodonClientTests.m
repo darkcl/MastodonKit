@@ -82,6 +82,8 @@
     
     XCTAssertTrue([sut.followsAccountUrl.absoluteString isEqualToString:@"https://example.com/api/v1/follows"]);
     
+    XCTAssertTrue([sut.muteAccountUrl.absoluteString isEqualToString:@"https://example.com/api/v1/mutes"]);
+    
     XCTAssertTrue([sut.mediaAttachmentUrl.absoluteString isEqualToString:@"https://example.com/api/v1/media"]);
 }
 

@@ -83,6 +83,12 @@ typedef void(^MastodonClientRequestProgessBlock)(double progress);
                                   limit:(NSInteger)limit
                              completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
+- (void)fetchCurentUserMutesWithClient:(MastodonClient * _Nonnull)client
+                                 maxId:(NSString * _Nullable)maxId
+                               sinceId:(NSString * _Nullable)sinceId
+                                 limit:(NSInteger)limit
+                            completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
 - (void)fetchCurentUserStatusesWithClient:(MastodonClient * _Nonnull)client
                                     maxId:(NSString * _Nullable)maxId
                                   sinceId:(NSString * _Nullable)sinceId

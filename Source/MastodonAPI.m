@@ -441,6 +441,27 @@
     
 }
 
++ (void)fetchCurentUserMutesWithClient:(MastodonClient * _Nonnull)client
+                                 maxId:(NSString * _Nullable)maxId
+                               sinceId:(NSString * _Nullable)sinceId
+                                 limit:(NSInteger)limit
+                          successBlock:(void(^ _Nullable)(NSArray <MastodonAccount *> * _Nullable result))successBlock
+                          failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager fetchCurentUserMutesWithClient:client
+                                          maxId:maxId
+                                        sinceId:sinceId
+                                          limit:limit
+                                     completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                         if (success) {
+                                             successBlock(response);
+                                         }else{
+                                             failureBlock(error);
+                                         }
+                                     }];
+}
+
 #pragma mark - Fetching Timeline
 
 + (void)fetchHomeTimeline:(MastodonClient * _Nonnull)client
