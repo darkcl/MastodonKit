@@ -16,6 +16,7 @@ FOUNDATION_EXPORT const unsigned char MastodonKitVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <MastodonKit/PublicHeader.h>
 
+#import <MastodonKit/MastodonConstants.h>
 
 #import <MastodonKit/MastodonAPI.h>
 
@@ -31,8 +32,6 @@ FOUNDATION_EXPORT const unsigned char MastodonKitVersionString[];
 #import <MastodonKit/NSError+MastodonKit.h>
 
 // Models
-
-#import <MastodonKit/MastodonConstants.h>
 
 #import <MastodonKit/MastodonStatus.h>
 
@@ -51,3 +50,9 @@ FOUNDATION_EXPORT const unsigned char MastodonKitVersionString[];
 #import <MastodonKit/MastodonNotification.h>
 
 #import <MastodonKit/MastodonReport.h>
+
+#import <MastodonKit/MastodonSearchResult.h>
+
+#import <MastodonKit/MastodonContext.h>
+
+#import <MastodonKit/MastodonCard.h>

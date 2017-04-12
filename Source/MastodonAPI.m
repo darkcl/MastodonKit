@@ -215,6 +215,106 @@
                        }];
 }
 
+#pragma mark - Statuses
+
++ (void)fetchStatusWithClient:(MastodonClient * _Nonnull)client
+                     statusId:(NSString * _Nonnull)statusId
+                 successBlock:(void(^ _Nullable)(MastodonStatus * _Nullable result))successBlock
+                 failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager fetchStatusWithClient:client
+                              statusId:statusId
+                            completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                if (success) {
+                                    successBlock(response);
+                                }else{
+                                    failureBlock(error);
+                                }
+                            }];
+}
+
++ (void)fetchStatusContextWithClient:(MastodonClient * _Nonnull)client
+                            statusId:(NSString * _Nonnull)statusId
+                        successBlock:(void(^ _Nullable)(MastodonContext * _Nullable result))successBlock
+                        failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager fetchStatusContextWithClient:client
+                                     statusId:statusId
+                                   completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                       if (success) {
+                                           successBlock(response);
+                                       }else{
+                                           failureBlock(error);
+                                       }
+                                   }];
+    
+}
+
++ (void)fetchStatusCardWithClient:(MastodonClient * _Nonnull)client
+                         statusId:(NSString * _Nonnull)statusId
+                     successBlock:(void(^ _Nullable)(MastodonCard * _Nullable result))successBlock
+                     failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager fetchStatusCardWithClient:client
+                                  statusId:statusId
+                                completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                    if (success) {
+                                        successBlock(response);
+                                    }else{
+                                        failureBlock(error);
+                                    }
+                                }];
+}
+
++ (void)fetchStatusRebloggedByWithClient:(MastodonClient * _Nonnull)client
+                                statusId:(NSString * _Nonnull)statusId
+                                   maxId:(NSString * _Nullable)maxId
+                                 sinceId:(NSString * _Nullable)sinceId
+                                   limit:(NSInteger)limit
+                            successBlock:(void(^ _Nullable)(NSArray <MastodonAccount *> * _Nullable result))successBlock
+                            failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager fetchStatusRebloggedByWithClient:client
+                                         statusId:statusId
+                                            maxId:maxId
+                                          sinceId:sinceId
+                                            limit:limit
+                                       completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                           if (success) {
+                                               successBlock(response);
+                                           }else{
+                                               failureBlock(error);
+                                           }
+                                       }];
+}
+
++ (void)fetchStatusFavouritedByWithClient:(MastodonClient * _Nonnull)client
+                                 statusId:(NSString * _Nonnull)statusId
+                                    maxId:(NSString * _Nullable)maxId
+                                  sinceId:(NSString * _Nullable)sinceId
+                                    limit:(NSInteger)limit
+                             successBlock:(void(^ _Nullable)(NSArray <MastodonAccount *> * _Nullable result))successBlock
+                             failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager fetchStatusFavouritedByWithClient:client
+                                          statusId:statusId
+                                             maxId:maxId
+                                           sinceId:sinceId
+                                             limit:limit
+                                        completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                            if (success) {
+                                                successBlock(response);
+                                            }else{
+                                                failureBlock(error);
+                                            }
+                                        }];
+}
+
 #pragma mark - Account Operation
 + (void)followAccountWithClient:(MastodonClient * _Nonnull)client
                   withAccountId:(NSString * _Nonnull)accountId

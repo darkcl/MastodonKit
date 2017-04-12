@@ -227,6 +227,42 @@ static NSString *const kClientSecretKey = @"client_secret";
     return [NSURL URLWithString:result];
 }
 
+- (NSURL * _Nonnull)statusUrl{
+    NSString *result = [NSString stringWithFormat:@"%@/api/%@/statuses", self.instanceUrl.absoluteString, MastodonAPIVersion];
+    
+    return [NSURL URLWithString:result];
+}
+
+- (NSURL * _Nonnull)statusUrlWithStatusId:(NSString * _Nonnull)statusId{
+    NSString *result = [NSString stringWithFormat:@"%@/%@", self.statusUrl.absoluteString, statusId];
+    
+    return [NSURL URLWithString:result];
+}
+
+- (NSURL * _Nonnull)statusContextUrlWithStatusId:(NSString * _Nonnull)statusId{
+    NSString *result = [NSString stringWithFormat:@"%@/%@/context", self.statusUrl.absoluteString, statusId];
+    
+    return [NSURL URLWithString:result];
+}
+
+- (NSURL * _Nonnull)statusCardUrlWithStatusId:(NSString * _Nonnull)statusId{
+    NSString *result = [NSString stringWithFormat:@"%@/%@/card", self.statusUrl.absoluteString, statusId];
+    
+    return [NSURL URLWithString:result];
+}
+
+- (NSURL * _Nonnull)statusReblogUrlWithStatusId:(NSString * _Nonnull)statusId{
+    NSString *result = [NSString stringWithFormat:@"%@/%@/reblogged_by", self.statusUrl.absoluteString, statusId];
+    
+    return [NSURL URLWithString:result];
+}
+
+- (NSURL * _Nonnull)statusFavouriteUrlWithStatusId:(NSString * _Nonnull)statusId{
+    NSString *result = [NSString stringWithFormat:@"%@/%@/favourited_by", self.statusUrl.absoluteString, statusId];
+    
+    return [NSURL URLWithString:result];
+}
+
 - (BOOL)isEqual:(id)object{
     if ([object isKindOfClass:[MastodonClient class]]) {
         MastodonClient *client = (MastodonClient *)object;

@@ -137,6 +137,34 @@ typedef void(^MastodonClientRequestProgessBlock)(double progress);
       shouldResolveLocal:(BOOL)shouldResolveLocal
               completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
+#pragma mark - Statuses
+
+- (void)fetchStatusWithClient:(MastodonClient * _Nonnull)client
+                     statusId:(NSString * _Nonnull)statusId
+                   completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)fetchStatusContextWithClient:(MastodonClient * _Nonnull)client
+                            statusId:(NSString * _Nonnull)statusId
+                          completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)fetchStatusCardWithClient:(MastodonClient * _Nonnull)client
+                         statusId:(NSString * _Nonnull)statusId
+                       completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)fetchStatusRebloggedByWithClient:(MastodonClient * _Nonnull)client
+                                statusId:(NSString * _Nonnull)statusId
+                                   maxId:(NSString * _Nullable)maxId
+                                 sinceId:(NSString * _Nullable)sinceId
+                                   limit:(NSInteger)limit
+                              completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)fetchStatusFavouritedByWithClient:(MastodonClient * _Nonnull)client
+                                 statusId:(NSString * _Nonnull)statusId
+                                    maxId:(NSString * _Nullable)maxId
+                                  sinceId:(NSString * _Nullable)sinceId
+                                    limit:(NSInteger)limit
+                               completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
 #pragma mark - Account Operation
 
 - (void)followAccountWithClient:(MastodonClient * _Nonnull)client

@@ -8,25 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MastodonConstants.h"
+
 @class MastodonAccount, MastodonAttachment, MastodonMention, MastodonTags, MastodonApplication;
-
-
-/**
- Status Visibility Type
-
- - MastodonStatusVisibilityUnknow: Unknown Type
- - MastodonStatusVisibilityPublic: Public status
- - MastodonStatusVisibilityUnlisted: Unlisted status
- - MastodonStatusVisibilityPrivate: Private status
- - MastodonStatusVisibilityDirect: Direct status
- */
-typedef NS_ENUM(NSInteger, MastodonStatusVisibility) {
-    MastodonStatusVisibilityUnknow = -1,
-    MastodonStatusVisibilityPublic,
-    MastodonStatusVisibilityUnlisted,
-    MastodonStatusVisibilityPrivate,
-    MastodonStatusVisibilityDirect
-};
 
 @interface MastodonStatus : NSObject
 

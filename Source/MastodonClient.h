@@ -87,6 +87,20 @@ typedef NS_ENUM(NSInteger, MastodonClientAccountOperationType) {
 
 @property (nonatomic, strong, readonly, nonnull) NSURL *searchUrl;
 
+#pragma mark - Statuses Related URL
+
+@property (nonatomic, strong, readonly, nonnull) NSURL *statusUrl;
+
+- (NSURL * _Nonnull)statusUrlWithStatusId:(NSString * _Nonnull)statusId;
+
+- (NSURL * _Nonnull)statusContextUrlWithStatusId:(NSString * _Nonnull)statusId;
+
+- (NSURL * _Nonnull)statusCardUrlWithStatusId:(NSString * _Nonnull)statusId;
+
+- (NSURL * _Nonnull)statusReblogUrlWithStatusId:(NSString * _Nonnull)statusId;
+
+- (NSURL * _Nonnull)statusFavouriteUrlWithStatusId:(NSString * _Nonnull)statusId;
+
 #pragma mark - OAuth
 
 @property (readonly) BOOL isRegistered;

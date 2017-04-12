@@ -101,4 +101,13 @@
     XCTAssertTrue([sut.searchUrl.absoluteString isEqualToString:@"https://example.com/api/v1/search"]);
 }
 
+- (void)testStatusUrl{
+    XCTAssertTrue([[sut statusUrlWithStatusId:@"test"].absoluteString isEqualToString:@"https://example.com/api/v1/statuses/test"]);
+    XCTAssertTrue([[sut statusContextUrlWithStatusId:@"test"].absoluteString isEqualToString:@"https://example.com/api/v1/statuses/test/context"]);
+    XCTAssertTrue([[sut statusCardUrlWithStatusId:@"test"].absoluteString isEqualToString:@"https://example.com/api/v1/statuses/test/card"]);
+    XCTAssertTrue([[sut statusReblogUrlWithStatusId:@"test"].absoluteString isEqualToString:@"https://example.com/api/v1/statuses/test/reblogged_by"]);
+    XCTAssertTrue([[sut statusFavouriteUrlWithStatusId:@"test"].absoluteString isEqualToString:@"https://example.com/api/v1/statuses/test/favourited_by"]);
+    XCTAssertTrue([sut.statusUrl.absoluteString isEqualToString:@"https://example.com/api/v1/statuses"]);
+}
+
 @end

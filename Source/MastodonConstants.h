@@ -19,3 +19,21 @@ FOUNDATION_EXPORT NSString * const MastodonKitApplicationName;
 FOUNDATION_EXPORT NSString * const MastodonKitRedirectUri;
 
 FOUNDATION_EXPORT NSString * const MastodonKitWebsitUrl;
+
+
+/**
+ Status Visibility Type
+ 
+ - MastodonStatusVisibilityUnknow: Unknown Type
+ - MastodonStatusVisibilityPublic: Public status
+ - MastodonStatusVisibilityUnlisted: Unlisted status
+ - MastodonStatusVisibilityPrivate: Private status
+ - MastodonStatusVisibilityDirect: Direct status
+ */
+typedef NS_ENUM(NSInteger, MastodonStatusVisibility) {
+    MastodonStatusVisibilityUnknow = -1,
+    MastodonStatusVisibilityPublic,
+    MastodonStatusVisibilityUnlisted,
+    MastodonStatusVisibilityPrivate,
+    MastodonStatusVisibilityDirect
+};

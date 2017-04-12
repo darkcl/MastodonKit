@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class MastodonStatus, MastodonClient, MastodonAccount, MastodonRelationship, MastodonAttachment, MastodonNotification, MastodonReport, MastodonSearchResult;
+@class MastodonStatus, MastodonClient, MastodonAccount, MastodonRelationship, MastodonAttachment, MastodonNotification, MastodonReport, MastodonSearchResult, MastodonContext, MastodonCard;
 
 @interface MastodonAPI : NSObject
 
@@ -141,6 +141,39 @@
       shouldResolveLocal:(BOOL)shouldResolveLocal
             successBlock:(void(^ _Nullable)(MastodonSearchResult * _Nullable result))successBlock
             failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
+#pragma mark - Statuses
+
++ (void)fetchStatusWithClient:(MastodonClient * _Nonnull)client
+                     statusId:(NSString * _Nonnull)statusId
+                 successBlock:(void(^ _Nullable)(MastodonStatus * _Nullable result))successBlock
+                 failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
++ (void)fetchStatusContextWithClient:(MastodonClient * _Nonnull)client
+                            statusId:(NSString * _Nonnull)statusId
+                        successBlock:(void(^ _Nullable)(MastodonContext * _Nullable result))successBlock
+                        failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
++ (void)fetchStatusCardWithClient:(MastodonClient * _Nonnull)client
+                         statusId:(NSString * _Nonnull)statusId
+                     successBlock:(void(^ _Nullable)(MastodonCard * _Nullable result))successBlock
+                     failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
++ (void)fetchStatusRebloggedByWithClient:(MastodonClient * _Nonnull)client
+                                statusId:(NSString * _Nonnull)statusId
+                                   maxId:(NSString * _Nullable)maxId
+                                 sinceId:(NSString * _Nullable)sinceId
+                                   limit:(NSInteger)limit
+                            successBlock:(void(^ _Nullable)(NSArray <MastodonAccount *> * _Nullable result))successBlock
+                            failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
++ (void)fetchStatusFavouritedByWithClient:(MastodonClient * _Nonnull)client
+                                 statusId:(NSString * _Nonnull)statusId
+                                    maxId:(NSString * _Nullable)maxId
+                                  sinceId:(NSString * _Nullable)sinceId
+                                    limit:(NSInteger)limit
+                             successBlock:(void(^ _Nullable)(NSArray <MastodonAccount *> * _Nullable result))successBlock
+                             failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
 
 #pragma mark - Account Operation
 
