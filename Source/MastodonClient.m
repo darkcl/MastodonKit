@@ -221,6 +221,12 @@ static NSString *const kClientSecretKey = @"client_secret";
     return [NSURL URLWithString:result];
 }
 
+- (NSURL * _Nonnull)searchUrl{
+    NSString *result = [NSString stringWithFormat:@"%@/api/%@/search", self.instanceUrl.absoluteString, MastodonAPIVersion];
+    
+    return [NSURL URLWithString:result];
+}
+
 - (BOOL)isEqual:(id)object{
     if ([object isKindOfClass:[MastodonClient class]]) {
         MastodonClient *client = (MastodonClient *)object;

@@ -158,15 +158,61 @@
                          limit:(NSInteger)limit
                   successBlock:(void(^ _Nullable)(NSArray <MastodonReport *> * _Nullable result))successBlock
                   failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
     
+    [api.manager fetchReportsWithClient:client
+                                  maxId:maxId
+                                sinceId:sinceId
+                                  limit:limit
+                             completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                 if (success) {
+                                     successBlock(response);
+                                 }else{
+                                     failureBlock(error);
+                                 }
+                             }];
 }
 
 + (void)reportUserWithClient:(MastodonClient * _Nonnull)client
                     accoutId:(NSString * _Nonnull)accoutId
                    statusIds:(NSArray <NSString *> * _Nonnull)statusIds
+                     comment:(NSString * _Nonnull)comment
                 successBlock:(void(^ _Nullable)(MastodonReport * _Nullable result))successBlock
                 failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
     
+    [api.manager reportUserWithClient:client
+                             accoutId:accoutId
+                            statusIds:statusIds
+                              comment:comment
+                           completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                               if (success) {
+                                   successBlock(response);
+                               }else{
+                                   failureBlock(error);
+                               }
+                           }];
+}
+
+#pragma mark - Search
+
++ (void)searchWithClient:(MastodonClient * _Nonnull)client
+             queryString:(NSString * _Nonnull)queryString
+      shouldResolveLocal:(BOOL)shouldResolveLocal
+            successBlock:(void(^ _Nullable)(MastodonSearchResult * _Nullable result))successBlock
+            failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager searchWithClient:client
+                      queryString:queryString
+               shouldResolveLocal:shouldResolveLocal
+                       completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                           if (success) {
+                               successBlock(response);
+                           }else{
+                               failureBlock(error);
+                           }
+                       }];
 }
 
 #pragma mark - Account Operation

@@ -97,4 +97,8 @@
     XCTAssertTrue([sut.reportUrl.absoluteString isEqualToString:@"https://example.com/api/v1/reports"]);
 }
 
+- (void)testSearchUrl{
+    XCTAssertTrue([sut.searchUrl.absoluteString isEqualToString:@"https://example.com/api/v1/search"]);
+}
+
 @end

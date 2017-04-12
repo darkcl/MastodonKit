@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class MastodonStatus, MastodonClient, MastodonAccount, MastodonRelationship, MastodonAttachment, MastodonNotification, MastodonReport;
+@class MastodonStatus, MastodonClient, MastodonAccount, MastodonRelationship, MastodonAttachment, MastodonNotification, MastodonReport, MastodonSearchResult;
 
 @interface MastodonAPI : NSObject
 
@@ -133,6 +133,14 @@
                      comment:(NSString * _Nonnull)comment
                   successBlock:(void(^ _Nullable)(MastodonReport * _Nullable result))successBlock
                   failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
+#pragma mark - Search
+
++ (void)searchWithClient:(MastodonClient * _Nonnull)client
+             queryString:(NSString * _Nonnull)queryString
+      shouldResolveLocal:(BOOL)shouldResolveLocal
+            successBlock:(void(^ _Nullable)(MastodonSearchResult * _Nullable result))successBlock
+            failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
 
 #pragma mark - Account Operation
 

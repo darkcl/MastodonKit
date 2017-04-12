@@ -130,6 +130,13 @@ typedef void(^MastodonClientRequestProgessBlock)(double progress);
                      comment:(NSString * _Nonnull)comment
                   completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
+#pragma mark - Search
+
+- (void)searchWithClient:(MastodonClient * _Nonnull)client
+             queryString:(NSString * _Nonnull)queryString
+      shouldResolveLocal:(BOOL)shouldResolveLocal
+              completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
 #pragma mark - Account Operation
 
 - (void)followAccountWithClient:(MastodonClient * _Nonnull)client

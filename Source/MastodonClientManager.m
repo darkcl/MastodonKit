@@ -18,6 +18,8 @@
 
 #import "MastodonNotification.h"
 
+#import "MastodonSearchResult.h"
+
 #import "NSError+MastodonKit.h"
 
 #import "MastodonStatus.h"
@@ -536,6 +538,61 @@
                     }else{
                         if ([jsonObject isKindOfClass:[NSDictionary class]]) {
                             completionBlock(YES, [[MastodonReport alloc] initWithDictionary:jsonObject], nil);
+                        }else{
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                        }
+                    }
+                }
+            }];
+    }else{
+        completionBlock(NO, nil, nil);
+    }
+}
+
+#pragma mark - Search
+
+- (void)searchWithClient:(MastodonClient * _Nonnull)client
+             queryString:(NSString * _Nonnull)queryString
+      shouldResolveLocal:(BOOL)shouldResolveLocal
+              completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    NSArray <MastodonClient *> *clients = self.clientsList;
+    
+    if ([clients containsObject:client]) {
+        client = [clients objectAtIndex:[clients indexOfObject:client]];
+    }
+    
+    NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
+    if (accounts.count != 0) {
+        
+        NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+        
+        if (queryString != nil) {
+            [param setValue:queryString forKey:@"q"];
+        }
+        
+        [param setValue:@(shouldResolveLocal).stringValue forKey:@"resolve"];
+        
+        [self performMethod:@"GET"
+                 onResource:client.searchUrl
+            usingParameters:param
+                withAccount:accounts[0]
+                 withClient:client
+        sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+            // e.g., update a progress indicator
+        }
+            responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                // Process the response
+                if (error != nil) {
+                    completionBlock(NO, nil, error);
+                }else{
+                    NSError *jsonError;
+                    id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
+                    
+                    if (jsonError != nil) {
+                        completionBlock(NO, nil, jsonError);
+                    }else{
+                        if ([jsonObject isKindOfClass:[NSDictionary class]]) {
+                            completionBlock(YES, [[MastodonSearchResult alloc] initWithDictionary:jsonObject], nil);
                         }else{
                             completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
                         }
