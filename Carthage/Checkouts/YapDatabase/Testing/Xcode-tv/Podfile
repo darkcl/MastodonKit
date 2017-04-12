@@ -1,0 +1,10 @@
+project 'YapDatabaseTesting.xcodeproj'
+platform :tvos, '9.0'
+
+target 'YapDatabase' do
+	pod "YapDatabase", path: '../../'
+end
+
+target 'YapDatabaseTests' do
+	pod "YapDatabase", path: '../../'
+end
