@@ -79,6 +79,8 @@
     XCTAssertTrue([sut.apporveFollowRequestsUrl.absoluteString isEqualToString:@"https://example.com/api/v1/follow_requests/authorize"]);
     
     XCTAssertTrue([sut.rejectFollowRequestsUrl.absoluteString isEqualToString:@"https://example.com/api/v1/follow_requests/reject"]);
+    
+    XCTAssertTrue([sut.followsAccountUrl.absoluteString isEqualToString:@"https://example.com/api/v1/follows"]);
 }
 
 @end

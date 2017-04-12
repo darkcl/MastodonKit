@@ -442,6 +442,50 @@
     }
 }
 
+- (void)followAccountWithClient:(MastodonClient * _Nonnull)client
+                        withAccountUri:(NSString * _Nonnull)accountUri
+                           completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    NSArray <MastodonClient *> *clients = self.clientsList;
+    
+    if ([clients containsObject:client]) {
+        client = [clients objectAtIndex:[clients indexOfObject:client]];
+    }
+    
+    NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
+    if (accounts.count != 0) {
+        
+        [self performMethod:@"POST"
+                 onResource:client.followsAccountUrl
+            usingParameters:@{@"uri": accountUri}
+                withAccount:accounts[0]
+                 withClient:client
+        sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+            // e.g., update a progress indicator
+        }
+            responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                // Process the response
+                if (error != nil) {
+                    NSError *jsonError;
+                    id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
+                    
+                    if (jsonError != nil) {
+                        completionBlock(NO, nil, jsonError);
+                    }else{
+                        if ([jsonObject isKindOfClass:[NSDictionary class]]) {
+                            completionBlock(YES, [[MastodonAccount alloc] initWithDictionary:jsonObject], nil);
+                        }else{
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                        }
+                    }
+                }else{
+                    completionBlock(YES, responseData, nil);
+                }
+            }];
+    }else{
+        completionBlock(NO, nil, nil);
+    }
+}
+
 #pragma mark - Fetching Account Information
 
 - (void)fetchCurentUserBlocksWithClient:(MastodonClient * _Nonnull)client

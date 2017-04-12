@@ -232,6 +232,24 @@
                                     }];
 }
 
+
++ (void)followAccountWithClient:(MastodonClient * _Nonnull)client
+                 withAccountUri:(NSString * _Nonnull)accountUri
+                   successBlock:(void(^ _Nullable)(MastodonAccount * _Nullable result))successBlock
+                   failureBlock:(void(^ _Nullable)(NSError *_Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager followAccountWithClient:client
+                          withAccountUri:accountUri
+                              completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                  if (success) {
+                                      successBlock(response);
+                                  }else{
+                                      failureBlock(error);
+                                  }
+                              }];
+}
+
 #pragma mark - Fetching Account
 
 + (void)fetchCurentUserAccountInfoWithClient:(MastodonClient * _Nonnull)client
