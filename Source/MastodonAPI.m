@@ -150,6 +150,25 @@
                                   }];
 }
 
+#pragma mark - Reports
+
++ (void)fetchReportsWithClient:(MastodonClient * _Nonnull)client
+                         maxId:(NSString * _Nullable)maxId
+                       sinceId:(NSString * _Nullable)sinceId
+                         limit:(NSInteger)limit
+                  successBlock:(void(^ _Nullable)(NSArray <MastodonReport *> * _Nullable result))successBlock
+                  failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    
+}
+
++ (void)reportUserWithClient:(MastodonClient * _Nonnull)client
+                    accoutId:(NSString * _Nonnull)accoutId
+                   statusIds:(NSArray <NSString *> * _Nonnull)statusIds
+                successBlock:(void(^ _Nullable)(MastodonReport * _Nullable result))successBlock
+                failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    
+}
+
 #pragma mark - Account Operation
 + (void)followAccountWithClient:(MastodonClient * _Nonnull)client
                   withAccountId:(NSString * _Nonnull)accountId

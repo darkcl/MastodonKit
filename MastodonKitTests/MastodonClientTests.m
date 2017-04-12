@@ -93,4 +93,8 @@
     XCTAssertTrue([sut.clearNotificationUrl.absoluteString isEqualToString:@"https://example.com/api/v1/notifications/clear"]);
 }
 
+- (void)testReportUrl{
+    XCTAssertTrue([sut.reportUrl.absoluteString isEqualToString:@"https://example.com/api/v1/reports"]);
+}
+
 @end

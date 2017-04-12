@@ -79,6 +79,10 @@ typedef NS_ENUM(NSInteger, MastodonClientAccountOperationType) {
 
 @property (nonatomic, strong, readonly, nonnull) NSURL *clearNotificationUrl;
 
+#pragma mark - Report URL
+
+@property (nonatomic, strong, readonly, nonnull) NSURL *reportUrl;
+
 #pragma mark - OAuth
 
 @property (readonly) BOOL isRegistered;

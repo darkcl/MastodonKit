@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class MastodonStatus, MastodonClient, MastodonAccount, MastodonRelationship, MastodonAttachment, MastodonNotification;
+@class MastodonStatus, MastodonClient, MastodonAccount, MastodonRelationship, MastodonAttachment, MastodonNotification, MastodonReport;
 
 @interface MastodonAPI : NSObject
 
@@ -117,6 +117,22 @@
 + (void)clearNotificationWithClient:(MastodonClient * _Nonnull)client
                        successBlock:(void(^ _Nullable)(void))successBlock
                        failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
+#pragma mark - Reports
+
++ (void)fetchReportsWithClient:(MastodonClient * _Nonnull)client
+                              maxId:(NSString * _Nullable)maxId
+                            sinceId:(NSString * _Nullable)sinceId
+                              limit:(NSInteger)limit
+                       successBlock:(void(^ _Nullable)(NSArray <MastodonReport *> * _Nullable result))successBlock
+                       failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
++ (void)reportUserWithClient:(MastodonClient * _Nonnull)client
+                         accoutId:(NSString * _Nonnull)accoutId
+                   statusIds:(NSArray <NSString *> * _Nonnull)statusIds
+                     comment:(NSString * _Nonnull)comment
+                  successBlock:(void(^ _Nullable)(MastodonReport * _Nullable result))successBlock
+                  failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
 
 #pragma mark - Account Operation
 
