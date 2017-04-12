@@ -29,13 +29,15 @@ typedef NS_ENUM(NSInteger, MastodonClientAccountOperationType) {
 
 @property (nonatomic, strong, readonly, nonnull) NSURL *tokenUrl;
 
-#pragma mark - Resources URL
+#pragma mark - Timeline Resources URL
 
 @property (nonatomic, strong, readonly, nonnull) NSURL *homeTimelineUrl;
 
 @property (nonatomic, strong, readonly, nonnull) NSURL *publicTimelineUrl;
 
 - (NSURL * _Nonnull)timelineWithTag:(NSString * _Nonnull)tag;
+
+#pragma mark - Account Resources URL
 
 @property (nonatomic, strong, readonly, nonnull) NSURL *currentUserUrl;
 
@@ -50,6 +52,10 @@ typedef NS_ENUM(NSInteger, MastodonClientAccountOperationType) {
 - (NSURL * _Nonnull)accountOperationUrlWithAccountId:(NSString * _Nonnull)accountId operationType:(MastodonClientAccountOperationType)type;
 
 - (NSURL * _Nonnull)accountRelationshipUrlWithAccountIds:(NSArray <NSString *> * _Nonnull)accountIds;
+
+@property (nonatomic, strong, readonly, nonnull) NSURL *blockedAccountUrl;
+
+@property (nonatomic, strong, readonly, nonnull) NSURL *favouriteStatusesUrl;
 
 #pragma mark - OAuth
 

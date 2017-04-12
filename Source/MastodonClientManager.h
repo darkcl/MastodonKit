@@ -72,6 +72,10 @@ typedef void(^MastodonClientRequestComplationBlock)(BOOL success, _Nullable id r
 - (void)fetchAccountRelationshipsWithClient:(MastodonClient * _Nonnull)client
                                   accountIds:(NSArray <NSString *> * _Nonnull)accountIds
                                   completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+#pragma mark - Fetching My Account Information
+
+
 #pragma mark - Account Operation
 
 - (void)followAccountWithClient:(MastodonClient * _Nonnull)client

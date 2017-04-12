@@ -149,6 +149,18 @@ static NSString *const kClientSecretKey = @"client_secret";
     return comp.URL;
 }
 
+- (NSURL * _Nonnull)blockedAccountUrl{
+    NSString *result = [NSString stringWithFormat:@"%@/api/%@/blocks", self.instanceUrl.absoluteString, MastodonAPIVersion];
+    
+    return [NSURL URLWithString:result];
+}
+
+- (NSURL * _Nonnull)favouriteStatusesUrl{
+    NSString *result = [NSString stringWithFormat:@"%@/api/%@/favourites", self.instanceUrl.absoluteString, MastodonAPIVersion];
+    
+    return [NSURL URLWithString:result];
+}
+
 - (BOOL)isEqual:(id)object{
     if ([object isKindOfClass:[MastodonClient class]]) {
         MastodonClient *client = (MastodonClient *)object;

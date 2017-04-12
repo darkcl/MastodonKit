@@ -18,22 +18,39 @@
 
 @implementation MastodonClientTests
 
-- (void)testClientUrl {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+- (void)setUp{
+    [super setUp];
     
     NSURL *url = [NSURL URLWithString:@"https://example.com"];
     
     sut = [MastodonClient clientWithInstanceURL:url];
+}
+
+- (void)tearDown{
+    [super tearDown];
     
-    XCTAssertTrue([url.absoluteString isEqualToString:sut.instanceUrl.absoluteString]);
+}
+
+- (void)testClientInstanceUrl {
+    XCTAssertTrue([sut.instanceUrl.absoluteString isEqualToString:@"https://example.com"]);
+}
+
+- (void)testClientRegisterAppUrl {
     XCTAssertTrue([sut.registerAppUrl.absoluteString isEqualToString:@"https://example.com/api/v1/apps"]);
+}
+
+- (void)testOAuthRelatedUrl{
     XCTAssertTrue([sut.authUrl.absoluteString isEqualToString:@"https://example.com/oauth/authorize?response_type=code"]);
     XCTAssertTrue([sut.tokenUrl.absoluteString isEqualToString:@"https://example.com/oauth/token"]);
-    
+}
+
+- (void)testTimelineRelatedUrl{
     XCTAssertTrue([[sut timelineWithTag:@"test"].absoluteString isEqualToString:@"https://example.com/api/v1/timelines/tag/test"]);
     XCTAssertTrue([[sut homeTimelineUrl].absoluteString isEqualToString:@"https://example.com/api/v1/timelines/home"]);
     XCTAssertTrue([[sut publicTimelineUrl].absoluteString isEqualToString:@"https://example.com/api/v1/timelines/public"]);
+}
+
+- (void)testAccountRelatedUrl{
     XCTAssertTrue([[sut currentUserUrl].absoluteString isEqualToString:@"https://example.com/api/v1/accounts/verify_credentials"]);
     XCTAssertTrue([[sut accountUrlWithAccountId:@"test"].absoluteString isEqualToString:@"https://example.com/api/v1/accounts/test"]);
     XCTAssertTrue([[sut accountFollowersUrlWithAccountId:@"test"].absoluteString isEqualToString:@"https://example.com/api/v1/accounts/test/followers"]);
@@ -47,11 +64,15 @@
     XCTAssertTrue([[sut accountOperationUrlWithAccountId:@"test" operationType:MastodonClientAccountOperationTypeUnblock].absoluteString isEqualToString:@"https://example.com/api/v1/accounts/test/unblock"]);
     
     XCTAssertTrue([[sut accountOperationUrlWithAccountId:@"test" operationType:MastodonClientAccountOperationTypeMute].absoluteString isEqualToString:@"https://example.com/api/v1/accounts/test/mute"]);
+    
     XCTAssertTrue([[sut accountOperationUrlWithAccountId:@"test" operationType:MastodonClientAccountOperationTypeUnmute].absoluteString isEqualToString:@"https://example.com/api/v1/accounts/test/unmute"]);
     
     NSArray *testIds = @[@"test1", @"test2"];
     
     XCTAssertTrue([[sut accountRelationshipUrlWithAccountIds:testIds].absoluteString isEqualToString:@"https://example.com/api/v1/accounts/relationships?id%5B%5D=test1&id%5B%5D=test2"]);
+    
+    XCTAssertTrue([sut.blockedAccountUrl.absoluteString isEqualToString:@"https://example.com/api/v1/blocks"]);
+    XCTAssertTrue([sut.favouriteStatusesUrl.absoluteString isEqualToString:@"https://example.com/api/v1/favourites"]);
 }
 
 @end
