@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class MastodonStatus, MastodonClient, MastodonAccount, MastodonRelationship;
+@class MastodonStatus, MastodonClient, MastodonAccount, MastodonRelationship, MastodonAttachment;
 
 @interface MastodonAPI : NSObject
 
@@ -162,5 +162,13 @@
                       limit:(NSInteger)limit
                successBlock:(void(^ _Nullable)(NSArray <MastodonStatus *> * _Nullable result))successBlock
                failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
+#pragma mark - Upload Media
+
++ (void)uploadFileWithClient:(MastodonClient * _Nonnull)client
+                    fileData:(NSData * _Nonnull)fileData
+               progressBlock:(void (^ _Nullable)(double progress))progressBlock
+                successBlock:(void(^ _Nullable)(MastodonAttachment * _Nullable result))successBlock
+                failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
 
 @end

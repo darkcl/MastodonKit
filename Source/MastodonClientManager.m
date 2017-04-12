@@ -14,6 +14,8 @@
 
 #import "MastodonAccount.h"
 
+#import "MastodonAttachment.h"
+
 #import "NSError+MastodonKit.h"
 
 #import "MastodonStatus.h"
@@ -1254,7 +1256,60 @@
     
 }
 
+#pragma mark - Upload Media
 
+- (void)uploadFileWithClient:(MastodonClient * _Nonnull)client
+                    fileData:(NSData * _Nonnull)fileData
+                    progress:(MastodonClientRequestProgessBlock _Nullable)progressBlock
+                  completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    NSArray <MastodonClient *> *clients = self.clientsList;
+    
+    if ([clients containsObject:client]) {
+        client = [clients objectAtIndex:[clients indexOfObject:client]];
+    }
+    
+    NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
+    if (accounts.count != 0) {
+        
+        if (fileData != nil) {
+            [self performMethod:@"POST"
+                     onResource:client.mediaAttachmentUrl
+                usingParameters:@{@"file": fileData}
+                    withAccount:accounts[0]
+                     withClient:client
+            sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+                // e.g., update a progress indicator
+                
+                progressBlock((double)bytesSend / (double)bytesTotal);
+            }
+                responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                    // Process the response
+                    if (error != nil) {
+                        completionBlock(NO, nil, error);
+                    }else{
+                        NSError *jsonError;
+                        id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
+                        
+                        if (jsonError != nil) {
+                            completionBlock(NO, nil, jsonError);
+                        }else{
+                            if ([jsonObject isKindOfClass:[NSDictionary class]]) {
+                                completionBlock(YES, [[MastodonAttachment alloc] initWithDictionary:jsonObject], nil);
+                            }else{
+                                completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            }
+                        }
+                    }
+                }];
+        }else{
+            completionBlock(NO, nil, nil);
+        }
+        
+        
+    }else{
+        completionBlock(NO, nil, nil);
+    }
+}
 
 #pragma mark - Setter & Getter
 

@@ -18,6 +18,8 @@ typedef void(^MastodonClientManagerLoginCompletionBlock)(BOOL success, NSURL * _
 
 typedef void(^MastodonClientRequestComplationBlock)(BOOL success, _Nullable id response, NSError * _Nullable error);
 
+typedef void(^MastodonClientRequestProgessBlock)(double progress);
+
 @interface MastodonClientManager : NSObject
 
 - (_Nonnull instancetype)initWithBlock:(_Nonnull MastodonClientManagerBuildBlock)block;
@@ -158,6 +160,13 @@ typedef void(^MastodonClientRequestComplationBlock)(BOOL success, _Nullable id r
                               sinceId:(NSString * _Nullable)sinceId
                                 limit:(NSInteger)limit
                            completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+#pragma mark - Upload Media
+
+- (void)uploadFileWithClient:(MastodonClient * _Nonnull)client
+                    fileData:(NSData * _Nonnull)fileData
+                    progress:(MastodonClientRequestProgessBlock _Nullable)progressBlock
+                  completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
 @property (nonatomic, strong, nonnull) NSString *applicationName;
 

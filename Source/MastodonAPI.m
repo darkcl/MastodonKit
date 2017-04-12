@@ -506,4 +506,27 @@
                                     }];
 }
 
+#pragma mark - Upload Media
+
++ (void)uploadFileWithClient:(MastodonClient * _Nonnull)client
+                    fileData:(NSData * _Nonnull)fileData
+               progressBlock:(void (^ _Nullable)(double progress))progressBlock
+                successBlock:(void(^ _Nullable)(MastodonAttachment * _Nullable result))successBlock
+                failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager uploadFileWithClient:client
+                             fileData:fileData
+                             progress:^(double progress) {
+                                 progressBlock(progress);
+                             }
+                           completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                               if (success) {
+                                   successBlock(response);
+                               }else{
+                                   failureBlock(error);
+                               }
+                           }];
+}
+
 @end
