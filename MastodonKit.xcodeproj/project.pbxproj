@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E7C284D1E9DF6EB00C51EE4 /* OHHTTPStubs.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 0E7C284C1E9DF6EB00C51EE4 /* OHHTTPStubs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		741673011E990CEF001AE48A /* NSUserDefaults+MastodonKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 741672FF1E990CEF001AE48A /* NSUserDefaults+MastodonKit.h */; };
 		741673021E990CEF001AE48A /* NSUserDefaults+MastodonKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 741673001E990CEF001AE48A /* NSUserDefaults+MastodonKit.m */; };
 		741673051E990CF3001AE48A /* NSUserDefaults+MastodonKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 741672FF1E990CEF001AE48A /* NSUserDefaults+MastodonKit.h */; };
@@ -143,7 +144,31 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		0E7C284A1E9DF6C300C51EE4 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E7C284B1E9DF6D600C51EE4 /* Copy Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0E7C284D1E9DF6EB00C51EE4 /* OHHTTPStubs.framework in Copy Files */,
+			);
+			name = "Copy Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		0E7C284C1E9DF6EB00C51EE4 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/iOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
 		741672FF1E990CEF001AE48A /* NSUserDefaults+MastodonKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+MastodonKit.h"; sourceTree = "<group>"; };
 		741673001E990CEF001AE48A /* NSUserDefaults+MastodonKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+MastodonKit.m"; sourceTree = "<group>"; };
 		741673091E992A63001AE48A /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = Carthage/Build/iOS/CocoaLumberjack.framework; sourceTree = "<group>"; };
@@ -353,6 +378,7 @@
 		74C627CF1E967B7B00484F3C = {
 			isa = PBXGroup;
 			children = (
+				0E7C284C1E9DF6EB00C51EE4 /* OHHTTPStubs.framework */,
 				74C6286F1E968B9900484F3C /* OAuth2Client.xcodeproj */,
 				74C6288A1E968F7400484F3C /* Source */,
 				74C627DB1E967B7B00484F3C /* MastodonKit */,
@@ -560,6 +586,7 @@
 			buildPhases = (
 				74C627D41E967B7B00484F3C /* Sources */,
 				74C627D51E967B7B00484F3C /* Frameworks */,
+				0E7C284A1E9DF6C300C51EE4 /* CopyFiles */,
 				74C627D61E967B7B00484F3C /* Headers */,
 				74C627D71E967B7B00484F3C /* Resources */,
 			);
@@ -597,9 +624,10 @@
 			buildConfigurationList = 74C628481E967E3700484F3C /* Build configuration list for PBXNativeTarget "MastodonKitTests_iOS" */;
 			buildPhases = (
 				74C6283C1E967E3700484F3C /* Sources */,
+				0E7C284B1E9DF6D600C51EE4 /* Copy Files */,
 				74C6283D1E967E3700484F3C /* Frameworks */,
 				74C6283E1E967E3700484F3C /* Resources */,
-				748AC7D01E98EA0A009FF145 /* ShellScript */,
+				0E7C284E1E9DF77C00C51EE4 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -755,7 +783,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		748AC7D01E98EA0A009FF145 /* ShellScript */ = {
+		0E7C284E1E9DF77C00C51EE4 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1075,6 +1103,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = M56A72A6G5;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MastodonKitTests/OCMock-iOS",
@@ -1095,6 +1124,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = M56A72A6G5;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MastodonKitTests/OCMock-iOS",
@@ -1116,6 +1146,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = M56A72A6G5;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MastodonKitTests/OCMock-macOS",
@@ -1140,6 +1171,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = M56A72A6G5;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MastodonKitTests/OCMock-macOS",
