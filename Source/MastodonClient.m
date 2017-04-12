@@ -197,6 +197,24 @@ static NSString *const kClientSecretKey = @"client_secret";
     return [NSURL URLWithString:result];
 }
 
+- (NSURL * _Nonnull)notificationUrl{
+    NSString *result = [NSString stringWithFormat:@"%@/api/%@/notifications", self.instanceUrl.absoluteString, MastodonAPIVersion];
+    
+    return [NSURL URLWithString:result];
+}
+
+- (NSURL * _Nonnull)notificationUrlWithNotificationId:(NSString *)notificationId{
+    NSString *result = [NSString stringWithFormat:@"%@/api/%@/notifications/%@", self.instanceUrl.absoluteString, MastodonAPIVersion, notificationId];
+    
+    return [NSURL URLWithString:result];
+}
+
+- (NSURL * _Nonnull)clearNotificationUrl{
+    NSString *result = [NSString stringWithFormat:@"%@/api/%@/notifications/clear", self.instanceUrl.absoluteString, MastodonAPIVersion];
+    
+    return [NSURL URLWithString:result];
+}
+
 - (BOOL)isEqual:(id)object{
     if ([object isKindOfClass:[MastodonClient class]]) {
         MastodonClient *client = (MastodonClient *)object;

@@ -95,6 +95,61 @@
                       }];
 }
 
+#pragma mark - Notification
+
++ (void)fetchNotificationWithClient:(MastodonClient * _Nonnull)client
+                              maxId:(NSString * _Nullable)maxId
+                            sinceId:(NSString * _Nullable)sinceId
+                              limit:(NSInteger)limit
+                       successBlock:(void(^ _Nullable)(NSArray <MastodonNotification *> * _Nullable result))successBlock
+                       failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager fetchNotificationWithClient:client
+                                       maxId:maxId
+                                     sinceId:sinceId
+                                       limit:limit
+                                  completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                      if (success) {
+                                          successBlock(response);
+                                      }else{
+                                          failureBlock(error);
+                                      }
+                                  }];
+}
+
++ (void)fetchNotificationWithClient:(MastodonClient * _Nonnull)client
+                     notificationId:(NSString * _Nonnull)notificationId
+                       successBlock:(void(^ _Nullable)(MastodonNotification * _Nullable result))successBlock
+                       failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager fetchNotificationWithClient:client
+                              notificationId:notificationId
+                                  completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                      if (success) {
+                                          successBlock(response);
+                                      }else{
+                                          failureBlock(error);
+                                      }
+                                  }];
+}
+
++ (void)clearNotificationWithClient:(MastodonClient * _Nonnull)client
+                       successBlock:(void(^ _Nullable)(void))successBlock
+                       failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager clearNotificationWithClient:client
+                                  completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                      if (success) {
+                                          successBlock();
+                                      }else{
+                                          failureBlock(error);
+                                      }
+                                  }];
+}
+
 #pragma mark - Account Operation
 + (void)followAccountWithClient:(MastodonClient * _Nonnull)client
                   withAccountId:(NSString * _Nonnull)accountId

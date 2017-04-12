@@ -71,6 +71,14 @@ typedef NS_ENUM(NSInteger, MastodonClientAccountOperationType) {
 
 @property (nonatomic, strong, readonly, nonnull) NSURL *mediaAttachmentUrl;
 
+#pragma mark - Notification URL
+
+@property (nonatomic, strong, readonly, nonnull) NSURL *notificationUrl;
+
+- (NSURL * _Nonnull)notificationUrlWithNotificationId:(NSString * _Nonnull)notificationId;
+
+@property (nonatomic, strong, readonly, nonnull) NSURL *clearNotificationUrl;
+
 #pragma mark - OAuth
 
 @property (readonly) BOOL isRegistered;

@@ -87,4 +87,10 @@
     XCTAssertTrue([sut.mediaAttachmentUrl.absoluteString isEqualToString:@"https://example.com/api/v1/media"]);
 }
 
+- (void)testNotificationRelatedUrl{
+    XCTAssertTrue([sut.notificationUrl.absoluteString isEqualToString:@"https://example.com/api/v1/notifications"]);
+    XCTAssertTrue([[sut notificationUrlWithNotificationId:@"test"].absoluteString isEqualToString:@"https://example.com/api/v1/notifications/test"]);
+    XCTAssertTrue([sut.clearNotificationUrl.absoluteString isEqualToString:@"https://example.com/api/v1/notifications/clear"]);
+}
+
 @end

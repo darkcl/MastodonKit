@@ -16,6 +16,8 @@
 
 #import "MastodonAttachment.h"
 
+#import "MastodonNotification.h"
+
 #import "NSError+MastodonKit.h"
 
 #import "MastodonStatus.h"
@@ -271,6 +273,145 @@
                         }
                     }
                 }
+            }];
+    }else{
+        completionBlock(NO, nil, nil);
+    }
+}
+
+#pragma mark - Notification
+
+- (void)fetchNotificationWithClient:(MastodonClient * _Nonnull)client
+                              maxId:(NSString * _Nullable)maxId
+                            sinceId:(NSString * _Nullable)sinceId
+                              limit:(NSInteger)limit
+                         completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    NSArray <MastodonClient *> *clients = self.clientsList;
+    
+    if ([clients containsObject:client]) {
+        client = [clients objectAtIndex:[clients indexOfObject:client]];
+    }
+    
+    NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
+    if (accounts.count != 0) {
+        
+        NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+        
+        if (maxId != nil) {
+            [param setObject:maxId forKey:@"max_id"];
+        }
+        
+        if (sinceId != nil) {
+            [param setObject:sinceId forKey:@"since_id"];
+        }
+        
+        if (limit != 0) {
+            [param setObject:@(limit) forKey:@"limit"];
+        }
+        
+        [self performMethod:@"GET"
+                 onResource:client.notificationUrl
+            usingParameters:param
+                withAccount:accounts[0]
+                 withClient:client
+        sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+            // e.g., update a progress indicator
+        }
+            responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                // Process the response
+                if (error != nil) {
+                    completionBlock(NO, nil, error);
+                }else{
+                    NSError *jsonError;
+                    id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
+                    
+                    if (jsonError != nil) {
+                        completionBlock(NO, nil, jsonError);
+                    }else{
+                        if ([jsonObject isKindOfClass:[NSArray class]]) {
+                            NSArray *arr = (NSArray *)jsonObject;
+                            NSMutableArray *result = [[NSMutableArray alloc] init];
+                            for (NSDictionary *info in arr) {
+                                [result addObject:[[MastodonNotification alloc] initWithDictionary:info]];
+                            }
+                            completionBlock(YES, result, nil);
+                        }else{
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                        }
+                    }
+                }
+            }];
+    }else{
+        completionBlock(NO, nil, nil);
+    }
+}
+
+- (void)fetchNotificationWithClient:(MastodonClient * _Nonnull)client
+                     notificationId:(NSString * _Nonnull)notificationId
+                         completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    NSArray <MastodonClient *> *clients = self.clientsList;
+    
+    if ([clients containsObject:client]) {
+        client = [clients objectAtIndex:[clients indexOfObject:client]];
+    }
+    
+    NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
+    if (accounts.count != 0) {
+        
+        [self performMethod:@"GET"
+                 onResource:[client notificationUrlWithNotificationId:notificationId]
+            usingParameters:nil
+                withAccount:accounts[0]
+                 withClient:client
+        sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+            // e.g., update a progress indicator
+        }
+            responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                // Process the response
+                if (error != nil) {
+                    completionBlock(NO, nil, error);
+                }else{
+                    NSError *jsonError;
+                    id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
+                    
+                    if (jsonError != nil) {
+                        completionBlock(NO, nil, jsonError);
+                    }else{
+                        if ([jsonObject isKindOfClass:[NSDictionary class]]) {
+                            completionBlock(YES, [[MastodonAccount alloc] initWithDictionary:jsonObject], nil);
+                        }else{
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                        }
+                    }
+                }
+            }];
+    }else{
+        completionBlock(NO, nil, nil);
+    }
+}
+
+- (void)clearNotificationWithClient:(MastodonClient * _Nonnull)client
+                         completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
+    NSArray <MastodonClient *> *clients = self.clientsList;
+    
+    if ([clients containsObject:client]) {
+        client = [clients objectAtIndex:[clients indexOfObject:client]];
+    }
+    
+    NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
+    if (accounts.count != 0) {
+        
+        [self performMethod:@"GET"
+                 onResource:client.clearNotificationUrl
+            usingParameters:nil
+                withAccount:accounts[0]
+                 withClient:client
+        sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
+            // e.g., update a progress indicator
+        }
+            responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
+                // Process the response
+                completionBlock(YES, responseData, nil);
             }];
     }else{
         completionBlock(NO, nil, nil);

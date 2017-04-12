@@ -20,7 +20,7 @@ typedef NS_ENUM(NSInteger, MastodonNotificationType) {
 
 @interface MastodonNotification : NSObject
 
-- (instancetype _Nonnull)initWithDictionary:(NSDictionary *)infoDict;
+- (instancetype _Nonnull)initWithDictionary:(NSDictionary * _Nonnull)infoDict;
 
 @property (nonatomic, strong, readonly, nonnull) NSString *notificationId;
 
@@ -30,6 +30,6 @@ typedef NS_ENUM(NSInteger, MastodonNotificationType) {
 
 @property (nonatomic, strong, readonly, nonnull) MastodonAccount *account;
 
-@property (nonatomic, strong, readonly, nonnull) MastodonStatus *status;
+@property (nonatomic, strong, readonly, nullable) MastodonStatus *status;
 
 @end

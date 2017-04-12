@@ -101,6 +101,21 @@ typedef void(^MastodonClientRequestProgessBlock)(double progress);
                                           limit:(NSInteger)limit
                                      completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
 
+#pragma mark - Notification
+
+- (void)fetchNotificationWithClient:(MastodonClient * _Nonnull)client
+                              maxId:(NSString * _Nullable)maxId
+                            sinceId:(NSString * _Nullable)sinceId
+                              limit:(NSInteger)limit
+                         completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)fetchNotificationWithClient:(MastodonClient * _Nonnull)client
+                     notificationId:(NSString * _Nonnull)notificationId
+                         completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
+- (void)clearNotificationWithClient:(MastodonClient * _Nonnull)client
+                         completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock;
+
 #pragma mark - Account Operation
 
 - (void)followAccountWithClient:(MastodonClient * _Nonnull)client

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class MastodonStatus, MastodonClient, MastodonAccount, MastodonRelationship, MastodonAttachment;
+@class MastodonStatus, MastodonClient, MastodonAccount, MastodonRelationship, MastodonAttachment, MastodonNotification;
 
 @interface MastodonAPI : NSObject
 
@@ -99,6 +99,24 @@
                                           limit:(NSInteger)limit
                                    successBlock:(void(^ _Nullable)(NSArray <MastodonAccount *> * _Nullable result))successBlock
                                    failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
+#pragma mark - Notification
+
++ (void)fetchNotificationWithClient:(MastodonClient * _Nonnull)client
+                              maxId:(NSString * _Nullable)maxId
+                            sinceId:(NSString * _Nullable)sinceId
+                              limit:(NSInteger)limit
+                       successBlock:(void(^ _Nullable)(NSArray <MastodonNotification *> * _Nullable result))successBlock
+                       failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
++ (void)fetchNotificationWithClient:(MastodonClient * _Nonnull)client
+                     notificationId:(NSString * _Nonnull)notificationId
+                       successBlock:(void(^ _Nullable)(MastodonNotification * _Nullable result))successBlock
+                       failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
++ (void)clearNotificationWithClient:(MastodonClient * _Nonnull)client
+                       successBlock:(void(^ _Nullable)(void))successBlock
+                       failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
 
 #pragma mark - Account Operation
 
