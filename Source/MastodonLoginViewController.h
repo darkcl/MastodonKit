@@ -8,8 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^MastodonLoginSuccessBlock)(void);
+
+typedef void(^MastodonLoginCancelBlock)(void);
+
+typedef void(^MastodonLoginFailureBlock)(NSError *error);
+
 @interface MastodonLoginViewController : UIViewController
 
-+ (void)showLoginViewWithUrl:(NSURL *)url withRedirectUri:(NSURL *)redirectUri;
++ (void)showLoginViewWithUrl:(NSURL *)url
+             withRedirectUri:(NSURL *)redirectUri
+                     success:(MastodonLoginSuccessBlock)successBlock
+                      cancel:(MastodonLoginCancelBlock)cancelBlock
+                     failure:(MastodonLoginFailureBlock)failureBlock;
 
 @end

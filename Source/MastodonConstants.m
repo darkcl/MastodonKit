@@ -10,3 +10,10 @@
 
 NSString * const MastodonAPIVersion = @"v1";
 NSString * const MastodonKitClientsKey = @"com.mastodonkit.clients";
+NSString * const MastodonKitErrorDomain = @"com.mastodonkit.error";
+
+NSString * const MastodonKitApplicationName = @"MastodonKitApplicationName";
+
+NSString * const MastodonKitRedirectUri = @"MastodonKitRedirectUri";
+
+NSString * const MastodonKitWebsitUrl = @"MastodonKitWebsitUrl";

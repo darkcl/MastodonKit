@@ -11,5 +11,6 @@
 @interface NSDictionary (MastodonKit)
 
 - (NSString *)stringOrNilForKey:(NSString *)key;
+- (id)objectOrNilForKey:(NSString *)key;
 
 @end
