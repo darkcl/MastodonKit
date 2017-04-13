@@ -495,8 +495,8 @@
 
 - (void)reportUserWithClient:(MastodonClient * _Nonnull)client
                     accoutId:(NSString * _Nonnull)accoutId
-                     comment:(NSString * _Nonnull)comment
                    statusIds:(NSArray <NSString *> * _Nonnull)statusIds
+                     comment:(NSString * _Nonnull)comment
                   completion:(MastodonClientRequestComplationBlock _Nullable)completionBlock{
     NSArray <MastodonClient *> *clients = self.clientsList;
     
