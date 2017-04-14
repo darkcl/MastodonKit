@@ -14,12 +14,13 @@ FOUNDATION_EXPORT NSString * const MastodonKitClientsKey;
 
 FOUNDATION_EXPORT NSString * const MastodonKitErrorDomain;
 
+FOUNDATION_EXPORT NSString * const MastodonKitLastUsedClientKey;
+
 FOUNDATION_EXPORT NSString * const MastodonKitApplicationName;
 
 FOUNDATION_EXPORT NSString * const MastodonKitRedirectUri;
 
 FOUNDATION_EXPORT NSString * const MastodonKitWebsitUrl;
-
 
 /**
  Status Visibility Type

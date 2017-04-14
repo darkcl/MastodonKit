@@ -24,6 +24,8 @@
 
 + (NSArray <MastodonClient *> * _Nonnull)listAllClients;
 
++ (MastodonClient * _Nullable)lastUsedClient;
+
 #pragma mark - Login Related
 
 + (void)loginWithClient:(MastodonClient * _Nonnull)client

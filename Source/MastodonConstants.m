@@ -14,6 +14,8 @@ NSString * const MastodonKitErrorDomain = @"com.mastodonkit.error";
 
 NSString * const MastodonKitApplicationName = @"MastodonKitApplicationName";
 
+NSString * const MastodonKitLastUsedClientKey = @"com.mastodonkit.lastUsedClient";
+
 NSString * const MastodonKitRedirectUri = @"MastodonKitRedirectUri";
 
 NSString * const MastodonKitWebsitUrl = @"MastodonKitWebsitUrl";

@@ -32,6 +32,8 @@
 
 #import "MastodonCard.h"
 
+#import "NSURL+MastodonKit.h"
+
 #ifdef COCOAPODS
 #import "NXOAuth2.h"
 #else
@@ -207,6 +209,10 @@
                                                    [MastodonLoginViewController showLoginViewWithUrl:preparedURL
                                                                                      withRedirectUri:[NSURL URLWithString:weakSelf.redirectUri]
                                                                                              success:^{
+                                                                                                 client.isAuthorized = YES;
+                                                                                                 
+                                                                                                 [weakSelf updateClient:client];
+                                                                                                 
                                                                                                  completionBlock(YES, nil, nil);
                                                                                              }
                                                                                               cancel:^{
@@ -952,7 +958,7 @@
             [params setObject:replyToStatusId forKey:@"media_ids"];
         }
         
-        [params setObject:@(isSensitive).stringValue forKey:@"sensitive"];
+        [params setObject:isSensitive ? @"true" : @"false" forKey:@"sensitive"];
         
         if (spolierText != nil) {
             [params setObject:spolierText forKey:@"spoiler_text"];
@@ -976,7 +982,7 @@
         }
         
         [self performMethod:@"POST"
-                 onResource:client.statusUrl
+                 onResource:[client.statusUrl urlWithParameters:params]
             usingParameters:params
                 withAccount:accounts[0]
                  withClient:client
@@ -2023,6 +2029,9 @@
             [param setObject:@(limit) forKey:@"limit"];
         }
         
+        
+        [param setObject:@(NO).stringValue forKey:@"local"];
+        
         [self performMethod:@"GET"
                  onResource:client.homeTimelineUrl
             usingParameters:param
@@ -2240,6 +2249,9 @@
       responseHandler:(NXOAuth2ConnectionResponseHandler)responseHandler{
     __weak typeof(self) weakSelf = self;
     
+    [[NSUserDefaults standardUserDefaults] setValue:client.instanceUrl.absoluteString forKey:MastodonKitLastUsedClientKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     [NXOAuth2Request performMethod:aMethod
                         onResource:aResource
                    usingParameters:someParameters
@@ -2249,17 +2261,13 @@
                        // Process the response
                        if (error != nil) {
                            if ([error.domain isEqualToString:NXOAuth2HTTPErrorDomain] && error.code == 401) {
-                               // Unauthorized (Try to re-login)
+                               // Unauthorized
                                [[NXOAuth2AccountStore sharedStore] removeAccount:anAccount];
                                
-                               [weakSelf loginWithClient:client
-                                              completion:^(BOOL loginSuccess, NSURL * _Nullable authUrl, NSError * _Nullable loginError) {
-                                                  if (loginSuccess) {
-                                                      [weakSelf performMethod:aMethod onResource:aResource usingParameters:someParameters withAccount:anAccount withClient:client sendProgressHandler:progressHandler responseHandler:responseHandler];
-                                                  }else{
-                                                      responseHandler(response, responseData, loginError);
-                                                  }
-                                              }];
+                               client.isAuthorized = NO;
+                               [weakSelf updateClient:client];
+                               
+                               responseHandler(response, responseData, [NSError unauthorizedError]);
                            }else{
                                responseHandler(response, responseData, error);
                            }

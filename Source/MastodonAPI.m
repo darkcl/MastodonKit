@@ -78,6 +78,19 @@
     }
 }
 
++ (MastodonClient * _Nullable)lastUsedClient{
+    NSString *lastUsedUrl = [[NSUserDefaults standardUserDefaults] valueForKey:MastodonKitLastUsedClientKey];
+    
+    NSURL *url = [NSURL URLWithString:lastUsedUrl];
+    
+    if (url) {
+        MastodonAPI *api = [self sharedInstance];
+        return [api.manager getClientWithInstanceUrl:url];
+    }else{
+        return nil;
+    }
+}
+
 #pragma mark - Login Related
 
 + (void)loginWithClient:(MastodonClient * _Nonnull)client

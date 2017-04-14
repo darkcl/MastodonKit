@@ -125,4 +125,6 @@ typedef NS_ENUM(NSInteger, MastodonClientStatusOperationType) {
 
 @property (nonatomic, strong, nullable) NSString *clientSecret;
 
+@property BOOL isAuthorized;
+
 @end

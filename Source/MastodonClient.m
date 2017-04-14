@@ -15,6 +15,7 @@ static NSString *const kAppIdKey = @"app_id";
 static NSString *const kRedirectUriKey = @"redirect_uri";
 static NSString *const kClientIdKey = @"client_id";
 static NSString *const kClientSecretKey = @"client_secret";
+static NSString *const kClientIsAuthorizedKey = @"is_authorized";
 
 @interface MastodonClient() {
     
@@ -27,6 +28,7 @@ static NSString *const kClientSecretKey = @"client_secret";
 - (instancetype)initWithInstanceURL:(NSURL *)url{
     if (self = [super init]) {
         _instanceUrl = url;
+        _isAuthorized = NO;
     }
     return self;
 }
@@ -317,6 +319,7 @@ static NSString *const kClientSecretKey = @"client_secret";
         self.redirectUri = [aDecoder decodeObjectForKey:kRedirectUriKey];
         self.clientId = [aDecoder decodeObjectForKey:kClientIdKey];
         self.clientSecret = [aDecoder decodeObjectForKey:kClientSecretKey];
+        self.isAuthorized = [aDecoder decodeBoolForKey:kClientIsAuthorizedKey];
     }
     return self;
 }
@@ -327,6 +330,7 @@ static NSString *const kClientSecretKey = @"client_secret";
     [aCoder encodeObject:self.redirectUri forKey:kRedirectUriKey];
     [aCoder encodeObject:self.clientId forKey:kClientIdKey];
     [aCoder encodeObject:self.clientSecret forKey:kClientSecretKey];
+    [aCoder encodeBool:self.isAuthorized forKey:kClientIsAuthorizedKey];
 }
 
 @end

@@ -12,6 +12,10 @@
 
 + (NSError *)loginCancelError;
 
++ (NSError *)unauthorizedError;
+
 + (NSError *)serverErrorWithResponse:(NSDictionary *)response;
+
+- (BOOL)isEqualToError:(NSError *)error;
 
 @end
