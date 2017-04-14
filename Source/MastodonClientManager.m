@@ -78,9 +78,11 @@
     if (client.isRegistered) {
         [[NXOAuth2AccountStore sharedStore] setClientID:client.clientId
                                                  secret:client.clientSecret
+                                                  scope:self.scopes
                                        authorizationURL:client.authUrl
                                                tokenURL:client.tokenUrl
                                             redirectURL:client.redirectUri
+                                          keyChainGroup:@"MastodonKit"
                                          forAccountType:[self serviceNameWithClient:client]];
     }
 }
@@ -140,7 +142,7 @@
     
     NSDictionary *params = @{@"client_name": self.applicationName,
                              @"redirect_uris": self.redirectUri,
-                             @"scopes": [self.scopes.allObjects componentsJoinedByString:@" "],
+                             @"scopes": @"read write follow",
                              @"website": self.websiteUrl ? self.websiteUrl : [NSNull null]};
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:registerUrl];
@@ -983,7 +985,7 @@
         
         [self performMethod:@"POST"
                  onResource:[client.statusUrl urlWithParameters:params]
-            usingParameters:params
+            usingParameters:nil
                 withAccount:accounts[0]
                  withClient:client
         sendProgressHandler:^(unsigned long long bytesSend, unsigned long long bytesTotal) {
@@ -2300,7 +2302,7 @@
         NSString *value = [weakSelf stringOrNilForObject:obj];
         
         if (value.length != 0 && key.length != 0) {
-            NSString *param = [NSString stringWithFormat:@"%@=%@", [weakSelf percentEscapeString:key], [weakSelf percentEscapeString:value]];
+            NSString *param = [NSString stringWithFormat:@"%@=%@", [weakSelf percentEscapeString:key], [weakSelf URLEscaped:value withEncoding:NSUTF8StringEncoding]];
             [parameterArray addObject:param];
         }
     }];
@@ -2308,6 +2310,14 @@
     NSString *string = [parameterArray componentsJoinedByString:@"&"];
     
     return [string dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSString *)URLEscaped:(NSString *)strIn withEncoding:(NSStringEncoding)encoding
+{
+    CFStringRef escaped = CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)strIn, NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]", CFStringConvertNSStringEncodingToEncoding(encoding));
+    NSString *strOut = [NSString stringWithString:(__bridge NSString *)escaped];
+    CFRelease(escaped);
+    return strOut;
 }
 
 - (NSString *)percentEscapeString:(NSString *)string {

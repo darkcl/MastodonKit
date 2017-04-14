@@ -23,7 +23,7 @@
                 [queries addObject:[[NSURLQueryItem alloc] initWithName:[NSString stringWithFormat:@"%@[]",key] value:subObj]];
             }
         }else{
-            [queries addObject:[[NSURLQueryItem alloc] initWithName:@"key" value:val]];
+            [queries addObject:[[NSURLQueryItem alloc] initWithName:key value:val]];
         }
     }
     components.queryItems = queries;
