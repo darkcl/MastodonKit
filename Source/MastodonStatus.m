@@ -120,8 +120,24 @@
     return [[_infoDict stringOrNilForKey:@"favourites_count"] integerValue];
 }
 
+- (void)setReblogged:(BOOL)reblogged{
+    NSMutableDictionary *aDict = [[NSMutableDictionary alloc] initWithDictionary:_infoDict];
+    
+    [aDict setValue:@(reblogged) forKey:@"reblogged"];
+    
+    _infoDict = [NSDictionary dictionaryWithDictionary:aDict];
+}
+
 - (BOOL)reblogged{
     return [[_infoDict stringOrNilForKey:@"reblogged"] boolValue];
+}
+
+- (void)setFavourited:(BOOL)favourited{
+    NSMutableDictionary *aDict = [[NSMutableDictionary alloc] initWithDictionary:_infoDict];
+    
+    [aDict setValue:@(favourited) forKey:@"favourited"];
+    
+    _infoDict = [NSDictionary dictionaryWithDictionary:aDict];
 }
 
 - (BOOL)favourited{

@@ -84,13 +84,13 @@
 /**
  Whether the authenticated user has reblogged the status
  */
-@property (readonly) BOOL reblogged;
+@property BOOL reblogged;
 
 
 /**
  Whether the authenticated user has favourited the status
  */
-@property (readonly) BOOL favourited;
+@property BOOL favourited;
 
 
 /**
