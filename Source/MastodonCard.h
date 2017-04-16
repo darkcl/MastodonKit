@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MastodonCard : NSObject
+#import "MastodonObject.h"
 
-- (instancetype _Nonnull)initWithDictionary:(NSDictionary * _Nonnull)infoDict;
+@interface MastodonCard : MastodonObject
 
 @property (nonatomic, strong, readonly, nonnull) NSString *url;
 

@@ -10,27 +10,14 @@
 
 #import "NSDictionary+MastodonKit.h"
 
-@interface MastodonReport() {
-    NSDictionary *_infoDict;
-}
-
-@end
-
 @implementation MastodonReport
 
-- (instancetype)initWithDictionary:(NSDictionary *)infoDict{
-    if (self = [super init]) {
-        _infoDict = infoDict;
-    }
-    return self;
-}
-
 - (NSString *)reportId{
-    return [_infoDict stringOrNilForKey:@"id"];
+    return [self.infoDict stringOrNilForKey:@"id"];
 }
 
 - (NSString *)reportAction{
-    return [_infoDict stringOrNilForKey:@"action_taken"];
+    return [self.infoDict stringOrNilForKey:@"action_taken"];
 }
 
 @end

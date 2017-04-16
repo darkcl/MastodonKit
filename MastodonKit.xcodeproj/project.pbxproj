@@ -57,6 +57,10 @@
 		745765E01EA0EC9C00BEBB05 /* NSURL+MastodonKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 745765DD1EA0EC9C00BEBB05 /* NSURL+MastodonKit.h */; };
 		745765E11EA0EC9C00BEBB05 /* NSURL+MastodonKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 745765DE1EA0EC9C00BEBB05 /* NSURL+MastodonKit.m */; };
 		745765E21EA0EC9C00BEBB05 /* NSURL+MastodonKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 745765DE1EA0EC9C00BEBB05 /* NSURL+MastodonKit.m */; };
+		746CE9CE1EA32E6C005B5925 /* MastodonObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 746CE9CC1EA32E6C005B5925 /* MastodonObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		746CE9CF1EA32E6C005B5925 /* MastodonObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 746CE9CC1EA32E6C005B5925 /* MastodonObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		746CE9D01EA32E6C005B5925 /* MastodonObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 746CE9CD1EA32E6C005B5925 /* MastodonObject.m */; };
+		746CE9D11EA32E6C005B5925 /* MastodonObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 746CE9CD1EA32E6C005B5925 /* MastodonObject.m */; };
 		7471110E1E9E58B100EFB957 /* MastodonReport.h in Headers */ = {isa = PBXBuildFile; fileRef = 7471110C1E9E58B100EFB957 /* MastodonReport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7471110F1E9E58B100EFB957 /* MastodonReport.h in Headers */ = {isa = PBXBuildFile; fileRef = 7471110C1E9E58B100EFB957 /* MastodonReport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		747111101E9E58B100EFB957 /* MastodonReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 7471110D1E9E58B100EFB957 /* MastodonReport.m */; };
@@ -225,6 +229,8 @@
 		7416736F1E9D0A9C001AE48A /* MastodonRelationship.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MastodonRelationship.m; sourceTree = "<group>"; };
 		745765DD1EA0EC9C00BEBB05 /* NSURL+MastodonKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+MastodonKit.h"; sourceTree = "<group>"; };
 		745765DE1EA0EC9C00BEBB05 /* NSURL+MastodonKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+MastodonKit.m"; sourceTree = "<group>"; };
+		746CE9CC1EA32E6C005B5925 /* MastodonObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MastodonObject.h; sourceTree = "<group>"; };
+		746CE9CD1EA32E6C005B5925 /* MastodonObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MastodonObject.m; sourceTree = "<group>"; };
 		7471110C1E9E58B100EFB957 /* MastodonReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MastodonReport.h; sourceTree = "<group>"; };
 		7471110D1E9E58B100EFB957 /* MastodonReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MastodonReport.m; sourceTree = "<group>"; };
 		747111131E9E5EB000EFB957 /* MastodonSearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MastodonSearchResult.h; sourceTree = "<group>"; };
@@ -336,6 +342,7 @@
 				747111191E9E5EB300EFB957 /* Search */,
 				747111201E9E66BB00EFB957 /* Context */,
 				747111271E9E67BB00EFB957 /* Card */,
+				746CE9D41EA32E70005B5925 /* Base Object */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -401,6 +408,15 @@
 				7416736F1E9D0A9C001AE48A /* MastodonRelationship.m */,
 			);
 			name = Relationship;
+			sourceTree = "<group>";
+		};
+		746CE9D41EA32E70005B5925 /* Base Object */ = {
+			isa = PBXGroup;
+			children = (
+				746CE9CC1EA32E6C005B5925 /* MastodonObject.h */,
+				746CE9CD1EA32E6C005B5925 /* MastodonObject.m */,
+			);
+			name = "Base Object";
 			sourceTree = "<group>";
 		};
 		747111121E9E58B400EFB957 /* Report */ = {
@@ -640,6 +656,7 @@
 				7416734D1E9A7130001AE48A /* MastodonAttachment.h in Headers */,
 				747111231E9E67B600EFB957 /* MastodonCard.h in Headers */,
 				741673701E9D0A9C001AE48A /* MastodonRelationship.h in Headers */,
+				746CE9CE1EA32E6C005B5925 /* MastodonObject.h in Headers */,
 				741673011E990CEF001AE48A /* NSUserDefaults+MastodonKit.h in Headers */,
 				74A918AD1E98A9C100AB8963 /* MastodonConstants.h in Headers */,
 				7471111C1E9E66B800EFB957 /* MastodonContext.h in Headers */,
@@ -652,6 +669,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				746CE9CF1EA32E6C005B5925 /* MastodonObject.h in Headers */,
 				74C628D81E9697DC00484F3C /* MastodonClient.h in Headers */,
 				7471111D1E9E66B800EFB957 /* MastodonContext.h in Headers */,
 				741673461E9A66A2001AE48A /* MastodonAccount.h in Headers */,
@@ -908,6 +926,7 @@
 				74A918AF1E98A9C100AB8963 /* MastodonConstants.m in Sources */,
 				7416734F1E9A7130001AE48A /* MastodonAttachment.m in Sources */,
 				7416731E1E993A04001AE48A /* MastodonLoginViewController.m in Sources */,
+				746CE9D01EA32E6C005B5925 /* MastodonObject.m in Sources */,
 				745765E11EA0EC9C00BEBB05 /* NSURL+MastodonKit.m in Sources */,
 				74C629341E97BCE500484F3C /* MastodonClientManagerBuilder.m in Sources */,
 				741673411E9A5F42001AE48A /* MastodonStatus.m in Sources */,
@@ -949,6 +968,7 @@
 				7471111F1E9E66B800EFB957 /* MastodonContext.m in Sources */,
 				745765E21EA0EC9C00BEBB05 /* NSURL+MastodonKit.m in Sources */,
 				747111181E9E5EB000EFB957 /* MastodonSearchResult.m in Sources */,
+				746CE9D11EA32E6C005B5925 /* MastodonObject.m in Sources */,
 				747111111E9E58B100EFB957 /* MastodonReport.m in Sources */,
 				741673481E9A66A2001AE48A /* MastodonAccount.m in Sources */,
 				741673261E9A10B4001AE48A /* NSError+MastodonKit.m in Sources */,

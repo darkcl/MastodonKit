@@ -20,31 +20,18 @@
 
 #import "MastodonApplication.h"
 
-@interface MastodonStatus() {
-    NSDictionary *_infoDict;
-}
-
-@end
-
 @implementation MastodonStatus
 
-- (instancetype)initWithDictionary:(NSDictionary *)infoDict{
-    if (self = [super init]) {
-        _infoDict = infoDict;
-    }
-    return self;
-}
-
 - (NSString *)statusId{
-    return [_infoDict stringOrNilForKey:@"id"];
+    return [self.infoDict stringOrNilForKey:@"id"];
 }
 
 - (NSString *)uri{
-    return [_infoDict stringOrNilForKey:@"uri"];
+    return [self.infoDict stringOrNilForKey:@"uri"];
 }
 
 - (NSURL *)url{
-    NSString *str = [_infoDict stringOrNilForKey:@"url"];
+    NSString *str = [self.infoDict stringOrNilForKey:@"url"];
     
     if (str) {
         NSURL *result = [NSURL URLWithString:str];
@@ -56,7 +43,7 @@
 }
 
 - (MastodonAccount *)account{
-    NSDictionary *accountInfoDict = [_infoDict objectOrNilForKey:@"account"];
+    NSDictionary *accountInfoDict = [self.infoDict objectOrNilForKey:@"account"];
     if (accountInfoDict && [accountInfoDict isKindOfClass:[NSDictionary class]]) {
         return [[MastodonAccount alloc] initWithDictionary:accountInfoDict];
     }else{
@@ -65,15 +52,15 @@
 }
 
 - (NSString *)inReplyToId{
-    return [_infoDict stringOrNilForKey:@"in_reply_to_id"];
+    return [self.infoDict stringOrNilForKey:@"in_reply_to_id"];
 }
 
 - (NSString *)inReplyToAccountId{
-    return [_infoDict stringOrNilForKey:@"in_reply_to_account_id"];
+    return [self.infoDict stringOrNilForKey:@"in_reply_to_account_id"];
 }
 
 - (MastodonStatus *)reblog{
-    NSDictionary *reblogInfoDict = [_infoDict objectOrNilForKey:@"reblog"];
+    NSDictionary *reblogInfoDict = [self.infoDict objectOrNilForKey:@"reblog"];
     if (reblogInfoDict && [reblogInfoDict isKindOfClass:[NSDictionary class]]) {
         return [[MastodonStatus alloc] initWithDictionary:reblogInfoDict];
     }else{
@@ -82,11 +69,11 @@
 }
 
 - (NSString *)content{
-    return [_infoDict stringOrNilForKey:@"content"];
+    return [self.infoDict stringOrNilForKey:@"content"];
 }
 
 - (NSDate *)createAt{
-    NSString *dateStr = [_infoDict stringOrNilForKey:@"created_at"];
+    NSString *dateStr = [self.infoDict stringOrNilForKey:@"created_at"];
     if (dateStr) {
         NSTimeZone *timeZone = [NSTimeZone defaultTimeZone];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -113,47 +100,47 @@
 }
 
 - (NSInteger)reblogsCount{
-    return [[_infoDict stringOrNilForKey:@"reblogs_count"] integerValue];
+    return [[self.infoDict stringOrNilForKey:@"reblogs_count"] integerValue];
 }
 
 - (NSInteger)favouritesCount{
-    return [[_infoDict stringOrNilForKey:@"favourites_count"] integerValue];
+    return [[self.infoDict stringOrNilForKey:@"favourites_count"] integerValue];
 }
 
 - (void)setReblogged:(BOOL)reblogged{
-    NSMutableDictionary *aDict = [[NSMutableDictionary alloc] initWithDictionary:_infoDict];
+    NSMutableDictionary *aDict = [[NSMutableDictionary alloc] initWithDictionary:self.infoDict];
     
     [aDict setValue:@(reblogged) forKey:@"reblogged"];
     
-    _infoDict = [NSDictionary dictionaryWithDictionary:aDict];
+    self.infoDict = [NSDictionary dictionaryWithDictionary:aDict];
 }
 
 - (BOOL)reblogged{
-    return [[_infoDict stringOrNilForKey:@"reblogged"] boolValue];
+    return [[self.infoDict stringOrNilForKey:@"reblogged"] boolValue];
 }
 
 - (void)setFavourited:(BOOL)favourited{
-    NSMutableDictionary *aDict = [[NSMutableDictionary alloc] initWithDictionary:_infoDict];
+    NSMutableDictionary *aDict = [[NSMutableDictionary alloc] initWithDictionary:self.infoDict];
     
     [aDict setValue:@(favourited) forKey:@"favourited"];
     
-    _infoDict = [NSDictionary dictionaryWithDictionary:aDict];
+    self.infoDict = [NSDictionary dictionaryWithDictionary:aDict];
 }
 
 - (BOOL)favourited{
-    return [[_infoDict stringOrNilForKey:@"favourited"] boolValue];
+    return [[self.infoDict stringOrNilForKey:@"favourited"] boolValue];
 }
 
 - (BOOL)sensitive{
-    return [[_infoDict stringOrNilForKey:@"sensitive"] boolValue];
+    return [[self.infoDict stringOrNilForKey:@"sensitive"] boolValue];
 }
 
 - (NSString *)spoilerText{
-    return [_infoDict stringOrNilForKey:@"spoiler_text"];
+    return [self.infoDict stringOrNilForKey:@"spoiler_text"];
 }
 
 - (MastodonStatusVisibility)visibility{
-    NSString *str = [_infoDict stringOrNilForKey:@"visibility"];
+    NSString *str = [self.infoDict stringOrNilForKey:@"visibility"];
     
     if ([str isEqualToString:@"public"]) {
         return MastodonStatusVisibilityPublic;
@@ -169,7 +156,7 @@
 }
 
 - (NSArray <MastodonAttachment *> *)mediaAttachments{
-    NSArray *arr = [_infoDict objectOrNilForKey:@"media_attachments"];
+    NSArray *arr = [self.infoDict objectOrNilForKey:@"media_attachments"];
     
     if (arr != nil && [arr isKindOfClass:[NSArray class]]) {
         NSMutableArray *result = [[NSMutableArray alloc] init];
@@ -184,7 +171,7 @@
 }
 
 - (NSArray <MastodonMention *> *)mentions{
-    NSArray *arr = [_infoDict objectOrNilForKey:@"mentions"];
+    NSArray *arr = [self.infoDict objectOrNilForKey:@"mentions"];
     
     if (arr != nil && [arr isKindOfClass:[NSArray class]]) {
         NSMutableArray *result = [[NSMutableArray alloc] init];
@@ -199,7 +186,7 @@
 }
 
 - (NSArray <MastodonTags *> *)tags{
-    NSArray *arr = [_infoDict objectOrNilForKey:@"tags"];
+    NSArray *arr = [self.infoDict objectOrNilForKey:@"tags"];
     
     if (arr != nil && [arr isKindOfClass:[NSArray class]]) {
         NSMutableArray *result = [[NSMutableArray alloc] init];
@@ -214,7 +201,7 @@
 }
 
 - (MastodonApplication *)application{
-    NSDictionary *appInfoDict = [_infoDict objectOrNilForKey:@"application"];
+    NSDictionary *appInfoDict = [self.infoDict objectOrNilForKey:@"application"];
     if (appInfoDict && [appInfoDict isKindOfClass:[NSDictionary class]]) {
         return [[MastodonApplication alloc] initWithDictionary:appInfoDict];
     }else{

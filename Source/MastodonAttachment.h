@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MastodonObject.h"
+
 typedef NS_ENUM(NSInteger, MastodonAttachmentType) {
     MastodonAttachmentTypeUnknow = -1,
     MastodonAttachmentTypeImage,
@@ -15,9 +17,7 @@ typedef NS_ENUM(NSInteger, MastodonAttachmentType) {
     MastodonAttachmentTypeGifv
 };
 
-@interface MastodonAttachment : NSObject
-
-- (instancetype)initWithDictionary:(NSDictionary *)infoDict;
+@interface MastodonAttachment : MastodonObject
 
 /**
  ID of the attachment

@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MastodonMention : NSObject
+#import "MastodonObject.h"
 
-- (instancetype)initWithDictionary:(NSDictionary *)infoDict;
+@interface MastodonMention : MastodonObject
 
 /**
  URL of user's profile (can be remote)

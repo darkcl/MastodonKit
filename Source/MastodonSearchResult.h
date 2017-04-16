@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MastodonObject.h"
+
 @class MastodonAccount, MastodonStatus;
 
-@interface MastodonSearchResult : NSObject
-
-- (instancetype _Nonnull)initWithDictionary:(NSDictionary * _Nonnull)infoDict;
+@interface MastodonSearchResult : MastodonObject
 
 @property (nonatomic, strong, readonly, nonnull) NSArray <MastodonAccount *> *accounts;
 

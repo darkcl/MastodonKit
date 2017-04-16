@@ -10,43 +10,39 @@
 
 #import "NSDictionary+MastodonKit.h"
 
-@interface MastodonRelationship() {
-    NSDictionary *_infoDict;
-}
-
-@end
-
 @implementation MastodonRelationship
 
-- (instancetype)initWithDictionary:(NSDictionary *)infoDict{
-    if (self = [super init]) {
-        _infoDict = infoDict;
-    }
-    return self;
-}
-
 - (BOOL)isFollowing{
-    return [[_infoDict stringOrNilForKey:@"following"] boolValue];
+    return [[self.infoDict stringOrNilForKey:@"following"] boolValue];
 }
 
 - (BOOL)isFollowedBy{
-    return [[_infoDict stringOrNilForKey:@"followed_by"] boolValue];
+    return [[self.infoDict stringOrNilForKey:@"followed_by"] boolValue];
 }
 
 - (BOOL)isBlocking{
-    return [[_infoDict stringOrNilForKey:@"blocking"] boolValue];
+    return [[self.infoDict stringOrNilForKey:@"blocking"] boolValue];
 }
 
 - (BOOL)isMuting{
-    return [[_infoDict stringOrNilForKey:@"muting"] boolValue];
+    return [[self.infoDict stringOrNilForKey:@"muting"] boolValue];
 }
 
 - (BOOL)isRequested{
-    return [[_infoDict stringOrNilForKey:@"requested"] boolValue];
+    return [[self.infoDict stringOrNilForKey:@"requested"] boolValue];
 }
 
 - (NSString *)accountId{
-    return [_infoDict stringOrNilForKey:@"id"];
+    return [self.infoDict stringOrNilForKey:@"id"];
+}
+
+- (BOOL)isEqual:(id)object{
+    if ([object isKindOfClass:[MastodonRelationship class]]) {
+        MastodonRelationship *otherRelation = (MastodonRelationship *)object;
+        return [self.accountId isEqualToString:otherRelation.accountId];
+    }else{
+        return NO;
+    }
 }
 
 @end

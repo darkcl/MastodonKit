@@ -8,10 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MastodonApplication : NSObject
+#import "MastodonObject.h"
 
-- (instancetype)initWithDictionary:(NSDictionary *)infoDict;
-
+@interface MastodonApplication : MastodonObject
 
 /**
  Name of the app

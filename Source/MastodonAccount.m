@@ -10,43 +10,30 @@
 
 #import "NSDictionary+MastodonKit.h"
 
-@interface MastodonAccount() {
-    NSDictionary *_infoDict;
-}
-
-@end
-
 @implementation MastodonAccount
 
-- (instancetype)initWithDictionary:(NSDictionary *)infoDict{
-    if (self = [super init]) {
-        _infoDict = infoDict;
-    }
-    return self;
-}
-
 - (NSString *)accountId{
-    return [_infoDict stringOrNilForKey:@"id"];
+    return [self.infoDict stringOrNilForKey:@"id"];
 }
 
 - (NSString *)userName{
-    return [_infoDict stringOrNilForKey:@"username"];
+    return [self.infoDict stringOrNilForKey:@"username"];
 }
 
 - (NSString *)acct{
-    return [_infoDict stringOrNilForKey:@"acct"];
+    return [self.infoDict stringOrNilForKey:@"acct"];
 }
 
 - (NSString *)displayName{
-    return [_infoDict stringOrNilForKey:@"display_name"];
+    return [self.infoDict stringOrNilForKey:@"display_name"];
 }
 
 - (NSString *)note{
-    return [_infoDict stringOrNilForKey:@"note"];
+    return [self.infoDict stringOrNilForKey:@"note"];
 }
 
 - (NSURL *)url{
-    NSString *urlStr = [_infoDict stringOrNilForKey:@"url"];
+    NSString *urlStr = [self.infoDict stringOrNilForKey:@"url"];
     if (urlStr) {
         return [NSURL URLWithString:urlStr];
     }else{
@@ -55,7 +42,7 @@
 }
 
 - (NSURL *)avatar{
-    NSString *urlStr = [_infoDict stringOrNilForKey:@"avatar"];
+    NSString *urlStr = [self.infoDict stringOrNilForKey:@"avatar"];
     if (urlStr) {
         return [NSURL URLWithString:urlStr];
     }else{
@@ -64,7 +51,7 @@
 }
 
 - (NSURL *)header{
-    NSString *urlStr = [_infoDict stringOrNilForKey:@"header"];
+    NSString *urlStr = [self.infoDict stringOrNilForKey:@"header"];
     if (urlStr) {
         return [NSURL URLWithString:urlStr];
     }else{
@@ -73,11 +60,11 @@
 }
 
 - (BOOL)isLocked{
-    return [[_infoDict stringOrNilForKey:@"locked"] boolValue];
+    return [[self.infoDict stringOrNilForKey:@"locked"] boolValue];
 }
 
 - (NSDate *)createAt{
-    NSString *dateStr = [_infoDict stringOrNilForKey:@"created_at"];
+    NSString *dateStr = [self.infoDict stringOrNilForKey:@"created_at"];
     if (dateStr) {
         NSTimeZone *timeZone = [NSTimeZone defaultTimeZone];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -104,15 +91,15 @@
 }
 
 - (NSInteger)followersCount{
-    return [[_infoDict stringOrNilForKey:@"followers_count"] integerValue];
+    return [[self.infoDict stringOrNilForKey:@"followers_count"] integerValue];
 }
 
 - (NSInteger)followingCount{
-    return [[_infoDict stringOrNilForKey:@"following_count"] integerValue];
+    return [[self.infoDict stringOrNilForKey:@"following_count"] integerValue];
 }
 
 - (NSInteger)statusesCount{
-    return [[_infoDict stringOrNilForKey:@"statuses_count"] integerValue];
+    return [[self.infoDict stringOrNilForKey:@"statuses_count"] integerValue];
 }
 
 @end

@@ -14,23 +14,10 @@
 
 #import "NSDictionary+MastodonKit.h"
 
-@interface MastodonSearchResult() {
-    NSDictionary *_infoDict;
-}
-
-@end
-
 @implementation MastodonSearchResult
 
-- (instancetype)initWithDictionary:(NSDictionary *)infoDict{
-    if (self = [super init]) {
-        _infoDict = infoDict;
-    }
-    return self;
-}
-
 - (NSArray <MastodonAccount *> *)accounts{
-    id obj = [_infoDict objectForKey:@"accounts"];
+    id obj = [self.infoDict objectForKey:@"accounts"];
     
     if ([obj isKindOfClass:[NSArray class]]) {
         NSMutableArray *result = [[NSMutableArray alloc] init];
@@ -48,7 +35,7 @@
 }
 
 - (NSArray <MastodonStatus *> *)statuses{
-    id obj = [_infoDict objectForKey:@"statuses"];
+    id obj = [self.infoDict objectForKey:@"statuses"];
     
     if ([obj isKindOfClass:[NSArray class]]) {
         NSMutableArray *result = [[NSMutableArray alloc] init];
@@ -66,7 +53,7 @@
 }
 
 - (NSArray <NSString *> *)hashTags{
-    id obj = [_infoDict objectForKey:@"hashtags"];
+    id obj = [self.infoDict objectForKey:@"hashtags"];
     
     if ([obj isKindOfClass:[NSArray class]]) {
         return obj;

@@ -8,10 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MastodonRelationship : NSObject
+#import "MastodonObject.h"
 
-- (instancetype)initWithDictionary:(NSDictionary *)infoDict;
-
+@interface MastodonRelationship : MastodonObject
 
 /**
  Whether the user is currently following the account

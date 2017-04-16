@@ -14,27 +14,14 @@
 
 #import "MastodonStatus.h"
 
-@interface MastodonNotification() {
-    NSDictionary *_infoDict;
-}
-
-@end
-
 @implementation MastodonNotification
 
-- (instancetype)initWithDictionary:(NSDictionary *)infoDict{
-    if (self = [super init]) {
-        _infoDict = infoDict;
-    }
-    return self;
-}
-
 - (NSString *)notificationId{
-    return [_infoDict stringOrNilForKey:@"id"];
+    return [self.infoDict stringOrNilForKey:@"id"];
 }
 
 - (MastodonNotificationType)notificationType{
-    NSString *typeStr = [_infoDict stringOrNilForKey:@"type"];
+    NSString *typeStr = [self.infoDict stringOrNilForKey:@"type"];
     
     if ([typeStr isEqualToString:@"mention"]) {
         return MastodonNotificationTypeMention;
@@ -50,7 +37,7 @@
 }
 
 - (NSDate *)createAt{
-    NSString *dateStr = [_infoDict stringOrNilForKey:@"created_at"];
+    NSString *dateStr = [self.infoDict stringOrNilForKey:@"created_at"];
     if (dateStr) {
         NSTimeZone *timeZone = [NSTimeZone defaultTimeZone];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -77,7 +64,7 @@
 }
 
 - (MastodonAccount *)account{
-    id obj = [_infoDict objectForKey:@"account"];
+    id obj = [self.infoDict objectForKey:@"account"];
     if ([obj isKindOfClass:[NSDictionary class]]) {
         return [[MastodonAccount alloc] initWithDictionary:obj];
     }else{
@@ -85,8 +72,14 @@
     }
 }
 
+- (void)setStatus:(MastodonStatus *)status{
+    NSMutableDictionary *result = [[NSMutableDictionary alloc] initWithDictionary:self.infoDict];
+    [result setObject:status.infoDict forKey:@"status"];
+    self.infoDict = [NSDictionary dictionaryWithDictionary:result];
+}
+
 - (MastodonStatus *)status{
-    id obj = [_infoDict objectForKey:@"status"];
+    id obj = [self.infoDict objectForKey:@"status"];
     if ([obj isKindOfClass:[NSDictionary class]]) {
         return [[MastodonStatus alloc] initWithDictionary:obj];
     }else{

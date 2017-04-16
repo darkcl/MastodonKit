@@ -10,35 +10,22 @@
 
 #import "NSDictionary+MastodonKit.h"
 
-@interface MastodonCard() {
-    NSDictionary *_infoDict;
-}
-
-@end
-
 @implementation MastodonCard
 
-- (instancetype)initWithDictionary:(NSDictionary *)infoDict{
-    if (self = [super init]) {
-        _infoDict = infoDict;
-    }
-    return self;
-}
-
 - (NSString *)url{
-    return [_infoDict stringOrNilForKey:@"url"];
+    return [self.infoDict stringOrNilForKey:@"url"];
 }
 
 - (NSString *)title{
-    return [_infoDict stringOrNilForKey:@"title"];
+    return [self.infoDict stringOrNilForKey:@"title"];
 }
 
 - (NSString *)cardDescription{
-    return [_infoDict stringOrNilForKey:@"description"];
+    return [self.infoDict stringOrNilForKey:@"description"];
 }
 
 - (NSString *)imageUrl{
-    return [_infoDict stringOrNilForKey:@"image"];
+    return [self.infoDict stringOrNilForKey:@"image"];
 }
 
 @end

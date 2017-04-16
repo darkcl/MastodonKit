@@ -12,23 +12,10 @@
 
 #import "NSDictionary+MastodonKit.h"
 
-@interface MastodonContext() {
-    NSDictionary *_infoDict;
-}
-
-@end
-
 @implementation MastodonContext
 
-- (instancetype)initWithDictionary:(NSDictionary *)infoDict{
-    if (self = [super init]) {
-        _infoDict = infoDict;
-    }
-    return self;
-}
-
 - (NSArray <MastodonStatus *> *)ancestors{
-    id obj = [_infoDict objectForKey:@"ancestors"];
+    id obj = [self.infoDict objectForKey:@"ancestors"];
     
     if ([obj isKindOfClass:[NSArray class]]) {
         NSMutableArray *result = [[NSMutableArray alloc] init];
@@ -46,7 +33,7 @@
 }
 
 - (NSArray <MastodonStatus *> *)descendants{
-    id obj = [_infoDict objectForKey:@"descendants"];
+    id obj = [self.infoDict objectForKey:@"descendants"];
     
     if ([obj isKindOfClass:[NSArray class]]) {
         NSMutableArray *result = [[NSMutableArray alloc] init];

@@ -10,27 +10,14 @@
 
 #import "NSDictionary+MastodonKit.h"
 
-@interface MastodonAttachment() {
-    NSDictionary *_infoDict;
-}
-
-@end
-
 @implementation MastodonAttachment
 
-- (instancetype)initWithDictionary:(NSDictionary *)infoDict{
-    if (self = [super init]) {
-        _infoDict = infoDict;
-    }
-    return self;
-}
-
 - (NSString *)attachmentId{
-    return [_infoDict stringOrNilForKey:@"id"];
+    return [self.infoDict stringOrNilForKey:@"id"];
 }
 
 - (MastodonAttachmentType)type{
-    NSString *typeStr = [_infoDict stringOrNilForKey:@"type"];
+    NSString *typeStr = [self.infoDict stringOrNilForKey:@"type"];
     
     if ([typeStr isEqualToString:@"image"]) {
         return MastodonAttachmentTypeImage;
@@ -44,7 +31,7 @@
 }
 
 - (NSURL *)url{
-    NSString *urlString = [_infoDict stringOrNilForKey:@"url"];
+    NSString *urlString = [self.infoDict stringOrNilForKey:@"url"];
     
     if (urlString) {
         return [NSURL URLWithString:urlString];
@@ -54,7 +41,7 @@
 }
 
 - (NSURL *)remoteUrl{
-    NSString *urlString = [_infoDict stringOrNilForKey:@"remote_url"];
+    NSString *urlString = [self.infoDict stringOrNilForKey:@"remote_url"];
     
     if (urlString) {
         return [NSURL URLWithString:urlString];
@@ -64,7 +51,7 @@
 }
 
 - (NSURL *)previewUrl{
-    NSString *urlString = [_infoDict stringOrNilForKey:@"preview_url"];
+    NSString *urlString = [self.infoDict stringOrNilForKey:@"preview_url"];
     
     if (urlString) {
         return [NSURL URLWithString:urlString];
@@ -74,7 +61,7 @@
 }
 
 - (NSURL *)textUrl{
-    NSString *urlString = [_infoDict stringOrNilForKey:@"text_url"];
+    NSString *urlString = [self.infoDict stringOrNilForKey:@"text_url"];
     
     if (urlString) {
         return [NSURL URLWithString:urlString];

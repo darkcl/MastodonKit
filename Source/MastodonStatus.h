@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MastodonObject.h"
+
 #import "MastodonConstants.h"
 
 @class MastodonAccount, MastodonAttachment, MastodonMention, MastodonTags, MastodonApplication;
 
-@interface MastodonStatus : NSObject
-
-- (instancetype)initWithDictionary:(NSDictionary *)infoDict;
+@interface MastodonStatus : MastodonObject
 
 /**
  The ID of the status

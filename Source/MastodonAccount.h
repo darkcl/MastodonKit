@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MastodonAccount : NSObject
+#import "MastodonObject.h"
 
-- (instancetype)initWithDictionary:(NSDictionary *)infoDict;
+@interface MastodonAccount : MastodonObject
 
 
 /**

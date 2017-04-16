@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MastodonReport : NSObject
+#import "MastodonObject.h"
 
-- (instancetype _Nonnull)initWithDictionary:(NSDictionary * _Nonnull)infoDict;
+@interface MastodonReport : MastodonObject
 
 @property (nonatomic, strong, readonly, nonnull) NSString *reportId;
 

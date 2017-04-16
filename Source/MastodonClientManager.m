@@ -957,7 +957,7 @@
         }
         
         if (mediaIds != nil) {
-            [params setObject:replyToStatusId forKey:@"media_ids"];
+            [params setObject:mediaIds forKey:@"media_ids"];
         }
         
         [params setObject:isSensitive ? @"true" : @"false" forKey:@"sensitive"];
@@ -1110,7 +1110,7 @@
     NSArray <NXOAuth2Account *> *accounts = [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:[self serviceNameWithClient:client]];
     if (accounts.count != 0) {
         
-        [self performMethod:@"GET"
+        [self performMethod:@"POST"
                  onResource:[client accountOperationUrlWithAccountId:accountId operationType:type]
             usingParameters:nil
                 withAccount:accounts[0]

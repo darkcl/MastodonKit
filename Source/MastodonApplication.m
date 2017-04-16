@@ -10,27 +10,14 @@
 
 #import "NSDictionary+MastodonKit.h"
 
-@interface MastodonApplication() {
-    NSDictionary *_infoDict;
-}
-
-@end
-
 @implementation MastodonApplication
 
-- (instancetype)initWithDictionary:(NSDictionary *)infoDict{
-    if (self = [super init]) {
-        _infoDict = infoDict;
-    }
-    return self;
-}
-
 - (NSString *)name{
-    return [_infoDict stringOrNilForKey:@"name"];
+    return [self.infoDict stringOrNilForKey:@"name"];
 }
 
 - (NSURL *)website{
-    NSString *urlString = [_infoDict stringOrNilForKey:@"website"];
+    NSString *urlString = [self.infoDict stringOrNilForKey:@"website"];
     if (urlString) {
         return [NSURL URLWithString:urlString];
     }else{

@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MastodonTags : NSObject
+#import "MastodonObject.h"
 
-- (instancetype)initWithDictionary:(NSDictionary *)infoDict;
+@interface MastodonTags : MastodonObject
 
 /**
  The hashtag, not including the preceding #
