@@ -62,7 +62,7 @@
                                  limit:(NSInteger)limit
                              onlyMedia:(BOOL)onlyMedia
                         excludeReplies:(BOOL)excludeReplies
-                          successBlock:(void(^ _Nullable)(NSArray <MastodonAccount *> * _Nullable result))successBlock
+                          successBlock:(void(^ _Nullable)(NSArray <MastodonStatus *> * _Nullable result))successBlock
                           failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
 
 + (void)fetchAccountRelationshipsWithClient:(MastodonClient * _Nonnull)client
