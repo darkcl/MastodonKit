@@ -54,7 +54,7 @@
 /**
  null or the reblogged Status (MastodonStatus)
  */
-@property (nonatomic, strong, readonly) MastodonStatus *reblog;
+@property (nonatomic, strong) MastodonStatus *reblog;
 
 
 /**

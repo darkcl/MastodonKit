@@ -59,6 +59,13 @@
     return [self.infoDict stringOrNilForKey:@"in_reply_to_account_id"];
 }
 
+- (void)setReblog:(MastodonStatus *)reblog{
+    NSMutableDictionary *result = [[NSMutableDictionary alloc] initWithDictionary:self.infoDict];
+    [result setObject:reblog.infoDict forKey:@"reblog"];
+    
+    self.infoDict = [NSDictionary dictionaryWithDictionary:result];
+}
+
 - (MastodonStatus *)reblog{
     NSDictionary *reblogInfoDict = [self.infoDict objectOrNilForKey:@"reblog"];
     if (reblogInfoDict && [reblogInfoDict isKindOfClass:[NSDictionary class]]) {

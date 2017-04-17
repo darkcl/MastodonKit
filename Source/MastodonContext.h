@@ -14,8 +14,8 @@
 
 @interface MastodonContext : MastodonObject
 
-@property (nonatomic, strong, readonly, nonnull) NSArray <MastodonStatus *> *ancestors;
+@property (nonatomic, strong, nonnull) NSArray <MastodonStatus *> *ancestors;
 
-@property (nonatomic, strong, readonly, nonnull) NSArray <MastodonStatus *> *descendants;
+@property (nonatomic, strong, nonnull) NSArray <MastodonStatus *> *descendants;
 
 @end

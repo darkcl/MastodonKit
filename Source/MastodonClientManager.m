@@ -269,13 +269,13 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSArray class]]) {
                             NSArray *arr = (NSArray *)jsonObject;
@@ -283,15 +283,15 @@
                             for (NSDictionary *info in arr) {
                                 [result addObject:[[MastodonRelationship alloc] initWithDictionary:info]];
                             }
-                            completionBlock(YES, result, nil);
+                            completionBlock(YES, result, nil, nil, nil);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -325,6 +325,8 @@
             [param setObject:@(limit) forKey:@"limit"];
         }
         
+        __weak typeof(self) weakSelf = self;
+        
         [self performMethod:@"GET"
                  onResource:client.notificationUrl
             usingParameters:param
@@ -336,13 +338,13 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSArray class]]) {
                             NSArray *arr = (NSArray *)jsonObject;
@@ -350,15 +352,15 @@
                             for (NSDictionary *info in arr) {
                                 [result addObject:[[MastodonNotification alloc] initWithDictionary:info]];
                             }
-                            completionBlock(YES, result, nil);
+                            completionBlock(YES, result, nil, [weakSelf getMaxIdFromResponse:response], [weakSelf getSinceIdFromResponse:response]);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -385,24 +387,24 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSDictionary class]]) {
-                            completionBlock(YES, [[MastodonAccount alloc] initWithDictionary:jsonObject], nil);
+                            completionBlock(YES, [[MastodonAccount alloc] initWithDictionary:jsonObject], nil, nil, nil);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -427,10 +429,10 @@
         }
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
-                completionBlock(YES, responseData, nil);
+                completionBlock(YES, responseData, nil, nil, nil);
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -464,6 +466,8 @@
             [param setObject:@(limit) forKey:@"limit"];
         }
         
+        __weak typeof(self) weakSelf = self;
+        
         [self performMethod:@"GET"
                  onResource:client.reportUrl
             usingParameters:param
@@ -475,13 +479,13 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSArray class]]) {
                             NSArray *arr = (NSArray *)jsonObject;
@@ -489,15 +493,15 @@
                             for (NSDictionary *info in arr) {
                                 [result addObject:[[MastodonReport alloc] initWithDictionary:info]];
                             }
-                            completionBlock(YES, result, nil);
+                            completionBlock(YES, result, nil, [weakSelf getMaxIdFromResponse:response], [weakSelf getSinceIdFromResponse:response]);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -540,24 +544,24 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSDictionary class]]) {
-                            completionBlock(YES, [[MastodonReport alloc] initWithDictionary:jsonObject], nil);
+                            completionBlock(YES, [[MastodonReport alloc] initWithDictionary:jsonObject], nil, nil, nil);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -595,24 +599,24 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSDictionary class]]) {
-                            completionBlock(YES, [[MastodonSearchResult alloc] initWithDictionary:jsonObject], nil);
+                            completionBlock(YES, [[MastodonSearchResult alloc] initWithDictionary:jsonObject], nil, nil, nil);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -641,24 +645,24 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSDictionary class]]) {
-                            completionBlock(YES, [[MastodonStatus alloc] initWithDictionary:jsonObject], nil);
+                            completionBlock(YES, [[MastodonStatus alloc] initWithDictionary:jsonObject], nil, nil, nil);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -685,24 +689,24 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSDictionary class]]) {
-                            completionBlock(YES, [[MastodonContext alloc] initWithDictionary:jsonObject], nil);
+                            completionBlock(YES, [[MastodonContext alloc] initWithDictionary:jsonObject], nil, nil, nil);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -729,24 +733,24 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSDictionary class]]) {
-                            completionBlock(YES, [[MastodonCard alloc] initWithDictionary:jsonObject], nil);
+                            completionBlock(YES, [[MastodonCard alloc] initWithDictionary:jsonObject], nil, nil, nil);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -779,6 +783,8 @@
             [param setObject:@(limit) forKey:@"limit"];
         }
         
+        __weak typeof(self) weakSelf = self;
+        
         [self performMethod:@"GET"
                  onResource:[client statusReblogUrlWithStatusId:statusId]
             usingParameters:param
@@ -790,13 +796,13 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSArray class]]) {
                             NSArray *arr = (NSArray *)jsonObject;
@@ -804,15 +810,15 @@
                             for (NSDictionary *info in arr) {
                                 [result addObject:[[MastodonAccount alloc] initWithDictionary:info]];
                             }
-                            completionBlock(YES, result, nil);
+                            completionBlock(YES, result, nil, [weakSelf getMaxIdFromResponse:response], [weakSelf getSinceIdFromResponse:response]);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -844,7 +850,7 @@
         if (limit != 0) {
             [param setObject:@(limit) forKey:@"limit"];
         }
-        
+        __weak typeof(self) weakSelf = self;
         [self performMethod:@"GET"
                  onResource:[client statusFavouriteUrlWithStatusId:statusId]
             usingParameters:param
@@ -856,13 +862,13 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSArray class]]) {
                             NSArray *arr = (NSArray *)jsonObject;
@@ -870,15 +876,15 @@
                             for (NSDictionary *info in arr) {
                                 [result addObject:[[MastodonAccount alloc] initWithDictionary:info]];
                             }
-                            completionBlock(YES, result, nil);
+                            completionBlock(YES, result, nil, [weakSelf getMaxIdFromResponse:response], [weakSelf getSinceIdFromResponse:response]);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -908,24 +914,24 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSDictionary class]]) {
-                            completionBlock(YES, [[MastodonStatus alloc] initWithDictionary:jsonObject], nil);
+                            completionBlock(YES, [[MastodonStatus alloc] initWithDictionary:jsonObject], nil, nil, nil);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -994,24 +1000,24 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSDictionary class]]) {
-                            completionBlock(YES, [[MastodonStatus alloc] initWithDictionary:jsonObject], nil);
+                            completionBlock(YES, [[MastodonStatus alloc] initWithDictionary:jsonObject], nil, nil, nil);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -1038,24 +1044,24 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSDictionary class]]) {
-                            completionBlock(YES, [[MastodonStatus alloc] initWithDictionary:jsonObject], nil);
+                            completionBlock(YES, [[MastodonStatus alloc] initWithDictionary:jsonObject], nil, nil, nil);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -1121,24 +1127,24 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSDictionary class]]) {
-                            completionBlock(YES, [[MastodonAccount alloc] initWithDictionary:jsonObject], nil);
+                            completionBlock(YES, [[MastodonAccount alloc] initWithDictionary:jsonObject], nil, nil, nil);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -1219,13 +1225,13 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
-                    completionBlock(YES, responseData, nil);
+                    completionBlock(YES, responseData, nil, nil, nil);
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -1252,13 +1258,13 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
-                    completionBlock(YES, responseData, nil);
+                    completionBlock(YES, responseData, nil, nil, nil);
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -1289,20 +1295,20 @@
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSDictionary class]]) {
-                            completionBlock(YES, [[MastodonAccount alloc] initWithDictionary:jsonObject], nil);
+                            completionBlock(YES, [[MastodonAccount alloc] initWithDictionary:jsonObject], nil, nil, nil);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }else{
-                    completionBlock(YES, responseData, nil);
+                    completionBlock(YES, responseData, nil, nil, nil);
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -1335,7 +1341,7 @@
         if (limit != 0) {
             [param setObject:@(limit) forKey:@"limit"];
         }
-        
+        __weak typeof(self) weakSelf = self;
         [self performMethod:@"GET"
                  onResource:client.muteAccountUrl
             usingParameters:param
@@ -1347,13 +1353,13 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError , nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSArray class]]) {
                             NSArray *arr = (NSArray *)jsonObject;
@@ -1361,15 +1367,15 @@
                             for (NSDictionary *info in arr) {
                                 [result addObject:[[MastodonAccount alloc] initWithDictionary:info]];
                             }
-                            completionBlock(YES, result, nil);
+                            completionBlock(YES, result, nil , [weakSelf getMaxIdFromResponse:response], [weakSelf getSinceIdFromResponse:response]);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -1401,6 +1407,8 @@
             [param setObject:@(limit) forKey:@"limit"];
         }
         
+        __weak typeof(self) weakSelf = self;
+        
         [self performMethod:@"GET"
                  onResource:client.blockedAccountUrl
             usingParameters:param
@@ -1412,13 +1420,13 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSArray class]]) {
                             NSArray *arr = (NSArray *)jsonObject;
@@ -1426,15 +1434,15 @@
                             for (NSDictionary *info in arr) {
                                 [result addObject:[[MastodonAccount alloc] initWithDictionary:info]];
                             }
-                            completionBlock(YES, result, nil);
+                            completionBlock(YES, result, nil , [weakSelf getMaxIdFromResponse:response], [weakSelf getSinceIdFromResponse:response]);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -1466,6 +1474,8 @@
             [param setObject:@(limit) forKey:@"limit"];
         }
         
+        __weak typeof(self) weakSelf = self;
+        
         [self performMethod:@"GET"
                  onResource:client.favouriteStatusesUrl
             usingParameters:param
@@ -1477,13 +1487,13 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSArray class]]) {
                             NSArray *arr = (NSArray *)jsonObject;
@@ -1491,15 +1501,15 @@
                             for (NSDictionary *info in arr) {
                                 [result addObject:[[MastodonStatus alloc] initWithDictionary:info]];
                             }
-                            completionBlock(YES, result, nil);
+                            completionBlock(YES, result, nil , [weakSelf getMaxIdFromResponse:response], [weakSelf getSinceIdFromResponse:response]);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -1531,6 +1541,8 @@
             [param setObject:@(limit) forKey:@"limit"];
         }
         
+        __weak typeof(self) weakSelf = self;
+        
         [self performMethod:@"GET"
                  onResource:client.followRequestsUrl
             usingParameters:param
@@ -1542,13 +1554,13 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSArray class]]) {
                             NSArray *arr = (NSArray *)jsonObject;
@@ -1556,15 +1568,15 @@
                             for (NSDictionary *info in arr) {
                                 [result addObject:[[MastodonAccount alloc] initWithDictionary:info]];
                             }
-                            completionBlock(YES, result, nil);
+                            completionBlock(YES, result, nil, [weakSelf getMaxIdFromResponse:response], [weakSelf getSinceIdFromResponse:response]);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -1607,6 +1619,8 @@
             [param setObject:@(excludeReplies).stringValue forKey:@"exclude_replies"];
         }
         
+        __weak typeof(self) weakSelf = self;
+        
         [self performMethod:@"GET"
                  onResource:[client accountStatusesUrlWithAccountId:accountId]
             usingParameters:param
@@ -1618,13 +1632,13 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSArray class]]) {
                             NSArray *arr = (NSArray *)jsonObject;
@@ -1632,15 +1646,15 @@
                             for (NSDictionary *info in arr) {
                                 [result addObject:[[MastodonStatus alloc] initWithDictionary:info]];
                             }
-                            completionBlock(YES, result, nil);
+                            completionBlock(YES, result, nil , [weakSelf getMaxIdFromResponse:response], [weakSelf getSinceIdFromResponse:response]);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -1673,6 +1687,8 @@
             [param setObject:@(limit) forKey:@"limit"];
         }
         
+        __weak typeof(self) weakSelf = self;
+        
         [self performMethod:@"GET"
                  onResource:[client accountFollowingsUrlWithAccountId:accountId]
             usingParameters:param
@@ -1684,13 +1700,13 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSArray class]]) {
                             NSArray *arr = (NSArray *)jsonObject;
@@ -1698,15 +1714,15 @@
                             for (NSDictionary *info in arr) {
                                 [result addObject:[[MastodonAccount alloc] initWithDictionary:info]];
                             }
-                            completionBlock(YES, result, nil);
+                            completionBlock(YES, result, nil , [weakSelf getMaxIdFromResponse:response], [weakSelf getSinceIdFromResponse:response]);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -1739,6 +1755,8 @@
             [param setObject:@(limit) forKey:@"limit"];
         }
         
+        __weak typeof(self) weakSelf = self;
+        
         [self performMethod:@"GET"
                  onResource:[client accountFollowersUrlWithAccountId:accountId]
             usingParameters:param
@@ -1750,13 +1768,13 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSArray class]]) {
                             NSArray *arr = (NSArray *)jsonObject;
@@ -1764,15 +1782,15 @@
                             for (NSDictionary *info in arr) {
                                 [result addObject:[[MastodonAccount alloc] initWithDictionary:info]];
                             }
-                            completionBlock(YES, result, nil);
+                            completionBlock(YES, result, nil , [weakSelf getMaxIdFromResponse:response], [weakSelf getSinceIdFromResponse:response]);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -1798,24 +1816,24 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSDictionary class]]) {
-                            completionBlock(YES, [[MastodonAccount alloc] initWithDictionary:jsonObject], nil);
+                            completionBlock(YES, [[MastodonAccount alloc] initWithDictionary:jsonObject], nil, nil, nil);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -1842,24 +1860,24 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSDictionary class]]) {
-                            completionBlock(YES, [[MastodonAccount alloc] initWithDictionary:jsonObject], nil);
+                            completionBlock(YES, [[MastodonAccount alloc] initWithDictionary:jsonObject], nil, nil, nil);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -1898,6 +1916,8 @@
         
         [param setObject:@(isLocal).stringValue forKey:@"local"];
         
+        __weak typeof(self) weakSelf = self;
+        
         [self performMethod:@"GET"
                  onResource:[client timelineWithTag:tag]
             usingParameters:param
@@ -1909,13 +1929,13 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSArray class]]) {
                             NSArray *arr = (NSArray *)jsonObject;
@@ -1923,15 +1943,15 @@
                             for (NSDictionary *info in arr) {
                                 [result addObject:[[MastodonStatus alloc] initWithDictionary:info]];
                             }
-                            completionBlock(YES, result, nil);
+                            completionBlock(YES, result, nil , [weakSelf getMaxIdFromResponse:response], [weakSelf getSinceIdFromResponse:response]);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -1964,6 +1984,8 @@
             [param setObject:@(limit) forKey:@"limit"];
         }
         
+        __weak typeof(self) weakSelf = self;
+        
         [self performMethod:@"GET"
                  onResource:client.publicTimelineUrl
             usingParameters:param
@@ -1975,13 +1997,13 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSArray class]]) {
                             NSArray *arr = (NSArray *)jsonObject;
@@ -1989,15 +2011,15 @@
                             for (NSDictionary *info in arr) {
                                 [result addObject:[[MastodonStatus alloc] initWithDictionary:info]];
                             }
-                            completionBlock(YES, result, nil);
+                            completionBlock(YES, result, nil , [weakSelf getMaxIdFromResponse:response], [weakSelf getSinceIdFromResponse:response]);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -2034,6 +2056,8 @@
         
         [param setObject:@(NO).stringValue forKey:@"local"];
         
+        __weak typeof(self) weakSelf = self;
+        
         [self performMethod:@"GET"
                  onResource:client.homeTimelineUrl
             usingParameters:param
@@ -2045,13 +2069,13 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSArray class]]) {
                             NSArray *arr = (NSArray *)jsonObject;
@@ -2059,15 +2083,15 @@
                             for (NSDictionary *info in arr) {
                                 [result addObject:[[MastodonStatus alloc] initWithDictionary:info]];
                             }
-                            completionBlock(YES, result, nil);
+                            completionBlock(YES, result, nil , [weakSelf getMaxIdFromResponse:response], [weakSelf getSinceIdFromResponse:response]);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -2104,6 +2128,8 @@
         
         [param setObject:@(YES).stringValue forKey:@"local"];
         
+        __weak typeof(self) weakSelf = self;
+        
         [self performMethod:@"GET"
                  onResource:client.publicTimelineUrl
             usingParameters:param
@@ -2115,13 +2141,13 @@
             responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                 // Process the response
                 if (error != nil) {
-                    completionBlock(NO, nil, error);
+                    completionBlock(NO, nil, error, nil, nil);
                 }else{
                     NSError *jsonError;
                     id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                     
                     if (jsonError != nil) {
-                        completionBlock(NO, nil, jsonError);
+                        completionBlock(NO, nil, jsonError, nil, nil);
                     }else{
                         if ([jsonObject isKindOfClass:[NSArray class]]) {
                             NSArray *arr = (NSArray *)jsonObject;
@@ -2129,15 +2155,15 @@
                             for (NSDictionary *info in arr) {
                                 [result addObject:[[MastodonStatus alloc] initWithDictionary:info]];
                             }
-                            completionBlock(YES, result, nil);
+                            completionBlock(YES, result, nil , [weakSelf getMaxIdFromResponse:response], [weakSelf getSinceIdFromResponse:response]);
                         }else{
-                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                            completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                         }
                     }
                 }
             }];
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
     
 }
@@ -2171,29 +2197,29 @@
                 responseHandler:^(NSURLResponse *response, NSData *responseData, NSError *error){
                     // Process the response
                     if (error != nil) {
-                        completionBlock(NO, nil, error);
+                        completionBlock(NO, nil, error, nil, nil);
                     }else{
                         NSError *jsonError;
                         id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
                         
                         if (jsonError != nil) {
-                            completionBlock(NO, nil, jsonError);
+                            completionBlock(NO, nil, jsonError, nil, nil);
                         }else{
                             if ([jsonObject isKindOfClass:[NSDictionary class]]) {
-                                completionBlock(YES, [[MastodonAttachment alloc] initWithDictionary:jsonObject], nil);
+                                completionBlock(YES, [[MastodonAttachment alloc] initWithDictionary:jsonObject], nil, nil, nil);
                             }else{
-                                completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject]);
+                                completionBlock(NO, nil, [NSError serverErrorWithResponse:jsonObject], nil, nil);
                             }
                         }
                     }
                 }];
         }else{
-            completionBlock(NO, nil, nil);
+            completionBlock(NO, nil, nil, nil, nil);
         }
         
         
     }else{
-        completionBlock(NO, nil, nil);
+        completionBlock(NO, nil, nil, nil, nil);
     }
 }
 
@@ -2230,6 +2256,102 @@
 }
 
 #pragma mark - Helper
+
+- (NSString *)getMaxIdFromResponse:(NSURLResponse *)response{
+    if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        NSString *linkStr = [httpResponse.allHeaderFields objectOrNilForKey:@"Link"];
+        
+        
+        
+        if (linkStr != nil) {
+            NSArray *comp = [linkStr componentsSeparatedByString:@", "];
+            
+            for (NSString *str in comp) {
+                NSDictionary *aDict = [self getRelationFromString:str];
+                
+                if ([aDict[@"rel"] isEqualToString:@"next"]) {
+                    NSURLComponents *components = [[NSURLComponents alloc] initWithURL:aDict[@"url"] resolvingAgainstBaseURL:NO];
+                    
+                    for (NSURLQueryItem *item in components.queryItems) {
+                        if ([item.name isEqualToString:@"max_id"]) {
+                            return item.value;
+                        }
+                    }
+                }
+            }
+            
+            return nil;
+        }else{
+            return nil;
+        }
+    }else{
+        return nil;
+    }
+        
+}
+
+- (NSDictionary *)getRelationFromString:(NSString *)str{
+    NSArray *comp = [str componentsSeparatedByString:@"; "];
+    
+    if (comp.count == 2) {
+        NSString *urlStr = comp[0];
+        urlStr = [urlStr stringByReplacingOccurrencesOfString:@"<" withString:@""];
+        urlStr = [urlStr stringByReplacingOccurrencesOfString:@">" withString:@""];
+        
+        NSURL *anUrl = [NSURL URLWithString:urlStr];
+        
+        if (anUrl == nil) {
+            return nil;
+        }else{
+            NSString *relationStr = comp[1];
+            relationStr = [relationStr stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+            relationStr = [relationStr stringByReplacingOccurrencesOfString:@"rel=" withString:@""];
+            if (relationStr.length != 0) {
+                return @{@"rel":relationStr,
+                         @"url": anUrl};
+            }else{
+                return nil;
+            }
+        }
+    }else{
+        return nil;
+    }
+}
+
+- (NSString *)getSinceIdFromResponse:(NSURLResponse *)response{
+    // <https://mastodon.cloud/api/v1/accounts/18466/following?max_id=59338>; rel="next", <https://mastodon.cloud/api/v1/accounts/18466/following?since_id=111432>; rel="prev"
+    if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        NSString *linkStr = [httpResponse.allHeaderFields objectOrNilForKey:@"Link"];
+        
+        
+        
+        if (linkStr != nil) {
+            NSArray *comp = [linkStr componentsSeparatedByString:@", "];
+            
+            for (NSString *str in comp) {
+                NSDictionary *aDict = [self getRelationFromString:str];
+                
+                if ([aDict[@"rel"] isEqualToString:@"prev"]) {
+                    NSURLComponents *components = [[NSURLComponents alloc] initWithURL:aDict[@"url"] resolvingAgainstBaseURL:NO];
+                    
+                    for (NSURLQueryItem *item in components.queryItems) {
+                        if ([item.name isEqualToString:@"since_id"]) {
+                            return item.value;
+                        }
+                    }
+                }
+            }
+            
+            return nil;
+        }else{
+            return nil;
+        }
+    }else{
+        return nil;
+    }
+}
 
 - (NSDictionary *)urlEncodeArray:(NSArray *)array
                          withKey:(NSString *)key{

@@ -14,6 +14,12 @@
 
 @implementation MastodonContext
 
+- (void)setAncestors:(NSArray<MastodonStatus *> *)ancestors{
+    NSMutableDictionary *result = [[NSMutableDictionary alloc] initWithDictionary:self.infoDict];
+    [result setObject:ancestors forKey:@"ancestors"];
+    self.infoDict = [NSDictionary dictionaryWithDictionary:result];
+}
+
 - (NSArray <MastodonStatus *> *)ancestors{
     id obj = [self.infoDict objectForKey:@"ancestors"];
     
@@ -30,6 +36,12 @@
     }else{
         return @[];
     }
+}
+
+- (void)setDescendants:(NSArray<MastodonStatus *> *)descendants{
+    NSMutableDictionary *result = [[NSMutableDictionary alloc] initWithDictionary:self.infoDict];
+    [result setObject:descendants forKey:@"descendants"];
+    self.infoDict = [NSDictionary dictionaryWithDictionary:result];
 }
 
 - (NSArray <MastodonStatus *> *)descendants{

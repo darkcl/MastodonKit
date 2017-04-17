@@ -18,7 +18,7 @@ typedef void(^MastodonClientManagerCompletionBlock)(BOOL success, NSError * _Nul
 
 typedef void(^MastodonClientManagerLoginCompletionBlock)(BOOL success, NSURL * _Nullable authUrl, NSError * _Nullable error);
 
-typedef void(^MastodonClientRequestComplationBlock)(BOOL success, _Nullable id response, NSError * _Nullable error);
+typedef void(^MastodonClientRequestComplationBlock)(BOOL success, _Nullable id response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId);
 
 typedef void(^MastodonClientRequestProgessBlock)(double progress);
 

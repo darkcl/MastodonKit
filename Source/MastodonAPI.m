@@ -122,7 +122,7 @@
                                        maxId:maxId
                                      sinceId:sinceId
                                        limit:limit
-                                  completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                  completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                       if (success) {
                                           successBlock(response);
                                       }else{
@@ -139,7 +139,7 @@
     
     [api.manager fetchNotificationWithClient:client
                               notificationId:notificationId
-                                  completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                  completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                       if (success) {
                                           successBlock(response);
                                       }else{
@@ -154,7 +154,7 @@
     MastodonAPI *api = [self sharedInstance];
     
     [api.manager clearNotificationWithClient:client
-                                  completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                  completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                       if (success) {
                                           successBlock();
                                       }else{
@@ -177,7 +177,7 @@
                                   maxId:maxId
                                 sinceId:sinceId
                                   limit:limit
-                             completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                             completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                  if (success) {
                                      successBlock(response);
                                  }else{
@@ -198,7 +198,7 @@
                              accoutId:accoutId
                             statusIds:statusIds
                               comment:comment
-                           completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                           completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                if (success) {
                                    successBlock(response);
                                }else{
@@ -219,7 +219,7 @@
     [api.manager searchWithClient:client
                       queryString:queryString
                shouldResolveLocal:shouldResolveLocal
-                       completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                       completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                            if (success) {
                                successBlock(response);
                            }else{
@@ -238,7 +238,7 @@
     
     [api.manager fetchStatusWithClient:client
                               statusId:statusId
-                            completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                            completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                 if (success) {
                                     successBlock(response);
                                 }else{
@@ -255,7 +255,7 @@
     
     [api.manager fetchStatusContextWithClient:client
                                      statusId:statusId
-                                   completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                   completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                        if (success) {
                                            successBlock(response);
                                        }else{
@@ -273,7 +273,7 @@
     
     [api.manager fetchStatusCardWithClient:client
                                   statusId:statusId
-                                completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                     if (success) {
                                         successBlock(response);
                                     }else{
@@ -296,7 +296,7 @@
                                             maxId:maxId
                                           sinceId:sinceId
                                             limit:limit
-                                       completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                       completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                            if (success) {
                                                successBlock(response);
                                            }else{
@@ -319,7 +319,7 @@
                                              maxId:maxId
                                            sinceId:sinceId
                                              limit:limit
-                                        completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                        completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                             if (success) {
                                                 successBlock(response);
                                             }else{
@@ -348,7 +348,7 @@
                           isSensitive:isSensitive
                           spolierText:spolierText
                        postVisibility:postVisibility
-                           completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                           completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                if (success) {
                                    successBlock(response);
                                }else{
@@ -365,7 +365,7 @@
     
     [api.manager deleteStatusWithClient:client
                                statusId:statusId
-                             completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                             completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                  if (success) {
                                      successBlock();
                                  }else{
@@ -383,7 +383,7 @@
     
     [api.manager reblogStatusWithClient:client
                                statusId:statusId
-                             completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                             completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                  if (success) {
                                      successBlock(response);
                                  }else{
@@ -400,7 +400,7 @@
     
     [api.manager unreblogStatusWithClient:client
                                statusId:statusId
-                             completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                             completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                  if (success) {
                                      successBlock(response);
                                  }else{
@@ -417,7 +417,7 @@
     
     [api.manager favouriteStatusWithClient:client
                                  statusId:statusId
-                               completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                               completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                    if (success) {
                                        successBlock(response);
                                    }else{
@@ -434,7 +434,7 @@
     
     [api.manager unfavouriteStatusWithClient:client
                                   statusId:statusId
-                                completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                     if (success) {
                                         successBlock(response);
                                     }else{
@@ -453,7 +453,7 @@
     
     [api.manager followAccountWithClient:client
                            withAccountId:accountId
-                              completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                              completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                   if (success) {
                                       successBlock(response);
                                   }else{
@@ -470,7 +470,7 @@
     
     [api.manager unfollowAccountWithClient:client
                              withAccountId:accountId
-                                completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                     if (success) {
                                         successBlock(response);
                                     }else{
@@ -487,7 +487,7 @@
     
     [api.manager blockAccountWithClient:client
                           withAccountId:accountId
-                             completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                             completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                  if (success) {
                                      successBlock(response);
                                  }else{
@@ -504,7 +504,7 @@
     
     [api.manager unblockAccountWithClient:client
                             withAccountId:accountId
-                               completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                               completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                    if (success) {
                                        successBlock(response);
                                    }else{
@@ -521,7 +521,7 @@
     
     [api.manager muteAccountWithClient:client
                          withAccountId:accountId
-                            completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                            completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                 if (success) {
                                     successBlock(response);
                                 }else{
@@ -538,7 +538,7 @@
     
     [api.manager unmuteAccountWithClient:client
                            withAccountId:accountId
-                              completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                              completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                   if (success) {
                                       successBlock(response);
                                   }else{
@@ -555,7 +555,7 @@
     
     [api.manager apporveFollowRequestWithClient:client
                                   withAccountId:accountId
-                                     completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                     completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                          if (success) {
                                              successBlock();
                                          }else{
@@ -572,7 +572,7 @@
     
     [api.manager rejectFollowRequestWithClient:client
                                  withAccountId:accountId
-                                    completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                    completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                         if (success) {
                                             successBlock();
                                         }else{
@@ -590,7 +590,7 @@
     
     [api.manager followAccountWithClient:client
                           withAccountUri:accountUri
-                              completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                              completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                   if (success) {
                                       successBlock(response);
                                   }else{
@@ -607,7 +607,7 @@
     MastodonAPI *api = [self sharedInstance];
     
     [api.manager fetchCurentUserAccountInfoWithClient:client
-                                           completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                           completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                                if (success) {
                                                    successBlock(response);
                                                }else{
@@ -621,7 +621,7 @@
                                   maxId:(NSString * _Nullable)maxId
                                 sinceId:(NSString * _Nullable)sinceId
                                   limit:(NSInteger)limit
-                           successBlock:(void(^ _Nullable)(NSArray <MastodonAccount *> * _Nullable result))successBlock
+                           successBlock:(void(^ _Nullable)(NSArray <MastodonAccount *> * _Nullable result, NSString * _Nullable maxId,  NSString * _Nullable sinceId))successBlock
                            failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
     MastodonAPI *api = [self sharedInstance];
     
@@ -630,9 +630,9 @@
                                            maxId:maxId
                                          sinceId:sinceId
                                            limit:limit
-                                      completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                      completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                           if (success) {
-                                              successBlock(response);
+                                              successBlock(response,maxId,sinceId);
                                           }else{
                                               failureBlock(error);
                                           }
@@ -645,7 +645,7 @@
                                   maxId:(NSString * _Nullable)maxId
                                 sinceId:(NSString * _Nullable)sinceId
                                   limit:(NSInteger)limit
-                           successBlock:(void(^ _Nullable)(NSArray <MastodonAccount *> * _Nullable result))successBlock
+                           successBlock:(void(^ _Nullable)(NSArray <MastodonAccount *> * _Nullable result, NSString * _Nullable maxId,  NSString * _Nullable sinceId))successBlock
                            failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
     MastodonAPI *api = [self sharedInstance];
     
@@ -654,9 +654,9 @@
                                            maxId:maxId
                                          sinceId:sinceId
                                            limit:limit
-                                      completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                      completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                           if (success) {
-                                              successBlock(response);
+                                              successBlock(response,maxId,sinceId);
                                           }else{
                                               failureBlock(error);
                                           }
@@ -681,7 +681,7 @@
                                           limit:limit
                                       onlyMedia:onlyMedia
                                  excludeReplies:excludeReplies
-                                     completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                     completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                          if (success) {
                                              successBlock(response);
                                          }else{
@@ -698,7 +698,7 @@
     
     [api.manager fetchAccountRelationshipsWithClient:client
                                           accountIds:accountIds
-                                          completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                          completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                               if (success) {
                                                   successBlock(response);
                                               }else{
@@ -717,7 +717,7 @@
     
     [api.manager fetchAccountInfoWithClient:client
                                   accountId:accountId
-                                 completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                 completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                      if (success) {
                                          successBlock(response);
                                      }else{
@@ -738,7 +738,7 @@
                                            maxId:maxId
                                          sinceId:sinceId
                                            limit:limit
-                                      completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                      completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                           if (success) {
                                               successBlock(response);
                                           }else{
@@ -759,7 +759,7 @@
                                              maxId:maxId
                                            sinceId:sinceId
                                              limit:limit
-                                        completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                        completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                             if (success) {
                                                 successBlock(response);
                                             }else{
@@ -780,7 +780,7 @@
                                                    maxId:maxId
                                                  sinceId:sinceId
                                                    limit:limit
-                                              completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                              completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                                   if (success) {
                                                       successBlock(response);
                                                   }else{
@@ -802,7 +802,7 @@
                                           maxId:maxId
                                         sinceId:sinceId
                                           limit:limit
-                                     completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                     completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                          if (success) {
                                              successBlock(response);
                                          }else{
@@ -825,7 +825,7 @@
                                        maxId:maxId
                                      sinceId:sinceId
                                        limit:limit
-                                  completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                  completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                       if (success) {
                                           successBlock(response);
                                       }else{
@@ -846,7 +846,7 @@
                                         maxId:maxId
                                       sinceId:sinceId
                                         limit:limit
-                                   completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                   completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                        if (success) {
                                            successBlock(response);
                                        }else{
@@ -867,7 +867,7 @@
                                          maxId:maxId
                                        sinceId:sinceId
                                          limit:limit
-                                    completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                                    completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                         if (success) {
                                             successBlock(response);
                                         }else{
@@ -890,7 +890,7 @@
                              progress:^(double progress) {
                                  progressBlock(progress);
                              }
-                           completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error) {
+                           completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId,  NSString * _Nullable sinceId) {
                                if (success) {
                                    successBlock(response);
                                }else{
