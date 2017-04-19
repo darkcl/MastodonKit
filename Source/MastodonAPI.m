@@ -876,6 +876,31 @@
                                     }];
 }
 
++ (void)fetchTagsTimelineWithClient:(MastodonClient * _Nonnull)client
+                                tag:(NSString * _Nonnull)tag
+                            isLocal:(BOOL)isLocal
+                              maxId:(NSString * _Nullable)maxId
+                            sinceId:(NSString * _Nullable)sinceId
+                              limit:(NSInteger)limit
+                       successBlock:(void(^ _Nullable)(NSArray <MastodonStatus *> * _Nullable result))successBlock
+                       failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock{
+    MastodonAPI *api = [self sharedInstance];
+    
+    [api.manager fetchTagsTimelineWithClient:client
+                                         tag:tag
+                                     isLocal:isLocal
+                                       maxId:maxId
+                                     sinceId:sinceId
+                                       limit:limit
+                                  completion:^(BOOL success, id  _Nullable response, NSError * _Nullable error, NSString * _Nullable maxId, NSString * _Nullable sinceId) {
+                                      if (success) {
+                                          successBlock(response);
+                                      }else{
+                                          failureBlock(error);
+                                      }
+                                  }];
+}
+
 #pragma mark - Upload Media
 
 + (void)uploadFileWithClient:(MastodonClient * _Nonnull)client

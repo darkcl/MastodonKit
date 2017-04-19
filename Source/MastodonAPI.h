@@ -286,6 +286,15 @@
                successBlock:(void(^ _Nullable)(NSArray <MastodonStatus *> * _Nullable result))successBlock
                failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
 
++ (void)fetchTagsTimelineWithClient:(MastodonClient * _Nonnull)client
+                                tag:(NSString * _Nonnull)tag
+                            isLocal:(BOOL)isLocal
+                              maxId:(NSString * _Nullable)maxId
+                            sinceId:(NSString * _Nullable)sinceId
+                              limit:(NSInteger)limit
+                       successBlock:(void(^ _Nullable)(NSArray <MastodonStatus *> * _Nullable result))successBlock
+                       failureBlock:(void(^ _Nullable)(NSError * _Nullable err))failureBlock;
+
 #pragma mark - Upload Media
 
 + (void)uploadFileWithClient:(MastodonClient * _Nonnull)client
