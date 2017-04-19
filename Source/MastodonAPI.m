@@ -36,6 +36,32 @@
     return instance;
 }
 
++ (BOOL)launchMastodonKitWithAppGroupIdentifier:(NSString *_Nonnull)identifier{
+    MastodonAPI *api = [self sharedInstance];
+    
+    if (api.manager == nil) {
+        NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:MastodonKitApplicationName];
+        NSAssert(appName != nil, @"Add 'MastodonKitApplicationName' for Application Name in Info.plist");
+        
+        NSString *redirectUri = [[NSBundle mainBundle] objectForInfoDictionaryKey:MastodonKitRedirectUri];
+        NSAssert(redirectUri != nil, @"Add 'MastodonKitRedirectUri' for Redirect Uri (For example: myApp://oauth) in Info.plist");
+        
+        NSString *websiteUrl = [[NSBundle mainBundle] objectForInfoDictionaryKey:MastodonKitWebsitUrl];
+        
+        api.manager = [[MastodonClientManager alloc] initWithBlock:^(MastodonClientManagerBuilder * _Nonnull builder) {
+            builder.applicationName = appName;
+            builder.redirectUri = redirectUri;
+            builder.websiteUrl = websiteUrl;
+        }];
+        
+        api.manager.appGroupIdentifier = identifier;
+        
+        return YES;
+    }else{
+        return YES;
+    }
+}
+
 + (BOOL)launchMastodonKit{
     MastodonAPI *api = [self sharedInstance];
     
@@ -53,6 +79,7 @@
             builder.redirectUri = redirectUri;
             builder.websiteUrl = websiteUrl;
         }];
+        
         return YES;
     }else{
         return YES;

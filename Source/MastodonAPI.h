@@ -16,6 +16,8 @@
 
 + (BOOL)launchMastodonKit;
 
++ (BOOL)launchMastodonKitWithAppGroupIdentifier:(NSString *_Nonnull)identifier;
+
 #pragma mark - Clients Related
 
 + (void)createClient:(NSURL * _Nonnull)instanceUrl;

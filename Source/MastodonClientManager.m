@@ -82,7 +82,7 @@
                                        authorizationURL:client.authUrl
                                                tokenURL:client.tokenUrl
                                             redirectURL:client.redirectUri
-                                          keyChainGroup:@"MastodonKit"
+                                          keyChainGroup:self.appGroupIdentifier ? self.appGroupIdentifier : @"MastodonKit"
                                          forAccountType:[self serviceNameWithClient:client]];
     }
 }
@@ -126,7 +126,7 @@
                 [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
             }
         }
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSUserDefaults appGroupUserDefault:self.appGroupIdentifier] synchronize];
         
         [clients removeObject:client];
         
@@ -2227,11 +2227,11 @@
 
 #if TARGET_OS_IOS
 - (NSArray <MastodonClient *> *)clientsList{
-    return [NSUserDefaults clientsArrayWithApplicationName:self.applicationName];
+    return [NSUserDefaults clientsArrayWithApplicationName:self.applicationName withAppGroupIdentifier:self.appGroupIdentifier];
 }
 
 - (void)setClientsList:(NSArray<MastodonClient *> *)clientsList{
-    [NSUserDefaults setClientsArray:clientsList applicationName:self.applicationName];
+    [NSUserDefaults setClientsArray:clientsList applicationName:self.applicationName withAppGroupIdentifier:self.appGroupIdentifier];
 }
 #endif
 
@@ -2373,8 +2373,8 @@
       responseHandler:(NXOAuth2ConnectionResponseHandler)responseHandler{
     __weak typeof(self) weakSelf = self;
     
-    [[NSUserDefaults standardUserDefaults] setValue:client.instanceUrl.absoluteString forKey:MastodonKitLastUsedClientKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [[NSUserDefaults appGroupUserDefault:self.appGroupIdentifier] setValue:client.instanceUrl.absoluteString forKey:MastodonKitLastUsedClientKey];
+    [[NSUserDefaults appGroupUserDefault:self.appGroupIdentifier] synchronize];
     
     [NXOAuth2Request performMethod:aMethod
                         onResource:aResource

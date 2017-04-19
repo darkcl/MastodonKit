@@ -12,21 +12,28 @@
 
 @implementation NSUserDefaults (MastodonKit)
 
-+ (NSArray *)clientsArrayWithApplicationName:(NSString *)applicationName{
-    NSDictionary *clientsDict = [[NSUserDefaults standardUserDefaults] valueForKey:MastodonKitClientsKey];
++ (NSUserDefaults *)appGroupUserDefault:(NSString *)identifier{
+    return identifier ? [[NSUserDefaults alloc] initWithSuiteName:identifier] : [NSUserDefaults standardUserDefaults];
+}
+
++ (NSArray *)clientsArrayWithApplicationName:(NSString *)applicationName
+                      withAppGroupIdentifier:(NSString *)identifier{
+    NSUserDefaults *userDefault = identifier ? [[NSUserDefaults alloc] initWithSuiteName:identifier] : [NSUserDefaults standardUserDefaults];
+    
+    NSDictionary *clientsDict = [userDefault valueForKey:MastodonKitClientsKey];
     
     if (clientsDict == nil) {
         clientsDict = @{};
-        [[NSUserDefaults standardUserDefaults] setObject:clientsDict forKey:MastodonKitClientsKey];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [userDefault setObject:clientsDict forKey:MastodonKitClientsKey];
+        [userDefault synchronize];
     }
     
     id clientsData = [clientsDict objectForKey:applicationName];
     if (clientsData == nil) {
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:clientsDict];
         [dict setObject:[NSKeyedArchiver archivedDataWithRootObject:@[]] forKey:applicationName];
-        [[NSUserDefaults standardUserDefaults] setObject:dict forKey:MastodonKitClientsKey];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [userDefault setObject:dict forKey:MastodonKitClientsKey];
+        [userDefault synchronize];
         
         return @[];
     }else{
@@ -41,21 +48,24 @@
 }
 
 + (void)setClientsArray:(NSArray *)clients
-        applicationName:(NSString *)applicationName{
-    NSDictionary *clientsDict = [[NSUserDefaults standardUserDefaults] valueForKey:MastodonKitClientsKey];
+        applicationName:(NSString *)applicationName
+ withAppGroupIdentifier:(NSString *)identifier{
+    NSUserDefaults *userDefault = identifier ? [[NSUserDefaults alloc] initWithSuiteName:identifier] : [NSUserDefaults standardUserDefaults];
+    
+    NSDictionary *clientsDict = [userDefault valueForKey:MastodonKitClientsKey];
     
     if (clientsDict == nil) {
         clientsDict = @{};
-        [[NSUserDefaults standardUserDefaults] setObject:clientsDict forKey:MastodonKitClientsKey];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [userDefault setObject:clientsDict forKey:MastodonKitClientsKey];
+        [userDefault synchronize];
     }
     
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:clientsDict];
     
     [dict setObject:[NSKeyedArchiver archivedDataWithRootObject:clients] forKey:applicationName];
     
-    [[NSUserDefaults standardUserDefaults] setObject:dict forKey:MastodonKitClientsKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [userDefault setObject:dict forKey:MastodonKitClientsKey];
+    [userDefault synchronize];
 }
 
 @end

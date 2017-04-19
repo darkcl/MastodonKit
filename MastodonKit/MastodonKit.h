@@ -16,6 +16,10 @@ FOUNDATION_EXPORT const unsigned char MastodonKitVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <MastodonKit/PublicHeader.h>
 
+#ifdef MastodonKitAppExtension
+#define NX_APP_EXTENSIONS 1
+#endif
+
 #import <MastodonKit/MastodonConstants.h>
 
 #import <MastodonKit/MastodonAPI.h>

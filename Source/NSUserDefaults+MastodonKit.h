@@ -10,9 +10,13 @@
 
 @interface NSUserDefaults (MastodonKit)
 
-+ (NSArray *)clientsArrayWithApplicationName:(NSString *)applicationName;
++ (NSArray *)clientsArrayWithApplicationName:(NSString *)applicationName
+                      withAppGroupIdentifier:(NSString *)identifier;
 
 + (void)setClientsArray:(NSArray *)clients
-        applicationName:(NSString *)applicationName;
+        applicationName:(NSString *)applicationName
+ withAppGroupIdentifier:(NSString *)identifier;
+
++ (NSUserDefaults *)appGroupUserDefault:(NSString *)identifier;
 
 @end

@@ -32,6 +32,8 @@ typedef void(^MastodonClientRequestProgessBlock)(double progress);
 
 - (MastodonClient * _Nullable)getClientWithInstanceUrl:(NSURL * _Nonnull)instanceUrl;
 
+@property (nonatomic, strong, nullable) NSString *appGroupIdentifier;
+
 #pragma mark - Login / Authenticate
 
 - (void)registerApplicationWithClient:(MastodonClient * _Nonnull)client
